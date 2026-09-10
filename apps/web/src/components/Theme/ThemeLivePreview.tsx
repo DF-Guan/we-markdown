@@ -49,7 +49,7 @@ const PREVIEW_MARKDOWN = `# 一级标题示例
 
 #### 四级标题
 
-这里有 \`行内代码\` 样式，也可以用来表示 \`npm install ahafair\` 等指令。
+这里有 \`行内代码\` 样式，也可以用来表示 \`npm install @we-markdown/core\` 等指令。
 
 \`\`\`js
 // 代码块示例

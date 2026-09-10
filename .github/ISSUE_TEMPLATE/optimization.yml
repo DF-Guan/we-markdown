@@ -3,7 +3,7 @@ description: 对现有功能提出更好的解决方案
 title: "[优化]: "
 labels: ["现有功能优化"]
 assignees:
-  - tenngoxars
+  - DF-Guan
 body:
   - type: textarea
     id: description

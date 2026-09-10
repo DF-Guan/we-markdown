@@ -3,7 +3,7 @@ description: 不知道算不算问题，问问看
 title: "[疑似 Bug]: "
 labels: ["疑似 Bug"]
 assignees:
-  - tenngoxars
+  - DF-Guan
 body:
   - type: textarea
     id: description

@@ -3,7 +3,7 @@ description: 报告一个影响使用的 Bug
 title: "[Bug]: "
 labels: ["Bug"]
 assignees:
-  - tenngoxars
+  - DF-Guan
 body:
   - type: textarea
     id: description

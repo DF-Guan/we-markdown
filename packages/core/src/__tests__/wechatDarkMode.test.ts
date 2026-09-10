@@ -84,7 +84,7 @@ describe("convertCssToWeChatDarkMode", () => {
   it("转换简单 CSS 规则中的颜色", () => {
     const css = "p { color: #000000; }";
     const result = convertCssToWeChatDarkMode(css);
-    expect(result).toContain("/* ahafair-wechat-dark-converted */");
+    expect(result).toContain("/* wemd-wechat-dark-converted */");
     expect(result).not.toContain("#000000");
   });
 
@@ -234,6 +234,6 @@ describe("_convertCssToWeChatDarkModeInternal", () => {
     const result2 = _convertCssToWeChatDarkModeInternal(css);
     // 内部函数每次都重新转换
     expect(result1).toBe(result2);
-    expect(result1).toContain("/* ahafair-wechat-dark-converted */");
+    expect(result1).toContain("/* wemd-wechat-dark-converted */");
   });
 });

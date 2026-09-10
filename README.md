@@ -170,4 +170,4 @@ WeMarkdown/
 
 ## 📄 License
 
-[MIT](LICENSE) © Darktu Studio / WeMarkdown Team
+[MIT](LICENSE) © WeMarkdown Team

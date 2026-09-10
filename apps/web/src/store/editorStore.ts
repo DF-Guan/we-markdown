@@ -43,7 +43,7 @@ export const defaultMarkdown = `# 欢迎使用 WeMarkdown (暗图排版)
 
 ==这是高亮文本==
 
-这是一个 [链接](https://github.com/your-repo)
+这是一个 [GitHub 仓库](https://github.com/DF-Guan/we-markdown)
 
 ## 2. 特殊格式
 ### 上标和下标
