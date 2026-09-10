@@ -8,6 +8,7 @@ import {
   ChevronRight,
   ChevronLeft,
   ListEnd,
+  Wand2,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -31,9 +32,10 @@ import "./Toolbar.css";
 
 interface ToolbarProps {
   onInsert: (prefix: string, suffix: string, placeholder: string) => void;
+  onFormatPangu?: () => void;
 }
 
-export function Toolbar({ onInsert }: ToolbarProps) {
+export function Toolbar({ onInsert, onFormatPangu }: ToolbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [showMermaidMenu, setShowMermaidMenu] = useState(false);
@@ -366,6 +368,18 @@ export function Toolbar({ onInsert }: ToolbarProps) {
 
       {/* 自媒体排版组件 */}
       <ComponentPickerPopover onInsert={onInsert} />
+
+      {/* 盘古中英文排版美化 */}
+      {onFormatPangu && (
+        <button
+          className="md-toolbar-btn"
+          onClick={onFormatPangu}
+          data-tooltip="中英文空格美化 (盘古排版规范)"
+          aria-label="中英文排版美化"
+        >
+          <Wand2 size={16} />
+        </button>
+      )}
 
       {/* 分隔符 */}
       <div className="md-toolbar-divider" />

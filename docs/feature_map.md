@@ -43,6 +43,17 @@
 - **Observable State (物理可观测)**:
   - `apps/web/src/__tests__/components/snippetTemplates.test.ts` 100% 全绿，插入的 HTML 均由 `<section style="...">` 封装且具备 `box-sizing: border-box`，不含任何外部 JavaScript 或侵入式外部依赖。
 
+### 5. 盘古中英文排版美化与实时阅读时长统计 (`pangu-formatter-and-reading-stats`)
+
+- **User POV (用户视角)**:
+  - 用户在编辑器工具栏点击「排版美化」按钮（Wand2 魔法棒图标），可一键对全文或当前高亮选中区域执行盘古规范排版美化（在中英文、数字、符号之间智能安全插入空格）；
+  - 编辑器底部状态栏实时显示当前文章的「行数」、「字数」、「字符(不含空格)」以及基于公众号常规阅读速率换算的「预计阅读时长」（如 `预计阅读: 约 3 分钟`）。
+- **Agent Drive (机器驱动)**:
+  - `formatPanguMarkdown` 执行严格的 Token 暂存保护机制（全面隔离多行代码块、行内代码、LaTeX 块/行内数学公式、HTML 标签及 Markdown 链接/图片目标），通过 CodeMirror 6 事务原子分发，原生保留撤销重做（Ctrl+Z）历史栈；
+  - `getArticleStats` 提供纯文本解析与多维字数指标计算。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/utils/panguFormatter.test.ts` 与 `apps/web/src/__tests__/utils/wordCount.test.ts` 均通过回归测试；工具栏渲染含 `Wand2` 的美化按钮，底部状态栏包含 `.editor-stat-reading` 元素。
+
 ---
 
 ## 🛠️ 机械校验指令 (Verification Command)

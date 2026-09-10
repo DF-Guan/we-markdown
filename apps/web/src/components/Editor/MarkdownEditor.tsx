@@ -10,7 +10,8 @@ import {
 import { underlineExtension } from "./markdownUnderline";
 import { useUITheme } from "../../hooks/useUITheme";
 import { useEditorStore } from "../../store/editorStore";
-import { countWords, countLines } from "../../utils/wordCount";
+import { getArticleStats } from "../../utils/wordCount";
+import { formatPanguMarkdown } from "../../utils/panguFormatter";
 import { Toolbar } from "./Toolbar";
 import { SearchPanel } from "./SearchPanel";
 import { SaveIndicator } from "./SaveIndicator";
@@ -234,8 +235,55 @@ export function MarkdownEditor() {
     });
   }, [content]);
 
-  const wordCount = countWords(content);
-  const lineCount = countLines(content);
+  const articleStats = getArticleStats(content);
+
+  const handleFormatPangu = () => {
+    const view = viewRef.current;
+    if (!view) return;
+
+    const selection = view.state.selection.main;
+    const hasSelection = !selection.empty;
+
+    if (hasSelection) {
+      const selectedText = view.state.doc.sliceString(
+        selection.from,
+        selection.to,
+      );
+      const result = formatPanguMarkdown(selectedText);
+      if (result.changedCount > 0) {
+        view.dispatch({
+          changes: {
+            from: selection.from,
+            to: selection.to,
+            insert: result.text,
+          },
+          selection: {
+            anchor: selection.from,
+            head: selection.from + result.text.length,
+          },
+        });
+        toast.success(`已优化选中排版 (${result.changedCount} 处规范化)`);
+      } else {
+        toast("选中区域排版已符合中英文空格规范", { icon: "✨" });
+      }
+    } else {
+      const fullText = view.state.doc.toString();
+      const result = formatPanguMarkdown(fullText);
+      if (result.changedCount > 0) {
+        view.dispatch({
+          changes: {
+            from: 0,
+            to: view.state.doc.length,
+            insert: result.text,
+          },
+        });
+        toast.success(`已完成全文排版美化 (${result.changedCount} 处规范化)`);
+      } else {
+        toast("全文排版已符合中英文空格规范", { icon: "✨" });
+      }
+    }
+    view.focus();
+  };
 
   const handleInsert = (
     prefix: string,
@@ -273,7 +321,7 @@ export function MarkdownEditor() {
       <div className="editor-header">
         <span className="editor-title">Markdown 编辑器</span>
       </div>
-      <Toolbar onInsert={handleInsert} />
+      <Toolbar onInsert={handleInsert} onFormatPangu={handleFormatPangu} />
       {showSearch && viewRef.current && (
         <SearchPanel
           view={viewRef.current}
@@ -285,8 +333,17 @@ export function MarkdownEditor() {
       </div>
       <div className="editor-footer">
         <div className="editor-stats">
-          <span className="editor-stat">行数: {lineCount}</span>
-          <span className="editor-stat">字数: {wordCount}</span>
+          <span className="editor-stat">行数: {articleStats.lines}</span>
+          <span className="editor-stat">字数: {articleStats.words}</span>
+          <span className="editor-stat">
+            字符(不含空格): {articleStats.charsNoSpaces}
+          </span>
+          <span
+            className="editor-stat editor-stat-reading"
+            title="以微信公众号常规阅读速率 (350字/分钟) 估算"
+          >
+            预计阅读: {articleStats.readingTimeString}
+          </span>
         </div>
         <SaveIndicator />
       </div>

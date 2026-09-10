@@ -326,6 +326,17 @@
   letter-spacing: 0.3px;
 }
 
+.editor-stat-reading {
+  display: inline-flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  color: var(--accent-primary);
+  padding: 1px 8px;
+  border-radius: var(--radius-pill, 9999px);
+  font-weight: 600;
+  cursor: default;
+}
+
 /* 保存状态指示器 - 融入 Thinking Orb 微质感 */
 .save-indicator {
   font-size: 11px;
