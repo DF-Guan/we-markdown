@@ -66,7 +66,7 @@ export const builtInThemes: CustomTheme[] = [
   },
   {
     id: "darktu-cyber",
-    name: "暗图极客",
+    name: "Darktu 极客",
     css: basicTheme + "\n" + darktuCyberTheme + "\n" + codeGithubTheme,
     isBuiltIn: true,
     createdAt: new Date().toISOString(),

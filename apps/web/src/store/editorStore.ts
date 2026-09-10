@@ -28,7 +28,7 @@ interface EditorStore {
   copyToWechat: () => void;
 }
 
-export const defaultMarkdown = `# 欢迎使用 WeMarkdown (暗图排版)
+export const defaultMarkdown = `# 欢迎使用 WeMarkdown
 
 这是一个现代化的 Markdown 编辑器，专为**微信公众号**排版设计。
 
@@ -138,9 +138,18 @@ $$
 **开始编辑吧!** 🚀
 `;
 
+function sanitizeMarkdown(text: string): string {
+  if (!text) return text;
+  return text
+    .replace(/ahafair/gi, "WeMarkdown")
+    .replace(/\s*\(?暗图排版\)?/g, "")
+    .replace(/\s*\(?暗图生态\)?/g, "");
+}
+
 export const useEditorStore = create<EditorStore>((set, get) => ({
   markdown: defaultMarkdown,
-  setMarkdown: (markdown) => set({ markdown, isEditing: true }),
+  setMarkdown: (markdown) =>
+    set({ markdown: sanitizeMarkdown(markdown), isEditing: true }),
 
   // 编辑状态跟踪
   lastAutoSavedAt: null,
@@ -168,7 +177,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     }
 
     // 重置编辑器内容
-    set({ markdown: options?.markdown ?? defaultMarkdown });
+    set({ markdown: sanitizeMarkdown(options?.markdown ?? defaultMarkdown) });
 
     // 重置主题（通过 themeStore）
     themeStore.selectTheme(targetTheme);

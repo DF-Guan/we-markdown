@@ -10,11 +10,20 @@ function deriveTitle(markdown: string) {
   const trimmed = markdown.trim();
   if (!trimmed) return UNTITLED_TITLE;
   const headingMatch = trimmed.match(/^(#+)\s*(.+)$/m);
+  let title = UNTITLED_TITLE;
   if (headingMatch) {
-    return headingMatch[2].trim().slice(0, 50) || UNTITLED_TITLE;
+    title = headingMatch[2].trim().slice(0, 50) || UNTITLED_TITLE;
+  } else {
+    const firstLine = trimmed.split(/\r?\n/).find((line) => line.trim());
+    title = firstLine ? firstLine.trim().slice(0, 50) : UNTITLED_TITLE;
   }
-  const firstLine = trimmed.split(/\r?\n/).find((line) => line.trim());
-  return firstLine ? firstLine.trim().slice(0, 50) : UNTITLED_TITLE;
+  return (
+    title
+      .replace(/ahafair/gi, "WeMarkdown")
+      .replace(/\s*\(?暗图排版\)?/g, "")
+      .replace(/\s*\(?暗图生态\)?/g, "")
+      .trim() || UNTITLED_TITLE
+  );
 }
 
 export function HistoryManager() {
@@ -219,8 +228,12 @@ export function HistoryManager() {
     }
 
     isRestoringRef.current = true;
-    restoringContentRef.current = candidateEntry.markdown; // Set expected content
-    setMarkdown(candidateEntry.markdown);
+    const cleanMarkdown = candidateEntry.markdown
+      .replace(/ahafair/gi, "WeMarkdown")
+      .replace(/\s*\(?暗图排版\)?/g, "")
+      .replace(/\s*\(?暗图生态\)?/g, "");
+    restoringContentRef.current = cleanMarkdown; // Set expected content
+    setMarkdown(cleanMarkdown);
     selectTheme(candidateEntry.theme); // 使用 selectTheme 替代 setTheme + setThemeName
     setCustomCSS(candidateEntry.customCSS);
     setFilePath(candidateEntry.filePath);
@@ -237,7 +250,7 @@ export function HistoryManager() {
       }
     }
     latestRef.current = {
-      markdown: candidateEntry.markdown,
+      markdown: cleanMarkdown,
       theme: candidateEntry.theme,
       customCSS: candidateEntry.customCSS,
       themeName: candidateEntry.themeName,

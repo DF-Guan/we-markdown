@@ -2,7 +2,7 @@
   <img src="apps/web/public/favicon-dark.svg" width="80" height="80" alt="WeMarkdown Logo" />
 </p>
 
-<h1 align="center">WeMarkdown (暗图排版)</h1>
+<h1 align="center">WeMarkdown</h1>
 
 <p align="center">
   <strong>更优雅的 Markdown 微信公众号排版工具</strong>

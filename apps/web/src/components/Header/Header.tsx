@@ -189,7 +189,7 @@ export function Header() {
           />
           <FloatingToolbarButton
             icon={<Sparkles size={18} strokeWidth={2} />}
-            label="暗图生态"
+            label="Darktu 官网"
             onClick={() =>
               window.open("https://darktu.com", "_blank", "noopener,noreferrer")
             }
@@ -265,15 +265,15 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary darktu-portal-btn"
-              title="探索 Darktu 暗图生态"
-              aria-label="暗图生态"
+              title="访问 Darktu 官网"
+              aria-label="Darktu 官网"
             >
               <Sparkles
                 size={18}
                 strokeWidth={2}
                 className="darktu-sparkle-icon"
               />
-              <span>暗图生态</span>
+              <span>Darktu 官网</span>
             </a>
 
             <button className="btn-primary" onClick={copyToWechat}>

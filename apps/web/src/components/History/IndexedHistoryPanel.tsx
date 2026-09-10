@@ -71,7 +71,11 @@ export function IndexedHistoryPanel() {
       customCSS: themeState.customCSS,
       themeName,
     });
-    setMarkdown(entry.markdown);
+    const cleanMarkdown = entry.markdown
+      .replace(/ahafair/gi, "WeMarkdown")
+      .replace(/\s*\(?暗图排版\)?/g, "")
+      .replace(/\s*\(?暗图生态\)?/g, "");
+    setMarkdown(cleanMarkdown);
     selectTheme(entry.theme);
     setCustomCSS(entry.customCSS);
     setActiveId(entry.id);
@@ -325,7 +329,11 @@ export function IndexedHistoryPanel() {
                         </div>
                       ) : (
                         <span className="history-title">
-                          {entry.title || "未命名文章"}
+                          {(entry.title || "未命名文章")
+                            .replace(/ahafair/gi, "WeMarkdown")
+                            .replace(/\s*\(?暗图排版\)?/g, "")
+                            .replace(/\s*\(?暗图生态\)?/g, "")
+                            .trim() || "未命名文章"}
                         </span>
                       )}
                       <span className="history-theme">

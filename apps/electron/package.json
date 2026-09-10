@@ -1,7 +1,7 @@
 {
   "name": "we-markdown-electron",
   "version": "1.2.9",
-  "description": "WeMarkdown (暗图排版) - 专为微信公众号打造的优雅 Markdown 编辑器",
+  "description": "WeMarkdown - 专为微信公众号打造的优雅 Markdown 编辑器",
   "main": "dist/main.js",
   "homepage": "https://md.darktu.com",
   "author": "DF-Guan / WeMarkdown Team",

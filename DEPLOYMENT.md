@@ -1,4 +1,4 @@
-# 📘 WeMarkdown (暗图排版) — 部署与双轨分支运维手册 (DEPLOYMENT.md)
+# 📘 WeMarkdown — 部署与双轨分支运维手册 (DEPLOYMENT.md)
 
 > 🛡️ **生产安全铁律**：严防 Cloudflare Pages 误将草稿半成品当作正式版本发布！  
 > 本项目实行严格的 **双轨分支隔离模型**：  
@@ -34,14 +34,14 @@ flowchart TD
 
 在 Cloudflare Dashboard 中创建或管理 `we-markdown` 项目时，必须严格核对以下设置：
 
-| 配置项 | 推荐值 | 说明 |
-| :--- | :--- | :--- |
-| **Project name** | `we-markdown` | Cloudflare Pages 项目代号 |
-| **Framework preset** | `Vite` | 前端构建预设 |
-| **Build command** | `pnpm --filter @we-markdown/web build` | 仅构建 Web 前端 |
-| **Build output directory** | `apps/web/dist` | 构建输出产物目录 |
-| 🚨 **Production branch** | **`release`** | **核心防呆点**：必须选 `release`！绝不能使用 `main`，防止草稿误触生产！ |
-| **Custom domains** | **`md.darktu.com`** | 绑定到 Production 槽位，自动获得免费 SSL 证书 |
+| 配置项                     | 推荐值                                 | 说明                                                                    |
+| :------------------------- | :------------------------------------- | :---------------------------------------------------------------------- |
+| **Project name**           | `we-markdown`                          | Cloudflare Pages 项目代号                                               |
+| **Framework preset**       | `Vite`                                 | 前端构建预设                                                            |
+| **Build command**          | `pnpm --filter @we-markdown/web build` | 仅构建 Web 前端                                                         |
+| **Build output directory** | `apps/web/dist`                        | 构建输出产物目录                                                        |
+| 🚨 **Production branch**   | **`release`**                          | **核心防呆点**：必须选 `release`！绝不能使用 `main`，防止草稿误触生产！ |
+| **Custom domains**         | **`md.darktu.com`**                    | 绑定到 Production 槽位，自动获得免费 SSL 证书                           |
 
 ---
 
@@ -86,6 +86,7 @@ git checkout main
 ## 🔒 故障应急与版本回滚 (Instant Rollback)
 
 若生产环境 `md.darktu.com` 出现紧急故障：
+
 1. 打开 Cloudflare Pages 控制台 ➔ 进入 `we-markdown` 项目 ➔ **Deployments** 列表；
 2. 找到上一个已知正常的 Production 部署条目；
 3. 点击右侧选项 ➔ 选择 **Rollback to this deployment**，全球边缘网络 3 秒内完成毫秒级回滚。

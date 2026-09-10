@@ -199,7 +199,7 @@ function createWindow() {
         height: 800,
         minWidth: 1024,
         minHeight: 640,
-        title: 'WeMarkdown (暗图排版)',
+        title: 'WeMarkdown',
         icon: windowIcon,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
