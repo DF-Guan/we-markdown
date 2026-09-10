@@ -34,6 +34,15 @@
 - **Observable State (物理可观测)**:
   - DOM 树中存在目标链接且具有 `noopener noreferrer` 安全属性。
 
+### 4. 自媒体内联排版组件库 (`creator-typography-snippets`)
+
+- **User POV (用户视角)**:
+  - 用户在编辑器工具栏点击「排版组件」按钮（Sparkles 图标），唤起轻量组件选择器（含灵感提示、杂志金句、步骤清单、核心对比、作者名片 5 款精选模板），点击即插入光标处；复制到微信公众号后台完美保全样式。
+- **Agent Drive (机器驱动)**:
+  - `CREATOR_SNIPPET_TEMPLATES` 导出高质感、自包含内联 CSS 组件，`ComponentPickerPopover` 提供分类过滤、无障碍键盘响应与平滑交互。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/components/snippetTemplates.test.ts` 100% 全绿，插入的 HTML 均由 `<section style="...">` 封装且具备 `box-sizing: border-box`，不含任何外部 JavaScript 或侵入式外部依赖。
+
 ---
 
 ## 🛠️ 机械校验指令 (Verification Command)

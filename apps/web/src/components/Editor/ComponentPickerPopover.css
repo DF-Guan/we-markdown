@@ -1,0 +1,191 @@
+.component-picker-popover {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  width: 320px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md, 8px);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: pickerPopIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pickerPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.component-picker-header {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-primary);
+}
+
+.component-picker-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.component-picker-title .title-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.2px;
+}
+
+.component-picker-title .title-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  color: var(--accent-primary);
+}
+
+.component-picker-desc {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+.component-picker-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+  overflow-x: auto;
+}
+
+.picker-tab-btn {
+  border: none;
+  background: transparent;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.picker-tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+.picker-tab-btn.active {
+  color: var(--accent-primary);
+  background: var(--bg-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+}
+
+.component-picker-list {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.component-card {
+  padding: 10px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: var(--bg-primary);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.component-card:hover,
+.component-card:focus-visible {
+  border-color: var(--accent-primary);
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--accent-primary) 3%, var(--bg-primary));
+  box-shadow: 0 3px 8px -1px rgba(7, 193, 96, 0.1);
+}
+
+.component-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.component-card-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.component-card-badge {
+  font-size: 10px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.component-card-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.component-card-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--accent-primary);
+  opacity: 0.8;
+  transition: all 0.15s ease;
+}
+
+.component-card:hover .component-card-action {
+  opacity: 1;
+}
+
+.component-card:hover .action-icon {
+  transform: translateX(2px);
+  transition: transform 0.15s ease;
+}
+
+.component-picker-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.footer-check {
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
