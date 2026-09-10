@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createMarkdownParser } from "@ahafair/core";
+import { createMarkdownParser } from "@we-markdown/core";
 
 describe("MarkdownParser", () => {
   const parser = createMarkdownParser();

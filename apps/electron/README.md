@@ -1,6 +1,6 @@
-# Ahafair Electron App
+# WeMarkdown Electron App
 
-基于 Electron 的 Ahafair 桌面应用，完全复用 Web 端代码。
+基于 Electron 的 WeMarkdown (暗图排版) 桌面应用，完全复用 Web 端代码。
 
 ## 开发
 

@@ -29,7 +29,7 @@ vi.mock("mermaid", () => ({
   },
 }));
 
-vi.mock("@ahafair/core", () => ({
+vi.mock("@we-markdown/core", () => ({
   createMarkdownParser: mocked.createMarkdownParserMock.mockImplementation(
     () => ({
       render: mocked.parserRender,

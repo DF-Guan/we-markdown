@@ -5,7 +5,7 @@ import {
   type CustomTheme,
   type DesignerVariables,
 } from "./themes/builtInThemes";
-import { convertCssToWeChatDarkMode } from "@ahafair/core";
+import { convertCssToWeChatDarkMode } from "@we-markdown/core";
 import { generateCSS } from "../components/Theme/ThemeDesigner/generateCSS";
 
 // 深色模式 CSS 转换缓存

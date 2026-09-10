@@ -49,10 +49,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build web
-        run: pnpm --filter ahafair-web build
+        run: pnpm --filter @we-markdown/web build
 
       - name: Build Electron
-        run: pnpm --filter ahafair-electron build:${{ matrix.target }}
+        run: pnpm --filter we-markdown-electron build:${{ matrix.target }}
 
       - name: Upload macOS artifacts
         if: matrix.target == 'mac'

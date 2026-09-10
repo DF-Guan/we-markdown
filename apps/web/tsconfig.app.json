@@ -7,7 +7,7 @@
     "module": "ESNext",
     "baseUrl": ".",
     "paths": {
-      "@ahafair/core": ["../../packages/core/src/index.ts"]
+      "@we-markdown/core": ["../../packages/core/src/index.ts"]
     },
     "types": ["vite/client", "@testing-library/jest-dom"],
     "skipLibCheck": true,

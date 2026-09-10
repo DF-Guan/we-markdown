@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { processHtml } from "@ahafair/core";
+import { processHtml } from "@we-markdown/core";
 import {
   applyLightRootVars,
   resolveInlineStyleVariablesForCopy,

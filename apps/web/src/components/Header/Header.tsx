@@ -32,7 +32,7 @@ import { Modal, FloatingToolbarButton } from "../common";
 const DefaultLogoMark = () => (
   <img
     src={`${import.meta.env.BASE_URL}favicon.svg`}
-    alt="Ahafair Logo"
+    alt="WeMarkdown Logo"
     width={40}
     height={40}
     style={{ display: "block" }}
@@ -44,7 +44,7 @@ const structuralismLogoSrc = `${import.meta.env.BASE_URL}favicon-light.svg`;
 const StructuralismLogoMark = () => (
   <img
     src={structuralismLogoSrc}
-    alt="Ahafair Logo"
+    alt="WeMarkdown Logo"
     width={40}
     height={40}
     style={{ display: "block" }}
@@ -204,8 +204,8 @@ export function Header() {
               <DefaultLogoMark />
             )}
             <div className="logo-info">
-              <span className="logo-text">Ahafair</span>
-              <span className="logo-subtitle">公众号 Markdown 排版编辑器</span>
+              <span className="logo-text">WeMarkdown</span>
+              <span className="logo-subtitle">Darktu 旗下公众号 Markdown 排版编辑器</span>
             </div>
           </div>
         </div>

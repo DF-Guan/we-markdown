@@ -1,5 +1,5 @@
 {
-  "name": "@ahafair/web",
+  "name": "@we-markdown/web",
   "private": true,
   "version": "1.2.9",
   "type": "module",
@@ -23,7 +23,7 @@
     "@lezer/markdown": "^1.6.0",
     "@lezer/highlight": "^1.2.3",
     "@uiw/codemirror-theme-github": "^4.25.3",
-    "@ahafair/core": "workspace:*",
+    "@we-markdown/core": "workspace:*",
     "codemirror": "^6.0.2",
     "cos-js-sdk-v5": "^1.10.1",
     "crypto-js": "^4.2.0",

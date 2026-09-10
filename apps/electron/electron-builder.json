@@ -1,6 +1,6 @@
 {
-  "appId": "com.ahafair.app",
-  "productName": "Ahafair",
+  "appId": "com.darktu.wemd",
+  "productName": "WeMarkdown",
   "directories": {
     "output": "release"
   },
@@ -27,7 +27,7 @@
     "icon": "assets/icon.icns"
   },
   "dmg": {
-    "title": "Ahafair ${version}",
+    "title": "WeMarkdown ${version}",
     "backgroundColor": "#ffffff",
     "icon": "assets/icon.icns",
     "contents": [
@@ -63,6 +63,6 @@
     "target": ["AppImage", "deb"],
     "category": "Office",
     "icon": "assets/icon.png",
-    "maintainer": "Ahafair Team"
+    "maintainer": "Darktu Studio / WeMarkdown Team"
   }
 }

@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="apps/web/public/favicon-dark.svg" width="80" height="80" alt="Ahafair Logo" />
+  <img src="apps/web/public/favicon-dark.svg" width="80" height="80" alt="WeMarkdown Logo" />
 </p>
 
-<h1 align="center">Ahafair</h1>
+<h1 align="center">WeMarkdown (暗图排版)</h1>
 
 <p align="center">
-  <strong>更优雅的 Markdown 公众号排版工具</strong>
+  <strong>Darktu 旗下更优雅的 Markdown 微信公众号排版工具</strong>
 </p>
 
 <p align="center">
@@ -14,10 +14,10 @@
 </p>
 
 <p align="center">
-  <a href="https://DF-Guan.github.io/Ahafair">🌐 官网</a> •
-  <a href="https://DF-Guan.github.io/Ahafair">✏️ 在线使用</a> •
-  <a href="https://DF-Guan.github.io/Ahafair">📖 文档</a> •
-  <a href="https://github.com/DF-Guan/Ahafair/releases">📦 下载桌面版</a>
+  <a href="https://md.darktu.com">🌐 官网</a> •
+  <a href="https://md.darktu.com">✏️ 在线使用</a> •
+  <a href="https://github.com/DF-Guan/we-markdown#readme">📖 文档</a> •
+  <a href="https://github.com/DF-Guan/we-markdown/releases">📦 下载桌面版</a>
 </p>
 
 <p align="center">
@@ -52,7 +52,7 @@
 
 ### 微信深色模式预览算法
 
-Ahafair 内置了一套**色彩语义保全算法**，可在编辑器中预览微信公众号深色模式下的实际效果，还原度达 **98% 以上**。
+WeMarkdown 内置了一套**色彩语义保全算法**，可在编辑器中预览微信公众号深色模式下的实际效果，还原度达 **98% 以上**。
 
 > 该算法基于微信官方开源的 [wechatjs/mp-darkmode](https://github.com/wechatjs/mp-darkmode) 核心算法迁移并优化，旨在保证高性能 CSS 转换的同时提供最接近官方的渲染效果。
 
@@ -61,7 +61,7 @@ Ahafair 内置了一套**色彩语义保全算法**，可在编辑器中预览�
 
 这（可能）是目前市面上除官方外唯一针对微信公众号深色模式预览的开源解决方案。
 
-👉 **[查看算法详细原理解析](https://DF-Guan.github.io/Ahafair)** | **[查看算法源码](packages/core/src/wechatDarkMode.ts)**
+👉 **[查看算法详细原理解析](https://md.darktu.com)** | **[查看算法源码](packages/core/src/wechatDarkMode.ts)**
 
 ---
 
@@ -69,11 +69,11 @@ Ahafair 内置了一套**色彩语义保全算法**，可在编辑器中预览�
 
 ### 在线使用
 
-直接访问 **[Ahafair 在线版](https://DF-Guan.github.io/Ahafair)** 即可开始写作，无需安装，同样支持纯本地存储。
+直接访问 **[WeMarkdown 在线版](https://md.darktu.com)** 即可开始写作，无需安装，同样支持纯本地存储。
 
 ### 桌面版下载
 
-前往 [Releases](https://github.com/DF-Guan/Ahafair/releases) 下载对应平台安装包：
+前往 [Releases](https://github.com/DF-Guan/we-markdown/releases) 下载对应平台安装包：
 
 - **macOS**: `.dmg`（Intel 版）/ `-arm64.dmg`（Apple Silicon 版）
 - **Windows**: `.exe`
@@ -82,12 +82,12 @@ Ahafair 内置了一套**色彩语义保全算法**，可在编辑器中预览�
 > ⚠️ **macOS 用户注意**：首次打开时如提示"应用已损坏"，请在终端执行：
 >
 > ```bash
-> xattr -cr /Applications/Ahafair.app
+> xattr -cr /Applications/WeMarkdown.app
 > ```
 >
 > ⚠️ **Windows 用户注意**：如 SmartScreen 提示"未知发布者"，点击「更多信息」→「仍要运行」
 >
-> ⚠️ **Linux 用户注意**：运行前需设置可执行权限：`chmod +x Ahafair.AppImage`
+> ⚠️ **Linux 用户注意**：运行前需设置可执行权限：`chmod +x WeMarkdown.AppImage`
 
 ### Docker 部署
 
@@ -98,11 +98,11 @@ docker compose up -d
 
 访问 `http://localhost:8080` 即可使用。
 
-默认会拉取 `ghcr.io/DF-Guan/ahafair-web:latest`。  
+默认会拉取 `ghcr.io/df-guan/we-markdown-web:latest`。  
 如需指定版本镜像，可覆盖环境变量：
 
 ```bash
-WEMD_IMAGE=ghcr.io/DF-Guan/ahafair-web:<版本号> docker compose up -d
+WEMD_IMAGE=ghcr.io/df-guan/we-markdown-web:<版本号> docker compose up -d
 ```
 
 ---
@@ -131,11 +131,11 @@ pnpm dev:desktop
 
 ```bash
 # 构建 Web
-pnpm --filter @ahafair/web build
+pnpm --filter @we-markdown/web build
 
 # 构建桌面应用
-pnpm --filter ahafair-electron run build:mac  # macOS
-pnpm --filter ahafair-electron run build:win  # Windows
+pnpm --filter we-markdown-electron run build:mac  # macOS
+pnpm --filter we-markdown-electron run build:win  # Windows
 ```
 
 ---
@@ -143,7 +143,7 @@ pnpm --filter ahafair-electron run build:win  # Windows
 ## 📁 项目结构
 
 ```
-Ahafair/
+WeMarkdown/
 ├── apps/
 │   ├── web/        # React + Vite 前端
 │   ├── electron/   # Electron 桌面端
@@ -158,7 +158,7 @@ Ahafair/
 
 ## 💬 反馈
 
-如有问题或建议，欢迎提交 [Issue](https://github.com/DF-Guan/Ahafair/issues)。
+如有问题或建议，欢迎提交 [Issue](https://github.com/DF-Guan/we-markdown/issues)。
 
 ---
 
@@ -170,4 +170,4 @@ Ahafair/
 
 ## 📄 License
 
-[MIT](LICENSE) © Ahafair Team
+[MIT](LICENSE) © Darktu Studio / WeMarkdown Team

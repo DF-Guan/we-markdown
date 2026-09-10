@@ -25,7 +25,7 @@ export interface COSConfig {
   secretKey: string;
   bucket: string;
   region: string;
-  customDomain?: string; // 自定义域名，如 https://img.ahafair.top
+  customDomain?: string; // 自定义域名，如 https://img.darktu.com
 }
 
 export class COSService {

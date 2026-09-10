@@ -4,7 +4,7 @@ import {
   createMarkdownParser,
   processHtml,
   convertCssToWeChatDarkMode,
-} from "@ahafair/core";
+} from "@we-markdown/core";
 import { useUITheme } from "../../hooks/useUITheme";
 import { useEditorStore } from "../../store/editorStore";
 import type { DesignerVariables } from "./ThemeDesigner/types";

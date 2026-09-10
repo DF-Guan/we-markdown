@@ -1,6 +1,6 @@
 import juice from "juice";
 
-const DATA_TOOL = "Ahafair编辑器";
+const DATA_TOOL = "WeMarkdown编辑器";
 const SECTION_ID = "ahafair";
 
 const BLOCK_TAGS = [

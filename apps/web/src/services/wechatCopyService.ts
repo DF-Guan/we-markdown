@@ -4,7 +4,7 @@
  */
 
 import toast from "react-hot-toast";
-import { processHtml, createMarkdownParser } from "@ahafair/core";
+import { processHtml, createMarkdownParser } from "@we-markdown/core";
 import katexCss from "katex/dist/katex.min.css?raw";
 import { loadMathJax } from "../utils/mathJaxLoader";
 import { hasMathFormula } from "../utils/katexRenderer";

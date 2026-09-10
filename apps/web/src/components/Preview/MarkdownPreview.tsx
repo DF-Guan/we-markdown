@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import mermaid from "mermaid";
-import { createMarkdownParser, processHtml } from "@ahafair/core";
+import { createMarkdownParser, processHtml } from "@we-markdown/core";
 import { useEditorStore } from "../../store/editorStore";
 import { useThemeStore } from "../../store/themeStore";
 import { useUITheme } from "../../hooks/useUITheme";

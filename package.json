@@ -1,13 +1,17 @@
 {
-  "name": "ahafair-monorepo",
+  "name": "we-markdown-monorepo",
   "private": true,
   "packageManager": "pnpm@9.0.2",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "dev:web": "pnpm --filter @ahafair/web run dev",
-    "dev:electron": "ELECTRON_START_URL=http://localhost:5173 NODE_ENV=development pnpm --filter ahafair-electron run dev -- --dev",
+    "dev:web": "pnpm --filter @we-markdown/web run dev",
+    "dev:electron": "ELECTRON_START_URL=http://localhost:5173 NODE_ENV=development pnpm --filter we-markdown-electron run dev -- --dev",
     "dev:desktop": "node scripts/run-desktop-dev.mjs",
+    "test": "node test/verify_feature_map.js && node test/verify_dune_architecture.js && node test/verify_reversibility_gate.js",
+    "verify:fm": "node test/verify_feature_map.js",
+    "verify:dune": "node test/verify_dune_architecture.js",
+    "verify:gate": "node test/verify_reversibility_gate.js",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky"

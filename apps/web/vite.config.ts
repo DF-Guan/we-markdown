@@ -12,7 +12,7 @@ export default defineConfig({
   base: "./",
   resolve: {
     alias: {
-      "@ahafair/core": path.resolve(__dirname, "../../packages/core/src/index.ts"),
+      "@we-markdown/core": path.resolve(__dirname, "../../packages/core/src/index.ts"),
     },
   },
   plugins: [react()],

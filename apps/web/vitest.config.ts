@@ -12,7 +12,7 @@ export default defineConfig({
     include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@ahafair/core": path.resolve(__dirname, "../../packages/core/src/index.ts"),
+      "@we-markdown/core": path.resolve(__dirname, "../../packages/core/src/index.ts"),
     },
   },
 });

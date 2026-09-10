@@ -42,7 +42,7 @@ export function SyntaxHelpPopover() {
 
   const openDocs = () => {
     window.open(
-      "https://df-guan.github.io/Ahafair/",
+      "https://md.darktu.com",
       "_blank",
       "noopener,noreferrer",
     );

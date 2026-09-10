@@ -457,7 +457,7 @@ export const S3Panel = ({
         <label>路径前缀（可选）</label>
         <input
           type="text"
-          placeholder="images/ahafair"
+          placeholder="images/wemd"
           value={viewingConfig.config?.pathPrefix || ""}
           onChange={(e) => onConfigChange("pathPrefix", e.target.value)}
         />
