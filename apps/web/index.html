@@ -2,14 +2,23 @@
 <html lang="zh-CN">
 
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZX315WS5VE"></script>
+  <!-- Google tag (gtag.js) - 延迟非阻塞探测加载，针对国内网络彻底免疫卡顿 -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-ZX315WS5VE');
+
+    // 延迟 1.5s 异步按需注入，若国内网络阻断则静默降级，绝不拖慢首屏与编辑器渲染
+    if (typeof window !== 'undefined') {
+      setTimeout(function() {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZX315WS5VE';
+        s.onerror = function() { /* 国内网络防火墙阻断时静默捕获，保持零干扰 */ };
+        document.head.appendChild(s);
+      }, 1500);
+    }
   </script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
