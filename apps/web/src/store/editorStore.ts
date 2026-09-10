@@ -28,7 +28,7 @@ interface EditorStore {
   copyToWechat: () => void;
 }
 
-export const defaultMarkdown = `# 欢迎使用 Ahafair
+export const defaultMarkdown = `# 欢迎使用 WeMarkdown (暗图排版)
 
 这是一个现代化的 Markdown 编辑器，专为**微信公众号**排版设计。
 
@@ -102,7 +102,7 @@ export const defaultMarkdown = `# 欢迎使用 Ahafair
 \`\`\`javascript
 // JavaScript 示例
 function hello() {
-  console.log('Hello, Ahafair!');
+  console.log('Hello, WeMarkdown!');
   const a = 1;
   const b = 2;
   return a + b;
@@ -118,9 +118,9 @@ $$
 $$
 
 ## 7. 脚注与链接建议
-这里演示脚注的使用：[WeChat Markdown](https://github.com/DF-Guan/Ahafair "Ahafair 是一款专为公众号设计的编辑器") 可以极大提升排版效率。
+这里演示脚注的使用：[WeChat Markdown](https://github.com/DF-Guan/we-markdown "WeMarkdown 是一款专为公众号设计的编辑器") 可以极大提升排版效率。
 
-在 Ahafair 中，只需为链接添加“标题”（双引号里的文字），系统就会自动将其转换为文末脚注，这是最符合微信公众号习惯的排法。
+在 WeMarkdown 中，只需为链接添加“标题”（双引号里的文字），系统就会自动将其转换为文末脚注，这是最符合微信公众号习惯的排法。
 
 ## 8. 表格
 | 姓名 | 年龄 | 职业 |
@@ -133,7 +133,7 @@ $$
 ---
 
 ## 9. 图片
-![Ahafair：专为微信公众号设计的现代化 Markdown 编辑器](https://df-guan.github.io/Ahafair/favicon.svg)
+![WeMarkdown：专为微信公众号设计的现代化 Markdown 编辑器](https://md.darktu.com/favicon.svg)
 
 **开始编辑吧!** 🚀
 `;

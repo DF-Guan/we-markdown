@@ -5,7 +5,7 @@
 <h1 align="center">WeMarkdown (暗图排版)</h1>
 
 <p align="center">
-  <strong>Darktu 旗下更优雅的 Markdown 微信公众号排版工具</strong>
+  <strong>更优雅的 Markdown 微信公众号排版工具</strong>
 </p>
 
 <p align="center">

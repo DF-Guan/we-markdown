@@ -16,7 +16,7 @@ import {
 // 主题预览用的示例 Markdown 内容
 const PREVIEW_MARKDOWN = `# 一级标题示例
 
-这是一段**加粗文本**、*斜体文本*、++下划线文本++、~~删除线文本~~、==高亮文本==和 [链接示例](https://github.com/DF-Guan/Ahafair)。
+这是一段**加粗文本**、*斜体文本*、++下划线文本++、~~删除线文本~~、==高亮文本==和 [链接示例](https://github.com/DF-Guan/we-markdown)。
 正文段落通常需要设置行高和间距，以保证阅读体验。
 
 ---
@@ -32,7 +32,7 @@ const PREVIEW_MARKDOWN = `# 一级标题示例
 
 ### 三级标题
 
-这里演示脚注的使用：[WeChat Markdown](https://github.com/DF-Guan/Ahafair "Ahafair 是一款专为公众号设计的编辑器") 可以极大提升排版效率。
+这里演示脚注的使用：[WeChat Markdown](https://github.com/DF-Guan/we-markdown "WeMarkdown 是一款专为公众号设计的编辑器") 可以极大提升排版效率。
 
 > [!TIP]
 > 这是一个提示块示例。支持切换"默认彩色"或"跟随主题色"风格，让排版更统一。
@@ -69,7 +69,7 @@ flowchart TD
   Reject --> End
 \`\`\`
 
-![Ahafair 示例图片：不仅支持常规排版，更可以深度定制每一个细节。](https://df-guan.github.io/Ahafair/favicon.svg)
+![WeMarkdown 示例图片：不仅支持常规排版，更可以深度定制每一个细节。](https://md.darktu.com/favicon.svg)
 `;
 
 interface ThemeLivePreviewProps {

@@ -1,6 +1,6 @@
 # 图床支持
 
-Ahafair 当前内置 5 类图床，均通过 `ImageHostManager` 统一管理。
+WeMarkdown 当前内置 5 类图床，均通过 `ImageHostManager` 统一管理。
 
 ## 支持的图床
 
@@ -81,7 +81,7 @@ const url = await manager.upload(file);
 ### Q: 是否支持 PicGo / PicList？
 
 不直接对接工具本身，但支持 S3 兼容协议。  
-如果 PicGo / PicList 配置的是同一套 S3 参数，可与 Ahafair 共用同一存储后端。
+如果 PicGo / PicList 配置的是同一套 S3 参数，可与 WeMarkdown 共用同一存储后端。
 
 ### Q: 图片上传失败怎么办？
 

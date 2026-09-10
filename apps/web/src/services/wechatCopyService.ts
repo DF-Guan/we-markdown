@@ -229,7 +229,7 @@ export async function copyToWechat(
           copied = electronResult.success;
           if (!electronResult.success) {
             console.warn(
-              "[Ahafair] Electron clipboard bridge unavailable, fallback to browser copy chain",
+              "[WeMarkdown] Electron clipboard bridge unavailable, fallback to browser copy chain",
               electronResult.error || "unknown error",
             );
           }
@@ -246,7 +246,7 @@ export async function copyToWechat(
     // 最后回退到 Clipboard API
     if (!copied && navigator.clipboard && window.ClipboardItem) {
       console.warn(
-        "[Ahafair] native execCommand copy unavailable, fallback to Clipboard API",
+        "[WeMarkdown] native execCommand copy unavailable, fallback to Clipboard API",
       );
       try {
         const blob = new Blob([container.innerHTML], { type: "text/html" });

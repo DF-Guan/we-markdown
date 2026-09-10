@@ -205,7 +205,7 @@ export function Header() {
             )}
             <div className="logo-info">
               <span className="logo-text">WeMarkdown</span>
-              <span className="logo-subtitle">Darktu 旗下公众号 Markdown 排版编辑器</span>
+              <span className="logo-subtitle">公众号 Markdown 排版编辑器</span>
             </div>
           </div>
         </div>

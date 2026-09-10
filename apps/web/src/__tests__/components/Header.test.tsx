@@ -103,7 +103,7 @@ describe("Header", () => {
   it("renders logo and core elements", () => {
     render(<Header />);
 
-    expect(screen.getByText("Ahafair")).toBeInTheDocument();
+    expect(screen.getByText("WeMarkdown")).toBeInTheDocument();
     expect(screen.getByText("公众号 Markdown 排版编辑器")).toBeInTheDocument();
     expect(screen.getByText("复制到公众号")).toBeInTheDocument();
   });

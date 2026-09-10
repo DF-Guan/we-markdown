@@ -148,7 +148,7 @@ export const renderMermaidBlocks = async (
       figure.appendChild(img);
       block.parentNode?.replaceChild(figure, block);
     } catch (error) {
-      console.error("[Ahafair] Mermaid render failed:", error);
+      console.error("[WeMarkdown] Mermaid render failed:", error);
     }
   }
 };
