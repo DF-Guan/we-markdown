@@ -56,6 +56,7 @@ describe("copyDispatcher (多平台分发调度服务)", () => {
 
     expect(spy).toHaveBeenCalledWith("# Zhihu Article", "", {
       showMacBar: undefined,
+      suppressToast: true,
     });
     expect(toast.success).toHaveBeenCalledWith(
       expect.stringContaining("知乎专栏"),
@@ -72,6 +73,7 @@ describe("copyDispatcher (多平台分发调度服务)", () => {
 
     expect(spy).toHaveBeenCalledWith("# Tech Article", "", {
       showMacBar: undefined,
+      suppressToast: true,
     });
     expect(toast.success).toHaveBeenCalledWith(
       expect.stringContaining("掘金专栏"),

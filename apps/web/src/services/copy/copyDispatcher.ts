@@ -93,8 +93,11 @@ export async function dispatchCopy(
     }
 
     case "zhihu": {
-      // 知乎专栏排版复用富文本主链路，并优化提示语
-      await copyToWechat(markdown, css, { showMacBar: options.showMacBar });
+      // 知乎专栏排版复用富文本主链路，并展示专属提示语
+      await copyToWechat(markdown, css, {
+        showMacBar: options.showMacBar,
+        suppressToast: true,
+      });
       toast.success("已复制，可直接粘贴至知乎专栏", {
         id: "copy-success-zhihu",
         duration: 2500,
@@ -105,7 +108,10 @@ export async function dispatchCopy(
 
     case "juejin": {
       // 掘金专栏排版
-      await copyToWechat(markdown, css, { showMacBar: options.showMacBar });
+      await copyToWechat(markdown, css, {
+        showMacBar: options.showMacBar,
+        suppressToast: true,
+      });
       toast.success("已复制，可直接粘贴至掘金专栏", {
         id: "copy-success-juejin",
         duration: 2500,
@@ -115,15 +121,19 @@ export async function dispatchCopy(
     }
 
     case "markdown": {
-      const success = await copyPlainText(markdown);
-      if (!success) {
-        throw new Error("剪贴板写入失败");
+      try {
+        const success = await copyPlainText(markdown);
+        if (!success) {
+          throw new Error("剪贴板写入失败");
+        }
+        toast.success("已复制纯净 Markdown 源码", {
+          id: "copy-success-markdown",
+          duration: 2000,
+          icon: "📋",
+        });
+      } catch {
+        toast.error("复制 Markdown 源码失败，请手动选取复制");
       }
-      toast.success("已复制纯净 Markdown 源码", {
-        id: "copy-success-markdown",
-        duration: 2000,
-        icon: "📋",
-      });
       break;
     }
 

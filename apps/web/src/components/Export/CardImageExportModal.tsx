@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Download,
   Copy,
@@ -16,6 +16,7 @@ import {
   CARD_THEMES,
   buildCardMarkup,
   renderCardToCanvas,
+  renderCardToBlob,
   downloadCardImage,
 } from "../../services/export/cardImageExporter";
 import "./CardImageExportModal.css";
@@ -40,6 +41,16 @@ export function CardImageExportModal({
   const [exporting, setExporting] = useState(false);
   const [copied, setCopied] = useState(false);
   const previewContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, onClose]);
 
   if (!open) return null;
 
@@ -73,26 +84,20 @@ export function CardImageExportModal({
   const handleCopyImage = async () => {
     try {
       setExporting(true);
-      const canvas = await renderCardToCanvas(currentOptions);
-      canvas.toBlob(async (blob) => {
-        if (!blob) {
-          toast.error("生成图片失败");
-          return;
-        }
-        if (navigator.clipboard && window.ClipboardItem) {
-          await navigator.clipboard.write([
-            new ClipboardItem({ "image/png": blob }),
-          ]);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
-          toast.success("图片已成功复制到剪贴板！", { icon: "📋" });
-        } else {
-          toast.error("当前浏览器环境不支持直接复制图片，请使用下载");
-        }
-      }, "image/png");
+      const blob = await renderCardToBlob(currentOptions);
+      if (navigator.clipboard && window.ClipboardItem) {
+        await navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob }),
+        ]);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        toast.success("图片已成功复制到剪贴板！", { icon: "📋" });
+      } else {
+        toast.error("当前浏览器环境不支持直接复制图片，请使用下载");
+      }
     } catch (e) {
       console.error(e);
-      toast.error("复制图片失败");
+      toast.error("复制图片失败，请尝试直接下载");
     } finally {
       setExporting(false);
     }

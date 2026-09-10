@@ -60,4 +60,19 @@ describe("CopyDropdown (多平台分发与导出菜单)", () => {
     fireEvent.click(exportItem);
     expect(handleExport).toHaveBeenCalled();
   });
+
+  it("closes dropdown on Escape key", () => {
+    render(
+      <CopyDropdown onCopyPlatform={() => {}} onOpenCardExport={() => {}} />,
+    );
+
+    const arrowBtn = screen.getByRole("button", {
+      name: /展开更多分发与导出选项/i,
+    });
+    fireEvent.click(arrowBtn);
+    expect(screen.getByText("知乎专栏")).toBeDefined();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(screen.queryByText("知乎专栏")).toBeNull();
+  });
 });

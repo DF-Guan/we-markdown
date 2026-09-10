@@ -28,7 +28,7 @@ export function CopyDropdown({
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 点击外部关闭
+  // 点击外部或按 Esc 键关闭
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -38,11 +38,18 @@ export function CopyDropdown({
         setIsOpen(false);
       }
     };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);
 
@@ -85,6 +92,7 @@ export function CopyDropdown({
         onClick={() => setIsOpen((prev) => !prev)}
         disabled={disabled}
         aria-label="展开更多分发与导出选项"
+        aria-expanded={isOpen}
         title="选择知乎、掘金、Markdown 或导出长图"
       >
         <ChevronDown size={14} strokeWidth={2.5} />

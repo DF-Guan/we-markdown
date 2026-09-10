@@ -83,4 +83,38 @@ describe("HistoryDiffModal (版本差异对比弹窗)", () => {
 
     expect(handleClose).toHaveBeenCalled();
   });
+
+  it("handles invalid historyTimestamp gracefully without crashing", () => {
+    render(
+      <HistoryDiffModal
+        open={true}
+        onClose={() => {}}
+        historyTitle="测试异常时间戳"
+        historyTimestamp="invalid-date-string"
+        historyMarkdown="文本"
+        currentMarkdown="文本"
+        onRestore={() => {}}
+      />,
+    );
+
+    expect(screen.getByText("(历史存档)")).toBeDefined();
+  });
+
+  it("calls onClose when pressing Escape key", () => {
+    const handleClose = vi.fn();
+
+    render(
+      <HistoryDiffModal
+        open={true}
+        onClose={handleClose}
+        historyTitle="测试按键关闭"
+        historyMarkdown="文本"
+        currentMarkdown="文本"
+        onRestore={() => {}}
+      />,
+    );
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(handleClose).toHaveBeenCalled();
+  });
 });

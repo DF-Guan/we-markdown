@@ -60,4 +60,19 @@ describe("cardImageExporter (卡片与长图海报导出引擎)", () => {
 
     expect(html).toContain(CARD_THEMES["classic-white"].cardBg);
   });
+
+  it("should sanitize void tags and escape special XML characters in title and author", () => {
+    const { html } = buildCardMarkup({
+      markdown: "# 测试 & 验证 <Foo>",
+      renderedHtml: '<p>文本</p><hr><img src="test.jpg" alt="pic"><br>',
+      format: "quote",
+      authorName: "Author & Co <Lead>",
+    });
+
+    expect(html).toContain("测试 &amp; 验证 &lt;Foo&gt;");
+    expect(html).toContain("Author &amp; Co &lt;Lead&gt;");
+    expect(html).toContain("<hr />");
+    expect(html).toContain('<img src="test.jpg" alt="pic" />');
+    expect(html).toContain("<br />");
+  });
 });

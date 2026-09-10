@@ -93,6 +93,36 @@ export function extractArticleMeta(markdown: string) {
 }
 
 /**
+ * 转义 XML/SVG 特殊字符
+ */
+export function escapeXml(str: string): string {
+  return (str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+/**
+ * 清洗并补全 HTML 使其符合 XHTML/XML 解析规范（SVG ForeignObject 必备）
+ */
+export function sanitizeHtmlForXml(html: string): string {
+  if (!html) return "";
+  // 1. 将非自闭合的 HTML void 标签转换为 XHTML 自闭合形式 (<hr>, <br>, <img> 等)
+  let xml = html.replace(
+    /<(img|br|hr|input|source|wbr)([^>]*?)>/gi,
+    (match, tag, rest) => {
+      const trimmedRest = rest.trimEnd();
+      return trimmedRest.endsWith("/") ? match : `<${tag}${rest} />`;
+    },
+  );
+  // 2. 将非实体引用的裸 & 转换为 &amp;
+  xml = xml.replace(/&(?!(?:[a-zA-Z]+|#\d+|#x[0-9a-fA-F]+);)/g, "&amp;");
+  return xml;
+}
+
+/**
  * 构建用于 SVG ForeignObject 的独立自包含 HTML 片段
  */
 export function buildCardMarkup(options: CardExportOptions): {
@@ -110,10 +140,14 @@ export function buildCardMarkup(options: CardExportOptions): {
   const width = format === "quote" ? 640 : format === "card" ? 720 : 800;
   const minHeight = format === "card" ? 960 : 480;
 
-  const contentHtml =
+  const rawContentHtml =
     options.renderedHtml && options.renderedHtml.trim()
       ? options.renderedHtml
       : `<p style="font-size: 16px; line-height: 1.8; color: ${theme.text};">${extractArticleMeta(options.markdown).excerpt}</p>`;
+
+  const safeTitle = escapeXml(title);
+  const safeAuthorName = escapeXml(authorName);
+  const safeContentHtml = sanitizeHtmlForXml(rawContentHtml);
 
   const html = `
     <div xmlns="http://www.w3.org/1999/xhtml" style="
@@ -144,19 +178,19 @@ export function buildCardMarkup(options: CardExportOptions): {
             <div style="width: 28px; height: 28px; border-radius: 50%; background: ${theme.accent}; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: bold;">
               ✍️
             </div>
-            <span style="font-size: 14px; font-weight: 600; color: ${theme.text};">${authorName}</span>
+            <span style="font-size: 14px; font-weight: 600; color: ${theme.text};">${safeAuthorName}</span>
           </div>
           <span style="font-size: 12px; color: #888888;">${new Date().toLocaleDateString("zh-CN")}</span>
         </div>
 
         <!-- 标题 -->
         <h1 style="margin: 0 0 20px 0; font-size: 24px; font-weight: 700; color: ${theme.text}; line-height: 1.4;">
-          ${title}
+          ${safeTitle}
         </h1>
 
         <!-- 正文内容渲染 -->
         <div style="font-size: 15px; line-height: 1.8; color: ${theme.text}; flex: 1;">
-          ${contentHtml}
+          ${safeContentHtml}
         </div>
 
         <!-- 底部水印声明 -->

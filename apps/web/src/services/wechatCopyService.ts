@@ -31,6 +31,7 @@ export { normalizeCopyContainer, stripCopyMetadata };
 
 interface CopyToWechatOptions {
   showMacBar?: boolean;
+  suppressToast?: boolean;
 }
 
 const buildCopyCss = (themeCss: string) => {
@@ -269,10 +270,12 @@ export async function copyToWechat(
       throw new Error("浏览器剪贴板写入失败");
     }
 
-    toast.success("已复制，可以直接粘贴至微信公众号", {
-      duration: 3000,
-      icon: "✅",
-    });
+    if (!options.suppressToast) {
+      toast.success("已复制，可以直接粘贴至微信公众号", {
+        duration: 3000,
+        icon: "✅",
+      });
+    }
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error);
     console.error("复制失败详情:", error);

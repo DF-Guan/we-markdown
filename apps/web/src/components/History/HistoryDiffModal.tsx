@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { GitCompare, X, RotateCcw, Plus, Minus } from "lucide-react";
 import { computeTextDiff } from "../../services/diff/diffEngine";
 import "./HistoryDiffModal.css";
@@ -32,16 +32,33 @@ export function HistoryDiffModal({
     return computeTextDiff(historyMarkdown, currentMarkdown);
   }, [open, historyMarkdown, currentMarkdown]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, onClose]);
+
   if (!open) return null;
 
-  const formattedTime = historyTimestamp
-    ? new Date(historyTimestamp).toLocaleString("zh-CN", {
+  const formattedTime = (() => {
+    if (!historyTimestamp) return "历史存档";
+    try {
+      const d = new Date(historyTimestamp);
+      if (isNaN(d.getTime())) return "历史存档";
+      return d.toLocaleString("zh-CN", {
         month: "2-digit",
         day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
-      })
-    : "历史存档";
+      });
+    } catch {
+      return "历史存档";
+    }
+  })();
 
   return (
     <div className="diff-modal-backdrop" onClick={onClose}>
