@@ -37,11 +37,11 @@
 ### 4. 自媒体内联排版组件库 (`creator-typography-snippets`)
 
 - **User POV (用户视角)**:
-  - 用户在编辑器工具栏点击「排版组件」按钮（Sparkles 图标），唤起轻量组件选择器（含灵感提示、杂志金句、步骤清单、核心对比、作者名片 5 款精选模板），点击即插入光标处；复制到微信公众号后台完美保全样式。
+  - 用户在编辑器工具栏点击「排版组件」按钮（Sparkles 图标），唤起组件选择器（支持实景视觉渲染预览与紧凑列表一键切换，包含灵感提示、杂志金句、步骤清单、核心对比、作者名片、双图并排、三图画廊 7 款精选模板），点击即插入光标处；真实效果一目了然，复制到微信公众号后台完美保全样式。
 - **Agent Drive (机器驱动)**:
-  - `CREATOR_SNIPPET_TEMPLATES` 导出高质感、自包含内联 CSS 组件，`ComponentPickerPopover` 提供分类过滤、无障碍键盘响应与平滑交互。
+  - `CREATOR_SNIPPET_TEMPLATES` 导出高质感、自包含内联 CSS 组件，`ComponentPickerPopover` 提供真实渲染视窗、视图模式切换、分类过滤、无障碍键盘响应与平滑交互。
 - **Observable State (物理可观测)**:
-  - `apps/web/src/__tests__/components/snippetTemplates.test.ts` 100% 全绿，插入的 HTML 均由 `<section style="...">` 封装且具备 `box-sizing: border-box`，不含任何外部 JavaScript 或侵入式外部依赖。
+  - `apps/web/src/__tests__/components/snippetTemplates.test.ts` 100% 全绿，组件弹窗支持 `.component-card-preview` 真实渲染视窗与 `.preview-toggle-btn` 模式切换；插入的 HTML 均由 `<section style="...">` 封装且具备 `box-sizing: border-box`，不含任何外部 JavaScript 或侵入式外部依赖。
 
 ### 5. 盘古中英文排版美化与实时阅读时长统计 (`pangu-formatter-and-reading-stats`)
 

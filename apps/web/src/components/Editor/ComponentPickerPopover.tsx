@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Sparkles, Check, ChevronRight } from "lucide-react";
+import { Sparkles, Check, ChevronRight, Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 import {
   CREATOR_SNIPPET_TEMPLATES,
@@ -16,6 +16,7 @@ export function ComponentPickerPopover({
 }: ComponentPickerPopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [showVisualPreview, setShowVisualPreview] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // 点击外部关闭
@@ -94,12 +95,27 @@ export function ComponentPickerPopover({
           <div className="component-picker-header">
             <div className="component-picker-title">
               <span className="title-text">排版组件库</span>
-              <span className="title-badge">
-                {CREATOR_SNIPPET_TEMPLATES.length} 款
-              </span>
+              <div className="picker-header-actions">
+                <button
+                  type="button"
+                  className="preview-toggle-btn"
+                  onClick={() => setShowVisualPreview((prev) => !prev)}
+                  title={
+                    showVisualPreview
+                      ? "切换为紧凑文字视图"
+                      : "切换为实景视觉预览"
+                  }
+                >
+                  {showVisualPreview ? <Eye size={12} /> : <EyeOff size={12} />}
+                  <span>{showVisualPreview ? "实景预览" : "紧凑列表"}</span>
+                </button>
+                <span className="title-badge">
+                  {CREATOR_SNIPPET_TEMPLATES.length} 款
+                </span>
+              </div>
             </div>
             <p className="component-picker-desc">
-              极简内联样式，复制微信不丢格式
+              真实渲染效果即时预览，点击直接插入正文
             </p>
           </div>
 
@@ -137,6 +153,17 @@ export function ComponentPickerPopover({
                   <span className="component-card-name">{template.name}</span>
                   <span className="component-card-badge">{template.badge}</span>
                 </div>
+
+                {/* 真实效果实景预览 */}
+                {showVisualPreview && (
+                  <div className="component-card-preview">
+                    <div
+                      className="component-card-preview-inner"
+                      dangerouslySetInnerHTML={{ __html: template.html }}
+                    />
+                  </div>
+                )}
+
                 <div className="component-card-desc">
                   {template.description}
                 </div>
