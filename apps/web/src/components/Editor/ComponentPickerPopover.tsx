@@ -5,6 +5,7 @@ import {
   CREATOR_SNIPPET_TEMPLATES,
   type SnippetTemplate,
 } from "./snippetTemplates";
+import { resolveAppAssetPath } from "../../utils/assetPath";
 import "./ComponentPickerPopover.css";
 
 interface ComponentPickerPopoverProps {
@@ -159,7 +160,12 @@ export function ComponentPickerPopover({
                   <div className="component-card-preview">
                     <div
                       className="component-card-preview-inner"
-                      dangerouslySetInnerHTML={{ __html: template.html }}
+                      dangerouslySetInnerHTML={{
+                        __html: template.html.replaceAll(
+                          "https://we-markdown.pages.dev/snippets/",
+                          resolveAppAssetPath("snippets/"),
+                        ),
+                      }}
                     />
                   </div>
                 )}

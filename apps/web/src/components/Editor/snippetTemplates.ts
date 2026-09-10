@@ -100,11 +100,11 @@ export const CREATOR_SNIPPET_TEMPLATES: SnippetTemplate[] = [
     description: "左右等宽双图排版，优雅微间距与图注，解决垂直堆叠单调问题",
     html: `<section style="margin: 24px 0; display: flex; gap: 12px; box-sizing: border-box;">
   <div style="flex: 1; text-align: center; box-sizing: border-box;">
-    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 8px; display: block; object-fit: cover;" alt="对比图 A" />
+    <img src="https://we-markdown.pages.dev/snippets/gallery-1.jpg" style="width: 100%; border-radius: 8px; display: block; object-fit: cover;" alt="对比图 A" />
     <span style="display: block; margin-top: 6px; font-size: 12px; color: #888888;">图 1 说明 (支持替换图片链接)</span>
   </div>
   <div style="flex: 1; text-align: center; box-sizing: border-box;">
-    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 8px; display: block; object-fit: cover;" alt="对比图 B" />
+    <img src="https://we-markdown.pages.dev/snippets/gallery-2.jpg" style="width: 100%; border-radius: 8px; display: block; object-fit: cover;" alt="对比图 B" />
     <span style="display: block; margin-top: 6px; font-size: 12px; color: #888888;">图 2 说明 (支持替换图片链接)</span>
   </div>
 </section>`,
@@ -117,15 +117,15 @@ export const CREATOR_SNIPPET_TEMPLATES: SnippetTemplate[] = [
     description: "横向三图画廊，移动端自适应平铺，适合展示多维度细节",
     html: `<section style="margin: 24px 0; display: flex; gap: 8px; box-sizing: border-box;">
   <div style="flex: 1; text-align: center; box-sizing: border-box;">
-    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 A" />
+    <img src="https://we-markdown.pages.dev/snippets/gallery-1.jpg" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 A" />
     <span style="display: block; margin-top: 4px; font-size: 11px; color: #888888;">视角 1</span>
   </div>
   <div style="flex: 1; text-align: center; box-sizing: border-box;">
-    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 B" />
+    <img src="https://we-markdown.pages.dev/snippets/gallery-2.jpg" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 B" />
     <span style="display: block; margin-top: 4px; font-size: 11px; color: #888888;">视角 2</span>
   </div>
   <div style="flex: 1; text-align: center; box-sizing: border-box;">
-    <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 C" />
+    <img src="https://we-markdown.pages.dev/snippets/gallery-3.jpg" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 C" />
     <span style="display: block; margin-top: 4px; font-size: 11px; color: #888888;">视角 3</span>
   </div>
 </section>`,

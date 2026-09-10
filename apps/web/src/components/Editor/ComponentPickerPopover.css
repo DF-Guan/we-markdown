@@ -220,6 +220,8 @@
 .component-card-preview-inner img {
   max-height: 80px;
   object-fit: cover;
+  background-color: var(--bg-secondary);
+  border-radius: 4px;
 }
 
 .component-card-desc {
