@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState, useRef } from "react";
 import { Toaster } from "react-hot-toast";
 import { Header } from "./components/Header/Header";
 import { FileSidebar } from "./components/Sidebar/FileSidebar";
@@ -68,6 +68,41 @@ function App() {
   const isMobile = isMobileScreen && !platform.isElectron;
   const copyToWechat = useEditorStore((state) => state.copyToWechat);
   const [showThemePanel, setShowThemePanel] = useState(false);
+
+  // 移动端左右滑动手势切换编辑/预览
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isMobile || !touchStartRef.current) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - touchStartRef.current.x;
+    const dy = touch.clientY - touchStartRef.current.y;
+    touchStartRef.current = null;
+
+    // 水平位移显著且水平大于垂直时触发平滑切屏
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (dx < 0 && activeView === "editor") {
+        setActiveView("preview");
+      } else if (dx > 0 && activeView === "preview") {
+        setActiveView("editor");
+      }
+    }
+  };
+
+  const handleOpenAICopilot = () => {
+    if (activeView !== "editor") {
+      setActiveView("editor");
+    }
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("wemd-open-ai-copilot"));
+    }, 60);
+  };
 
   // 全局保存快捷键（统一监听器）
   useEffect(() => {
@@ -295,6 +330,8 @@ function App() {
           <div
             className="workspace"
             data-mobile-view={isMobile ? activeView : undefined}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <div className="editor-pane">
               {/* 存储未就绪或文件/历史加载中显示 loading */}
@@ -330,6 +367,7 @@ function App() {
               onViewChange={setActiveView}
               onCopyToWechat={copyToWechat}
               onOpenTheme={() => setShowThemePanel(true)}
+              onOpenAICopilot={handleOpenAICopilot}
             />
           )}
         </main>

@@ -29,6 +29,7 @@ import { setLinkToFootnoteEnabled } from "./ToolbarState";
 import { SyntaxHelpPopover } from "./SyntaxHelpPopover";
 import { ComponentPickerPopover } from "./ComponentPickerPopover";
 import { ComplianceCheckPopover } from "./ComplianceCheckPopover";
+import { AICopilotPopover } from "./AICopilotPopover";
 import "./Toolbar.css";
 
 interface ToolbarProps {
@@ -36,6 +37,9 @@ interface ToolbarProps {
   onFormatPangu?: () => void;
   content?: string;
   onReplaceWord?: (oldWord: string, newWord: string, index: number) => void;
+  onReplaceContent?: (newContent: string) => void;
+  onReplaceSelection?: (newText: string) => void;
+  getSelectedText?: () => string;
 }
 
 export function Toolbar({
@@ -43,6 +47,9 @@ export function Toolbar({
   onFormatPangu,
   content = "",
   onReplaceWord,
+  onReplaceContent,
+  onReplaceSelection,
+  getSelectedText,
 }: ToolbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -373,6 +380,15 @@ export function Toolbar({
           <Image size={16} />
         )}
       </button>
+
+      {/* AI 创作副驾驶 */}
+      <AICopilotPopover
+        content={content}
+        onInsert={onInsert}
+        onReplaceContent={onReplaceContent}
+        onReplaceSelection={onReplaceSelection}
+        getSelectedText={getSelectedText}
+      />
 
       {/* 自媒体排版组件 */}
       <ComponentPickerPopover onInsert={onInsert} />

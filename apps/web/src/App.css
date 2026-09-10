@@ -150,6 +150,7 @@
     gap: 0;
     height: 100%;
     min-height: 0;
+    touch-action: pan-y;
   }
 
   .app[data-layout-mode="mobile"] .editor-pane,
@@ -180,6 +181,18 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    animation: mobilePaneFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes mobilePaneFadeIn {
+    from {
+      opacity: 0.8;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .app[data-layout-mode="mobile"] .editor-pane:hover,

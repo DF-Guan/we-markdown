@@ -26,6 +26,8 @@ interface CardImageExportModalProps {
   onClose: () => void;
   markdown: string;
   renderedHtml: string;
+  initialFormat?: CardFormat;
+  initialContent?: string;
 }
 
 export function CardImageExportModal({
@@ -33,14 +35,22 @@ export function CardImageExportModal({
   onClose,
   markdown,
   renderedHtml,
+  initialFormat,
+  initialContent,
 }: CardImageExportModalProps) {
-  const [format, setFormat] = useState<CardFormat>("card");
+  const [format, setFormat] = useState<CardFormat>(initialFormat || "card");
   const [theme, setTheme] = useState<CardBackgroundTheme>("classic-white");
   const [authorName, setAuthorName] = useState("WeMarkdown 创作者");
   const [showWatermark, setShowWatermark] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [copied, setCopied] = useState(false);
   const previewContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (initialFormat) {
+      setFormat(initialFormat);
+    }
+  }, [initialFormat]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -61,6 +71,7 @@ export function CardImageExportModal({
     theme,
     authorName,
     showWatermark,
+    customContent: initialContent,
   };
 
   const { html: cardInnerHtml } = buildCardMarkup(currentOptions);

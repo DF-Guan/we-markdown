@@ -348,6 +348,45 @@ export function MarkdownEditor() {
     view.focus();
   };
 
+  const handleReplaceContent = (newContent: string) => {
+    const view = viewRef.current;
+    if (!view) {
+      setMarkdown(newContent);
+      return;
+    }
+    view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: newContent },
+      selection: { anchor: 0 },
+    });
+    view.focus();
+  };
+
+  const handleReplaceSelection = (newText: string) => {
+    const view = viewRef.current;
+    if (!view) return;
+    const sel = view.state.selection.main;
+    if (sel.from === sel.to) {
+      view.dispatch({
+        changes: { from: sel.from, insert: newText },
+        selection: { anchor: sel.from + newText.length },
+      });
+    } else {
+      view.dispatch({
+        changes: { from: sel.from, to: sel.to, insert: newText },
+        selection: { anchor: sel.from + newText.length },
+      });
+    }
+    view.focus();
+  };
+
+  const handleGetSelectedText = () => {
+    const view = viewRef.current;
+    if (!view) return "";
+    const sel = view.state.selection.main;
+    if (sel.from === sel.to) return "";
+    return view.state.sliceDoc(sel.from, sel.to);
+  };
+
   return (
     <div className="markdown-editor">
       <div className="editor-header">
@@ -358,6 +397,9 @@ export function MarkdownEditor() {
         onFormatPangu={handleFormatPangu}
         content={content}
         onReplaceWord={handleReplaceWord}
+        onReplaceContent={handleReplaceContent}
+        onReplaceSelection={handleReplaceSelection}
+        getSelectedText={handleGetSelectedText}
       />
       {showSearch && viewRef.current && (
         <SearchPanel

@@ -1,6 +1,19 @@
-import { Pencil, Eye, Copy, MoreHorizontal, Palette, X } from "lucide-react";
-import { useState } from "react";
+import {
+  Pencil,
+  Eye,
+  Copy,
+  MoreHorizontal,
+  Palette,
+  X,
+  Sparkles,
+  Download,
+} from "lucide-react";
+import { useState, useEffect } from "react";
 import type { MobileViewType } from "../../hooks/useMobileView";
+import {
+  promptPWAInstall,
+  onPWAInstallableChange,
+} from "../../services/pwa/pwaService";
 import "./MobileToolbar.css";
 
 interface MobileToolbarProps {
@@ -8,6 +21,7 @@ interface MobileToolbarProps {
   onViewChange: (view: MobileViewType) => void;
   onCopyToWechat: () => void;
   onOpenTheme: () => void;
+  onOpenAICopilot?: () => void;
 }
 
 /**
@@ -18,8 +32,14 @@ export function MobileToolbar({
   onViewChange,
   onCopyToWechat,
   onOpenTheme,
+  onOpenAICopilot,
 }: MobileToolbarProps) {
   const [showMenu, setShowMenu] = useState(false);
+  const [canInstall, setCanInstall] = useState(false);
+
+  useEffect(() => {
+    return onPWAInstallableChange(setCanInstall);
+  }, []);
 
   return (
     <>
@@ -40,6 +60,18 @@ export function MobileToolbar({
               </button>
             </div>
             <div className="mobile-menu-list">
+              {onOpenAICopilot && (
+                <button
+                  className="mobile-menu-item"
+                  onClick={() => {
+                    onOpenAICopilot();
+                    setShowMenu(false);
+                  }}
+                >
+                  <Sparkles size={20} color="#6366f1" />
+                  <span>AI 创作副驾驶</span>
+                </button>
+              )}
               <button
                 className="mobile-menu-item"
                 onClick={() => {
@@ -50,6 +82,18 @@ export function MobileToolbar({
                 <Palette size={20} />
                 <span>主题管理</span>
               </button>
+              {canInstall && (
+                <button
+                  className="mobile-menu-item"
+                  onClick={() => {
+                    promptPWAInstall();
+                    setShowMenu(false);
+                  }}
+                >
+                  <Download size={20} color="#07c160" />
+                  <span>添加到手机桌面 (PWA)</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

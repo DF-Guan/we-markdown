@@ -94,6 +94,29 @@
 - **Observable State (物理可观测)**:
   - `packages/core/src/__tests__/themes/newThemes.test.ts` 100% 全绿通过。
 
+### 10. 纯前端轻量化 AI 创作副驾驶 (`byok-ai-copilot`)
+
+- **User POV (用户视角)**:
+  - 用户在编辑器工具栏点击「AI 创作副驾驶」按钮（或使用快捷键 `Alt+A`），展开轻量微型悬浮面板；
+  - **爆款标题工坊**：一键生成 5~8 组涵盖悬念、反常识、干货清单、痛点共鸣与金句沉淀的自媒体爆款标题，支持一键设为主标题；
+  - **内容润色去 AI 味**：对全文或选中文本执行自然流畅 (去 AI 味)、自媒体爆款网感、严谨学术深度与极简凝练等多维度调优；
+  - **摘要金句与海报联动**：提炼 150 字精华导读与穿透力金句，支持一键做成小红书 3:4 卡片或金句微卡（直通 `CardImageExportModal`）；
+  - **BYOK 隐私安全**：本地配置 DeepSeek / 硅基流动 / OpenAI / Claude API Key 与 BaseURL，AES-256 加密持久化存储，绝不上报第三方服务器。
+- **Agent Drive (机器驱动)**:
+  - `aiConfig.ts` 负责凭证加密持久化与服务商预置；`aiService.ts` 统一调度 OpenAI 兼容与 Claude 规范，并执行结构化 JSON 提取与容错降级；`AICopilotPopover.tsx` 提供紧凑视窗与 CodeMirror 原子事务替换。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/services/aiConfig.test.ts`、`apps/web/src/__tests__/services/aiService.test.ts` 与 `apps/web/src/__tests__/components/AICopilotPopover.test.tsx` 100% 全绿通过；工具栏渲染 `.ai-copilot-trigger-btn` 且支持全局 `wemd-open-ai-copilot` 事件。
+
+### 11. PWA 原生离线应用与移动端触控优化 (`pwa-offline-and-mobile-touch`)
+
+- **User POV (用户视角)**:
+  - 用户在移动端设备（屏幕宽度 < 768px）可使用平滑左右滑屏手势（向左轻滑切至预览，向右轻滑切至编辑）或底部 Tab 栏顺畅切换；
+  - 在 Chrome / Safari / Edge 浏览器中支持点击「添加到桌面」，即可作为独立原生 Web 应用离线脱机运行，无网环境下照常排版写作与本地暂存。
+- **Agent Drive (机器驱动)**:
+  - `public/manifest.webmanifest` 声明应用独立窗口标识与操作快捷方式；`public/sw.js` 部署 Cache-First 离线缓存拦截策略；`pwaService.ts` 接管 Service Worker 注册、更新检测与安装事件分发；`App.tsx` 实现基于位移矢量的触控滑屏响应。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/services/pwaService.test.ts` 100% 全绿通过；`sw.js` 与 `manifest.webmanifest` 资源就绪；`App.css` 包含移动端 `@keyframes mobilePaneFadeIn` 与手势触控样式。
+
 ---
 
 ## 🛠️ 机械校验指令 (Verification Command)

@@ -18,6 +18,7 @@ export interface CardExportOptions {
   authorName?: string;
   showWatermark?: boolean;
   scale?: number;
+  customContent?: string;
 }
 
 export interface CardThemeConfig {
@@ -141,9 +142,11 @@ export function buildCardMarkup(options: CardExportOptions): {
   const minHeight = format === "card" ? 960 : 480;
 
   const rawContentHtml =
-    options.renderedHtml && options.renderedHtml.trim()
-      ? options.renderedHtml
-      : `<p style="font-size: 16px; line-height: 1.8; color: ${theme.text};">${extractArticleMeta(options.markdown).excerpt}</p>`;
+    options.customContent && options.customContent.trim()
+      ? `<div style="font-size: 18px; line-height: 1.85; color: ${theme.text}; font-weight: 500; padding: 12px 0;">${options.customContent}</div>`
+      : options.renderedHtml && options.renderedHtml.trim()
+        ? options.renderedHtml
+        : `<p style="font-size: 16px; line-height: 1.8; color: ${theme.text};">${extractArticleMeta(options.markdown).excerpt}</p>`;
 
   const safeTitle = escapeXml(title);
   const safeAuthorName = escapeXml(authorName);
