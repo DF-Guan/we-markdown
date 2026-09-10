@@ -21,10 +21,7 @@ const GithubIcon = ({ size = 24 }: { size?: number | string }) => (
 );
 
 export function SidebarFooter() {
-  const uiTheme = useUITheme((state) => state.theme);
-  const logoSrc = resolveAppAssetPath(
-    uiTheme === "dark" ? "favicon-light.svg" : "favicon-dark.svg",
-  );
+  const logoSrc = resolveAppAssetPath("logo-64.png");
 
   return (
     <div className="sidebar-footer">

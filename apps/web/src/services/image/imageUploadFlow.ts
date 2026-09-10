@@ -26,13 +26,17 @@ export interface UploadEditorImageResult {
 export function getStoredImageHostConfig(): ImageHostConfig {
   const configStr = localStorage.getItem("imageHostConfig");
   if (!configStr) {
-    return { type: "official" };
+    return { type: "local" };
   }
 
   try {
-    return JSON.parse(configStr) as ImageHostConfig;
+    const parsed = JSON.parse(configStr) as ImageHostConfig;
+    if (parsed.type === ("official" as any)) {
+      return { type: "local" };
+    }
+    return parsed;
   } catch {
-    return { type: "official" };
+    return { type: "local" };
   }
 }
 

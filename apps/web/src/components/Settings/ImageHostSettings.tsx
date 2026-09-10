@@ -4,7 +4,7 @@ import type { ImageHostConfig } from "../../services/image/ImageUploader";
 import {
   AliyunPanel,
   HostTabs,
-  OfficialHostPanel,
+  LocalHostPanel,
   QiniuPanel,
   S3Panel,
   TencentPanel,
@@ -14,6 +14,7 @@ import "./ImageHostSettings.css";
 interface AllConfigs {
   currentType: ImageHostConfig["type"];
   configs: {
+    local?: any;
     official?: any;
     qiniu?: any;
     aliyun?: any;
@@ -25,14 +26,26 @@ interface AllConfigs {
 export function ImageHostSettings() {
   const [allConfigs, setAllConfigs] = useState<AllConfigs>(() => {
     const saved = localStorage.getItem("imageHostConfigs");
-    return saved ? JSON.parse(saved) : { currentType: "official", configs: {} };
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.currentType === "official") {
+          parsed.currentType = "local";
+        }
+        return parsed;
+      } catch {
+        // fallback below
+      }
+    }
+    return { currentType: "local", configs: {} };
   });
   const [viewingType, setViewingType] = useState<ImageHostConfig["type"]>(
-    allConfigs.currentType,
+    allConfigs.currentType === "official" ? "local" : allConfigs.currentType,
   );
   const [testResult, setTestResult] = useState<string | null>(null);
 
-  const activeType = allConfigs.currentType;
+  const activeType =
+    allConfigs.currentType === "official" ? "local" : allConfigs.currentType;
   const viewingConfig: ImageHostConfig = {
     type: viewingType,
     config: allConfigs.configs[viewingType],
@@ -81,8 +94,8 @@ export function ImageHostSettings() {
   };
 
   const handleActivate = async (type: ImageHostConfig["type"]) => {
-    if (type === "official") {
-      setAllConfigs((prev) => ({ ...prev, currentType: type }));
+    if (type === "local" || type === "official") {
+      setAllConfigs((prev) => ({ ...prev, currentType: "local" }));
       return;
     }
 
@@ -140,10 +153,11 @@ export function ImageHostSettings() {
       />
 
       <div className="host-config-panel">
-        {viewingConfig.type === "official" && (
-          <OfficialHostPanel
+        {(viewingConfig.type === "local" ||
+          viewingConfig.type === "official") && (
+          <LocalHostPanel
             activeType={activeType}
-            onActivate={() => handleActivate("official")}
+            onActivate={() => handleActivate("local")}
           />
         )}
 

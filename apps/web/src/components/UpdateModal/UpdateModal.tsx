@@ -20,7 +20,7 @@ export function UpdateModal({
   onSkipVersion,
 }: UpdateModalProps) {
   const [showNotes, setShowNotes] = useState(false);
-  const iconSrc = resolveAppAssetPath("favicon-dark.svg");
+  const iconSrc = resolveAppAssetPath("logo-64.png");
 
   // 简单处理 Markdown 格式的 release notes
   const formatReleaseNotes = (notes: string) => {

@@ -8,11 +8,11 @@ interface UIThemeStore {
   setTheme: (theme: UITheme) => void;
 }
 
-const THEME_STORAGE_KEY = "ahafair-ui-theme";
+const THEME_STORAGE_KEY = "wemarkdown-ui-theme";
 
 const FAVICON_MAP: Record<UITheme, string> = {
-  default: "favicon-dark.svg",
-  dark: "favicon-dark.svg",
+  default: "favicon.svg",
+  dark: "favicon.svg",
 };
 
 const resolveAssetHref = (filename: string) => {
@@ -35,7 +35,9 @@ const applyThemeSideEffects = (theme: UITheme) => {
 const hydrateThemeFromStorage = (): UITheme => {
   if (typeof window === "undefined") return "default";
   try {
-    const stored = window.localStorage?.getItem(THEME_STORAGE_KEY);
+    const stored =
+      window.localStorage?.getItem(THEME_STORAGE_KEY) ||
+      window.localStorage?.getItem("ahafair-ui-theme");
     // 兼容旧值 structuralism 迁移到 dark
     if (stored === "structuralism") {
       applyThemeSideEffects("dark");

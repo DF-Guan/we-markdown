@@ -1,4 +1,4 @@
-import { Cloud, Image as ImageIcon, ShieldCheck, Zap } from "lucide-react";
+import { HardDrive, Image as ImageIcon, ShieldCheck, Zap } from "lucide-react";
 import type { ImageHostConfig } from "../../services/image/ImageUploader";
 
 export interface HostTabProps {
@@ -12,16 +12,17 @@ export const HostTabs = ({
   viewingType,
   onTabChange,
 }: HostTabProps) => {
+  const isLocalActive = activeType === "local" || activeType === "official";
+  const isLocalViewing = viewingType === "local" || viewingType === "official";
+
   return (
     <div className="host-tabs">
       <button
-        className={`host-tab ${viewingType === "official" ? "active" : ""}`}
-        onClick={() => onTabChange("official")}
+        className={`host-tab ${isLocalViewing ? "active" : ""}`}
+        onClick={() => onTabChange("local")}
       >
-        官方图床
-        {activeType === "official" && (
-          <span className="tab-active-badge">使用中</span>
-        )}
+        本地直传
+        {isLocalActive && <span className="tab-active-badge">默认推荐</span>}
       </button>
       <button
         className={`host-tab ${viewingType === "qiniu" ? "active" : ""}`}
@@ -63,42 +64,43 @@ export const HostTabs = ({
   );
 };
 
-interface OfficialPanelProps {
+interface LocalPanelProps {
   activeType: ImageHostConfig["type"];
   onActivate: () => void;
 }
 
-export const OfficialHostPanel = ({
-  activeType,
-  onActivate,
-}: OfficialPanelProps) => {
+export const LocalHostPanel = ({ activeType, onActivate }: LocalPanelProps) => {
+  const isCurrentActive = activeType === "local" || activeType === "official";
+
   return (
     <div className="official-host-intro">
       <div className="intro-header">
         <div className="intro-icon-wrapper">
-          <Cloud size={48} strokeWidth={1.5} className="primary-icon" />
+          <HardDrive size={48} strokeWidth={1.5} className="primary-icon" />
         </div>
-        <h3>官方托管服务</h3>
-        <p>专为公众号排版优化的图片托管方案</p>
+        <h3>本地优先直传</h3>
+        <p>无需配置任何云端图床，图片直接从本地加载与排版</p>
       </div>
 
       <div className="feature-grid">
         <div className="feature-item">
           <div className="feature-icon">
-            <Zap size={20} />
+            <ShieldCheck size={20} />
           </div>
           <div className="feature-text">
-            <strong>高速访问</strong>
-            <span>基于全球边缘网络，加载流畅</span>
+            <strong>100% 本地隐私</strong>
+            <span>
+              图片在本地浏览器直接解析，绝不上传到任何第三方外链服务器
+            </span>
           </div>
         </div>
         <div className="feature-item">
           <div className="feature-icon">
-            <ShieldCheck size={20} />
+            <Zap size={20} />
           </div>
           <div className="feature-text">
-            <strong>安全稳定</strong>
-            <span>无需配置 Key，HTTPS 加密传输</span>
+            <strong>零网络依赖与延迟</strong>
+            <span>本地即插即用，无惧断网、接口超时或凭证失效风险</span>
           </div>
         </div>
         <div className="feature-item">
@@ -106,25 +108,30 @@ export const OfficialHostPanel = ({
             <ImageIcon size={20} />
           </div>
           <div className="feature-text">
-            <strong>开箱即用</strong>
-            <span>默认集成，专注于内容创作</span>
+            <strong>微信后台原生转存</strong>
+            <span>
+              复制排版到微信公众号后台时，微信会自动将本地图片转存至公众号官方图床
+            </span>
           </div>
         </div>
       </div>
 
-      {activeType === "official" ? (
+      {isCurrentActive ? (
         <div className="active-status">
           <span className="pulsing-dot"></span>
-          <span>当前已启用官方图床</span>
+          <span>当前已启用本地直传（默认推荐）</span>
         </div>
       ) : (
         <button className="btn-activate" onClick={onActivate}>
-          启用官方图床
+          切换为本地直传
         </button>
       )}
     </div>
   );
 };
+
+// 兼容别名
+export const OfficialHostPanel = LocalHostPanel;
 
 interface HostConfigPanelProps {
   activeType: ImageHostConfig["type"];

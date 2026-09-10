@@ -79,4 +79,17 @@ describe("uploadEditorImage integration", () => {
     expect(uploadedFiles[0].size).toBeLessThanOrEqual(2 * MB);
     expect(result.url).toBe("https://example.com/big.jpg");
   });
+
+  it("LocalUploader 能够正确读取文件为 base64 data url，无需外部网络", async () => {
+    const { LocalUploader } = await import(
+      "../../services/image/uploaders/LocalUploader"
+    );
+    const uploader = new LocalUploader();
+    const file = new File(["test-image-binary-data"], "test.png", {
+      type: "image/png",
+    });
+    const url = await uploader.upload(file);
+    expect(url.startsWith("data:image/png;base64,")).toBe(true);
+    expect(await uploader.validate()).toBe(true);
+  });
 });
