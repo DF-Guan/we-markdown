@@ -1,5 +1,5 @@
 /* ============================================
- * Ahafair 主题模板
+ * WeMarkdown 主题模板
  * ============================================
  * 
  * 使用说明：
@@ -249,8 +249,8 @@
   /* 内边距 */
   background: var(--ahafair-quote-background);
   /* 背景色 */
-  border-left: var(--ahafair-quote-border-width) var(--ahafair-quote-border-style)
-    var(--ahafair-quote-border-color);
+  border-left: var(--ahafair-quote-border-width)
+    var(--ahafair-quote-border-style) var(--ahafair-quote-border-color);
   /* 左边框 */
   border-radius: 4px;
   /* 圆角 */
@@ -270,8 +270,8 @@
   margin: var(--ahafair-paragraph-margin) 0;
   padding: var(--ahafair-quote-padding-y) var(--ahafair-quote-padding-x);
   background: var(--ahafair-quote-background);
-  border-left: var(--ahafair-quote-border-width) var(--ahafair-quote-border-style)
-    var(--ahafair-quote-border-color);
+  border-left: var(--ahafair-quote-border-width)
+    var(--ahafair-quote-border-style) var(--ahafair-quote-border-color);
 }
 
 #ahafair .multiquote-2 p {
@@ -286,8 +286,8 @@
   margin: var(--ahafair-paragraph-margin) 0;
   padding: var(--ahafair-quote-padding-y) var(--ahafair-quote-padding-x);
   background: var(--ahafair-quote-background);
-  border-left: var(--ahafair-quote-border-width) var(--ahafair-quote-border-style)
-    var(--ahafair-quote-border-color);
+  border-left: var(--ahafair-quote-border-width)
+    var(--ahafair-quote-border-style) var(--ahafair-quote-border-color);
 }
 
 #ahafair .multiquote-3 p {

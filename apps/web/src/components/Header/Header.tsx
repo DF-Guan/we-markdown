@@ -36,7 +36,7 @@ const DefaultLogoMark = () => (
     alt="WeMarkdown Logo"
     width={40}
     height={40}
-    style={{ display: "block" }}
+    style={{ display: "block", borderRadius: "8px" }}
   />
 );
 
@@ -48,7 +48,7 @@ const StructuralismLogoMark = () => (
     alt="WeMarkdown Logo"
     width={40}
     height={40}
-    style={{ display: "block" }}
+    style={{ display: "block", borderRadius: "8px" }}
   />
 );
 

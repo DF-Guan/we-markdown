@@ -1,6 +1,10 @@
+<p align="center">
+  <img src="assets/icon.png" width="80" height="80" alt="WeMarkdown Electron Logo" style="border-radius: 18px;" />
+</p>
+
 # WeMarkdown Electron App
 
-基于 Electron 的 WeMarkdown 桌面应用，完全复用 Web 端代码。
+基于 Electron 28 的 WeMarkdown 跨平台桌面客户端，提供原生 macOS、Windows 与 Linux 沉浸式排版体验。
 
 ## 开发
 
