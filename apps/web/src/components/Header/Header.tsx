@@ -30,25 +30,25 @@ import { useUITheme } from "../../hooks/useUITheme";
 import { useWindowControls } from "../../hooks/useWindowControls";
 import { Modal, FloatingToolbarButton } from "../common";
 
+import darktuLogo from "../../assets/logo-128.png";
+
 const DefaultLogoMark = () => (
   <img
-    src={`${import.meta.env.BASE_URL}favicon.svg`}
-    alt="WeMarkdown Logo"
+    src={darktuLogo}
+    alt="Darktu WeMarkdown Logo"
     width={40}
     height={40}
-    style={{ display: "block", borderRadius: "8px" }}
+    style={{ display: "block", borderRadius: "8px", objectFit: "contain" }}
   />
 );
 
-const structuralismLogoSrc = `${import.meta.env.BASE_URL}favicon-light.svg`;
-
 const StructuralismLogoMark = () => (
   <img
-    src={structuralismLogoSrc}
-    alt="WeMarkdown Logo"
+    src={darktuLogo}
+    alt="Darktu WeMarkdown Logo"
     width={40}
     height={40}
-    style={{ display: "block", borderRadius: "8px" }}
+    style={{ display: "block", borderRadius: "8px", objectFit: "contain" }}
   />
 );
 
@@ -208,7 +208,7 @@ export function Header() {
         style={headerStyle}
       >
         <div className="header-left">
-          <div className="logo">
+          <div className="logo" title="Darktu WeMarkdown">
             {isStructuralismUI ? (
               <StructuralismLogoMark />
             ) : (

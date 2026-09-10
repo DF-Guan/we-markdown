@@ -105,6 +105,7 @@ describe("Header", () => {
 
     expect(screen.getByText("WeMarkdown")).toBeInTheDocument();
     expect(screen.getByText("公众号 Markdown 排版编辑器")).toBeInTheDocument();
+    expect(screen.getByAltText("Darktu WeMarkdown Logo")).toBeInTheDocument();
     expect(screen.getByText("复制到公众号")).toBeInTheDocument();
   });
 

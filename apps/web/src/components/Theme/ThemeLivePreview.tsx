@@ -69,7 +69,7 @@ flowchart TD
   Reject --> End
 \`\`\`
 
-![WeMarkdown 示例图片：不仅支持常规排版，更可以深度定制每一个细节。](https://md.darktu.com/favicon.svg)
+![WeMarkdown 示例图片：不仅支持常规排版，更可以深度定制每一个细节。](https://md.darktu.com/logo-128.png)
 `;
 
 interface ThemeLivePreviewProps {

@@ -133,7 +133,7 @@ $$
 ---
 
 ## 9. 图片
-![WeMarkdown：专为微信公众号设计的现代化 Markdown 编辑器](https://md.darktu.com/favicon.svg)
+![WeMarkdown：专为微信公众号设计的现代化 Markdown 编辑器](https://md.darktu.com/logo-128.png)
 
 **开始编辑吧!** 🚀
 `;

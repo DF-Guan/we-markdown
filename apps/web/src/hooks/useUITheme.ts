@@ -11,8 +11,8 @@ interface UIThemeStore {
 const THEME_STORAGE_KEY = "wemarkdown-ui-theme";
 
 const FAVICON_MAP: Record<UITheme, string> = {
-  default: "favicon.svg",
-  dark: "favicon.svg",
+  default: "favicon.svg?v=2.6.0",
+  dark: "favicon.svg?v=2.6.0",
 };
 
 const resolveAssetHref = (filename: string) => {
