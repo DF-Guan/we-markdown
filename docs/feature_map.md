@@ -65,6 +65,35 @@
 - **Observable State (物理可观测)**:
   - `apps/web/src/__tests__/services/complianceChecker.test.ts` 与 `apps/web/src/__tests__/components/snippetTemplates.test.ts` 全部通过；工具栏渲染 `ComplianceCheckPopover`。
 
+### 7. 多平台复制分发与高清长图海报导出 (`multi-channel-copy-and-card-export`)
+
+- **User POV (用户视角)**:
+  - 顶部导航栏提供智能分发组合按钮：点击主按钮一键复制到微信公众号，展开微型下拉菜单可分发至知乎专栏、掘金社区、纯净 Markdown，或呼出「导出高清海报与卡片」；
+  - 海报模态框支持小红书 3:4 比例卡片、长图海报、金句微卡等 3 种格式，实时切换 4 款主题配色并一键下载 2x/3x Retina 高清 PNG 或复制到剪贴板。
+- **Agent Drive (机器驱动)**:
+  - `dispatchCopy` 执行目标平台专用清洗与剪贴板写入；`cardImageExporter` 执行纯前端 SVG/Canvas 光栅化渲染。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/services/copyDispatcher.test.ts`、`cardImageExporter.test.ts` 与 `CopyDropdown.test.tsx` 100% 全绿；Header 渲染 `CopyDropdown`。
+
+### 8. 文档历史版本时间胶囊与可视化 Diff 对比 (`history-diff-time-capsule`)
+
+- **User POV (用户视角)**:
+  - 用户在历史记录面板（IndexedDB / 本地文件）中点击任一快照的菜单选项「对比版本差异」，呼出全屏/半屏红绿双栏差异对比视窗；
+  - 清晰呈现被删改红底字符与新增绿底字符，展示新增/修改行数统计，并支持一键安全还原（还原前自动暂存当前草稿）。
+- **Agent Drive (机器驱动)**:
+  - `computeTextDiff` LCS 差异引擎输出精确的 `added` / `removed` / `unchanged` 行流。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/services/diffEngine.test.ts` 与 `HistoryDiffModal.test.tsx` 100% 全绿通过。
+
+### 9. 彭博特稿与东方青黛高级自媒体主题 (`bloomberg-and-oriental-themes`)
+
+- **User POV (用户视角)**:
+  - 用户在主题管理面板或快捷菜单中可一键选用「彭博特稿」（权威双横线大标、沉稳炭黑与暗金眉题）与「东方青黛」（水墨云纹居中大标、青黛朱砂古典配色与宣纸雅白题跋）。
+- **Agent Drive (机器驱动)**:
+  - `@we-markdown/core` 导出 `bloombergEditorialTheme` 与 `orientalInkTheme`，并在 `builtInThemes` 中注册。
+- **Observable State (物理可观测)**:
+  - `packages/core/src/__tests__/themes/newThemes.test.ts` 100% 全绿通过。
+
 ---
 
 ## 🛠️ 机械校验指令 (Verification Command)

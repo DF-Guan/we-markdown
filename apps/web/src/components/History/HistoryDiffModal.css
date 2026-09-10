@@ -1,0 +1,231 @@
+.diff-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.15s ease;
+}
+
+.diff-modal-dialog {
+  width: 100%;
+  max-width: 840px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 85vh;
+}
+
+.diff-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-light);
+  gap: 12px;
+}
+
+.diff-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex-wrap: wrap;
+}
+
+.diff-modal-title .title-icon {
+  color: var(--accent-primary);
+}
+
+.diff-history-name {
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.diff-time-tag {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.diff-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.diff-stats-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-added {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge-removed {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-identical {
+  padding: 2px 7px;
+  font-size: 11px;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+[data-ui-theme="dark"] .badge-added {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+[data-ui-theme="dark"] .badge-removed {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.diff-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.diff-close-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.diff-content-view {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+  background: var(--bg-primary);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  max-height: 580px;
+}
+
+.diff-line {
+  display: flex;
+  align-items: flex-start;
+  padding: 1px 16px;
+  user-select: text;
+}
+
+.line-num-old,
+.line-num-new {
+  width: 38px;
+  text-align: right;
+  color: var(--text-secondary);
+  opacity: 0.55;
+  font-size: 11px;
+  user-select: none;
+  padding-right: 8px;
+  flex-shrink: 0;
+}
+
+.line-marker {
+  width: 16px;
+  text-align: center;
+  user-select: none;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.line-text {
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.diff-added {
+  background-color: rgba(34, 197, 94, 0.12);
+  color: #15803d;
+}
+
+.diff-added .line-marker {
+  color: #16a34a;
+}
+
+[data-ui-theme="dark"] .diff-added {
+  background-color: rgba(34, 197, 94, 0.16);
+  color: #86efac;
+}
+
+.diff-removed {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #b91c1c;
+}
+
+.diff-removed .line-marker {
+  color: #dc2626;
+}
+
+[data-ui-theme="dark"] .diff-removed {
+  background-color: rgba(239, 68, 68, 0.16);
+  color: #fca5a5;
+}
+
+.diff-unchanged {
+  color: var(--text-primary);
+}
+
+.diff-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.diff-safety-tip {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.diff-footer-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

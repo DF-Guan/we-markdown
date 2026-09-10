@@ -11,6 +11,7 @@ import {
   Github,
   Globe,
   BookOpen,
+  GitCompare,
 } from "lucide-react";
 import { useEditorStore } from "../../store/editorStore";
 import { useThemeStore } from "../../store/themeStore";
@@ -19,6 +20,7 @@ import { useUITheme } from "../../hooks/useUITheme";
 import { SidebarFooter } from "../Sidebar/SidebarFooter";
 import type { HistorySnapshot } from "../../store/historyStore";
 import { resolveNewArticleThemeSnapshot } from "../../utils/newArticleTheme";
+import { HistoryDiffModal } from "./HistoryDiffModal";
 
 const PAGE_SIZE = 50;
 
@@ -60,6 +62,13 @@ export function IndexedHistoryPanel() {
     null,
   );
   const [deleting, setDeleting] = useState(false);
+  const [diffTarget, setDiffTarget] = useState<HistorySnapshot | null>(null);
+  const currentMarkdown =
+    useEditorStore((state) =>
+      state && typeof state === "object" && "markdown" in state
+        ? state.markdown
+        : "",
+    ) || "";
 
   const handleRestore = async (entry?: HistorySnapshot) => {
     if (!entry) return;
@@ -389,6 +398,15 @@ export function IndexedHistoryPanel() {
               重命名
             </button>
             <button
+              onClick={() => {
+                setDiffTarget(menuEntry);
+                closeActionMenu();
+              }}
+            >
+              <GitCompare size={14} />
+              对比版本差异
+            </button>
+            <button
               className="danger"
               onClick={() => {
                 setDeleteTarget(menuEntry);
@@ -487,6 +505,17 @@ export function IndexedHistoryPanel() {
           </div>,
           document.body,
         )}
+      {diffTarget && (
+        <HistoryDiffModal
+          open={Boolean(diffTarget)}
+          onClose={() => setDiffTarget(null)}
+          historyTitle={diffTarget.title || "未命名文章"}
+          historyTimestamp={diffTarget.savedAt || diffTarget.createdAt}
+          historyMarkdown={diffTarget.markdown || ""}
+          currentMarkdown={currentMarkdown}
+          onRestore={() => handleRestore(diffTarget)}
+        />
+      )}
     </>
   );
 }

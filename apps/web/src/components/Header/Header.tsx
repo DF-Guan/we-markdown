@@ -29,6 +29,14 @@ import {
 import { useUITheme } from "../../hooks/useUITheme";
 import { useWindowControls } from "../../hooks/useWindowControls";
 import { Modal, FloatingToolbarButton } from "../common";
+import { CopyDropdown } from "./CopyDropdown";
+import { CardImageExportModal } from "../Export/CardImageExportModal";
+import {
+  dispatchCopy,
+  type TargetPlatform,
+} from "../../services/copy/copyDispatcher";
+import { useThemeStore } from "../../store/themeStore";
+import { createMarkdownParser } from "@we-markdown/core";
 
 import darktuLogo from "../../assets/logo-128.png";
 
@@ -102,9 +110,28 @@ const WindowControls = ({ fixed = false }: { fixed?: boolean }) => {
 
 export function Header() {
   const { copyToWechat } = useEditorStore();
+  const markdown =
+    useEditorStore((state) =>
+      state && typeof state.markdown === "string" ? state.markdown : "",
+    ) || "";
+  const themeCss =
+    useThemeStore((state) =>
+      state ? state.customCSS || state.getThemeCSS(state.themeId) : "",
+    ) || "";
+
   const [showThemePanel, setShowThemePanel] = useState(false);
   const [showStorageModal, setShowStorageModal] = useState(false);
   const [showImageHostModal, setShowImageHostModal] = useState(false);
+  const [showCardExportModal, setShowCardExportModal] = useState(false);
+
+  const handleCopyPlatform = async (platform: TargetPlatform) => {
+    if (platform === "wechat") {
+      copyToWechat?.();
+      return;
+    }
+    await dispatchCopy(platform, String(markdown), String(themeCss));
+  };
+
   const uiTheme = useUITheme((state) => state.theme);
   const setTheme = useUITheme((state) => state.setTheme);
   const isStructuralismUI = uiTheme === "dark";
@@ -276,10 +303,10 @@ export function Header() {
               <span>Darktu 官网</span>
             </a>
 
-            <button className="btn-primary" onClick={copyToWechat}>
-              <Send size={18} strokeWidth={2} />
-              <span>复制到公众号</span>
-            </button>
+            <CopyDropdown
+              onCopyPlatform={handleCopyPlatform}
+              onOpenCardExport={() => setShowCardExportModal(true)}
+            />
 
             <button
               className="btn-ghost"
@@ -335,6 +362,17 @@ export function Header() {
           <ImageHostSettings />
         </Suspense>
       </Modal>
+
+      {showCardExportModal && (
+        <CardImageExportModal
+          open={showCardExportModal}
+          onClose={() => setShowCardExportModal(false)}
+          markdown={typeof markdown === "string" ? markdown : ""}
+          renderedHtml={createMarkdownParser().render(
+            typeof markdown === "string" ? markdown : "",
+          )}
+        />
+      )}
     </>
   );
 }

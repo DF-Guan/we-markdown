@@ -14,3 +14,5 @@ export * from "./receipt";
 export * from "./sunset-film";
 export * from "./template";
 export * from "./darktu-cyber";
+export * from "./bloomberg-editorial";
+export * from "./oriental-ink";

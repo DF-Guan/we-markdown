@@ -18,6 +18,8 @@ import {
   sunsetFilmTheme,
   templateTheme,
   darktuCyberTheme,
+  bloombergEditorialTheme,
+  orientalInkTheme,
 } from "@we-markdown/core";
 
 // 从 ThemeDesigner 导入共享类型（解决类型重复定义问题）
@@ -156,6 +158,22 @@ export const builtInThemes: CustomTheme[] = [
     id: "template",
     name: "主题模板",
     css: basicTheme + "\n" + templateTheme + "\n" + codeGithubTheme,
+    isBuiltIn: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "bloomberg-editorial",
+    name: "彭博特稿",
+    css: basicTheme + "\n" + bloombergEditorialTheme + "\n" + codeGithubTheme,
+    isBuiltIn: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "oriental-ink",
+    name: "东方青黛",
+    css: basicTheme + "\n" + orientalInkTheme + "\n" + codeGithubTheme,
     isBuiltIn: true,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
