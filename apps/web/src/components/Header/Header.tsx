@@ -24,6 +24,7 @@ import {
   Moon,
   ChevronsUp,
   ChevronsDown,
+  Sparkles,
 } from "lucide-react";
 import { useUITheme } from "../../hooks/useUITheme";
 import { useWindowControls } from "../../hooks/useWindowControls";
@@ -187,6 +188,13 @@ export function Header() {
             onClick={() => setShowThemePanel(true)}
           />
           <FloatingToolbarButton
+            icon={<Sparkles size={18} strokeWidth={2} />}
+            label="暗图生态"
+            onClick={() =>
+              window.open("https://darktu.com", "_blank", "noopener,noreferrer")
+            }
+          />
+          <FloatingToolbarButton
             icon={<Send size={18} strokeWidth={2} />}
             label="复制到公众号"
             onClick={copyToWechat}
@@ -252,6 +260,21 @@ export function Header() {
               <Palette size={18} strokeWidth={2} />
               <span>主题管理</span>
             </button>
+            <a
+              href="https://darktu.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary darktu-portal-btn"
+              title="探索 Darktu 暗图生态"
+              aria-label="暗图生态"
+            >
+              <Sparkles
+                size={18}
+                strokeWidth={2}
+                className="darktu-sparkle-icon"
+              />
+              <span>暗图生态</span>
+            </a>
 
             <button className="btn-primary" onClick={copyToWechat}>
               <Send size={18} strokeWidth={2} />

@@ -17,6 +17,7 @@ import {
   receiptTheme,
   sunsetFilmTheme,
   templateTheme,
+  darktuCyberTheme,
 } from "@we-markdown/core";
 
 // 从 ThemeDesigner 导入共享类型（解决类型重复定义问题）
@@ -59,6 +60,14 @@ export const builtInThemes: CustomTheme[] = [
     id: "default",
     name: "默认主题",
     css: basicTheme + "\n" + customDefaultTheme + "\n" + codeGithubTheme,
+    isBuiltIn: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "darktu-cyber",
+    name: "暗图极客",
+    css: basicTheme + "\n" + darktuCyberTheme + "\n" + codeGithubTheme,
     isBuiltIn: true,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
