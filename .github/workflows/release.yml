@@ -56,6 +56,7 @@ jobs:
 
       - name: Upload macOS artifacts
         if: matrix.target == 'mac'
+        uses: actions/upload-artifact@v4
         with:
           name: macos-artifacts
           path: apps/electron/release/
@@ -63,6 +64,7 @@ jobs:
 
       - name: Upload Windows artifacts
         if: matrix.target == 'win'
+        uses: actions/upload-artifact@v4
         with:
           name: windows-artifacts
           path: apps/electron/release/
