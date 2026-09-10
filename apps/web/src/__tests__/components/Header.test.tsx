@@ -70,7 +70,7 @@ describe("Header", () => {
       window.localStorage &&
       typeof window.localStorage.removeItem === "function"
     ) {
-      window.localStorage.removeItem("ahafair-header-autohide");
+      window.localStorage.removeItem("wemd-header-autohide");
     }
 
     // Setup default hook returns
@@ -193,7 +193,7 @@ describe("Header", () => {
 
     await waitFor(() => {
       expect(storageMock.setItem).toHaveBeenCalledWith(
-        "ahafair-header-autohide",
+        "wemd-header-autohide",
         "true",
       );
     });
