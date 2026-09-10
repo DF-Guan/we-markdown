@@ -5,8 +5,8 @@ import {
 } from "../../components/Editor/snippetTemplates";
 
 describe("CREATOR_SNIPPET_TEMPLATES (自媒体排版组件库)", () => {
-  it("should provide 5 high-quality, restrained templates", () => {
-    expect(CREATOR_SNIPPET_TEMPLATES.length).toBe(5);
+  it("should provide 7 high-quality, restrained templates", () => {
+    expect(CREATOR_SNIPPET_TEMPLATES.length).toBe(7);
   });
 
   it("should ensure every template has unique IDs and valid fields", () => {
@@ -16,6 +16,7 @@ describe("CREATOR_SNIPPET_TEMPLATES (自媒体排版组件库)", () => {
       "quote",
       "list",
       "comparison",
+      "layout",
       "signature",
     ];
 
@@ -55,6 +56,8 @@ describe("CREATOR_SNIPPET_TEMPLATES (自媒体排版组件库)", () => {
     expect(templateIds).toContain("punchline-quote");
     expect(templateIds).toContain("step-badge-list");
     expect(templateIds).toContain("comparison-card");
+    expect(templateIds).toContain("dual-image-grid");
+    expect(templateIds).toContain("trio-image-grid");
     expect(templateIds).toContain("author-signature");
   });
 });

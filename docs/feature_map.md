@@ -54,6 +54,17 @@
 - **Observable State (物理可观测)**:
   - `apps/web/src/__tests__/utils/panguFormatter.test.ts` 与 `apps/web/src/__tests__/utils/wordCount.test.ts` 均通过回归测试；工具栏渲染含 `Wand2` 的美化按钮，底部状态栏包含 `.editor-stat-reading` 元素。
 
+### 6. 微信内容合规自检与多图画廊排版 (`content-compliance-and-image-grid`)
+
+- **User POV (用户视角)**:
+  - 用户在编辑器工具栏点击「合规体检」盾牌图标按钮，展开纯本地轻量悬浮卡片，一键毫秒级检测广告法极限词（如“顶级”、“最佳”、“最先进”）、虚假夸大承诺与平台诱导词，并支持一键替换为合规推荐词；若文章无违规，显示安全绿色徽章；
+  - 用户在「自媒体排版组件」菜单中可一键插入「双图并排对比」与「三图画廊组合」，自动生成兼顾移动端适配与公众号后台内联 CSS 的优雅多图网格。
+- **Agent Drive (机器驱动)**:
+  - `checkCompliance` 自动遮盖屏蔽代码块与公式，执行纯本地安全正则比对并精准定位字符坐标；
+  - `CREATOR_SNIPPET_TEMPLATES` 导出高质感 `dual-image-grid` 与 `trio-image-grid` 内联 HTML。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/services/complianceChecker.test.ts` 与 `apps/web/src/__tests__/components/snippetTemplates.test.ts` 全部通过；工具栏渲染 `ComplianceCheckPopover`。
+
 ---
 
 ## 🛠️ 机械校验指令 (Verification Command)

@@ -1,7 +1,13 @@
 export interface SnippetTemplate {
   id: string;
   name: string;
-  category: "callout" | "quote" | "list" | "comparison" | "signature";
+  category:
+    | "callout"
+    | "quote"
+    | "list"
+    | "comparison"
+    | "layout"
+    | "signature";
   badge: string;
   description: string;
   html: string;
@@ -63,18 +69,18 @@ export const CREATOR_SNIPPET_TEMPLATES: SnippetTemplate[] = [
   <div style="display: flex; align-items: flex-start;">
     <span style="display: inline-block; min-width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #07c160; color: #ffffff; font-size: 12px; font-weight: 700; border-radius: 50%; margin-right: 12px; margin-top: 2px;">03</span>
     <div style="flex: 1;">
-      <p style="margin: 0; font-size: 15px; font-weight: 600; color: #0f172a; line-height: 1.5;">第三步：一键无损复制发布</p>
-      <p style="margin: 4px 0 0 0; font-size: 13px; color: #64748b; line-height: 1.6;">点击复制到微信公众号后台，自研内联 CSS 完美保全段落与色彩。</p>
+      <p style="margin: 0; font-size: 15px; font-weight: 600; color: #0f172a; line-height: 1.5;">第三步：一键美化与排查</p>
+      <p style="margin: 4px 0 0 0; font-size: 13px; color: #64748b; line-height: 1.6;">使用盘古规范优化字距，检查合规极限词后安心发文。</p>
     </div>
   </div>
 </section>`,
   },
   {
     id: "comparison-card",
-    name: "核心对比卡片",
+    name: "红绿双栏对比",
     category: "comparison",
-    badge: "优劣对照",
-    description: "左右双栏（或上下分栏）对比方案与利弊，视觉清晰直观",
+    badge: "方案对比",
+    description: "左右双列红绿对比卡片，适合推荐实践与避坑指南",
     html: `<section style="margin: 24px 0; display: flex; gap: 12px; box-sizing: border-box;">
   <div style="flex: 1; padding: 16px; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; box-sizing: border-box;">
     <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #166534;">✅ 推荐做法</p>
@@ -83,6 +89,44 @@ export const CREATOR_SNIPPET_TEMPLATES: SnippetTemplate[] = [
   <div style="flex: 1; padding: 16px; background-color: #fff7ed; border: 1px solid #fed7aa; border-radius: 10px; box-sizing: border-box;">
     <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #9a3412;">⚠️ 避坑提醒</p>
     <p style="margin: 0; font-size: 13px; color: #c2410c; line-height: 1.6;">• 避免高饱和度大花边干扰内容<br>• 避免外链依赖导致图片失效<br>• 避免大段无间距挤占视觉</p>
+  </div>
+</section>`,
+  },
+  {
+    id: "dual-image-grid",
+    name: "双图并排对比",
+    category: "layout",
+    badge: "画廊并列",
+    description: "左右等宽双图排版，优雅微间距与图注，解决垂直堆叠单调问题",
+    html: `<section style="margin: 24px 0; display: flex; gap: 12px; box-sizing: border-box;">
+  <div style="flex: 1; text-align: center; box-sizing: border-box;">
+    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 8px; display: block; object-fit: cover;" alt="对比图 A" />
+    <span style="display: block; margin-top: 6px; font-size: 12px; color: #888888;">图 1 说明 (支持替换图片链接)</span>
+  </div>
+  <div style="flex: 1; text-align: center; box-sizing: border-box;">
+    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 8px; display: block; object-fit: cover;" alt="对比图 B" />
+    <span style="display: block; margin-top: 6px; font-size: 12px; color: #888888;">图 2 说明 (支持替换图片链接)</span>
+  </div>
+</section>`,
+  },
+  {
+    id: "trio-image-grid",
+    name: "三图画廊组合",
+    category: "layout",
+    badge: "画廊组合",
+    description: "横向三图画廊，移动端自适应平铺，适合展示多维度细节",
+    html: `<section style="margin: 24px 0; display: flex; gap: 8px; box-sizing: border-box;">
+  <div style="flex: 1; text-align: center; box-sizing: border-box;">
+    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 A" />
+    <span style="display: block; margin-top: 4px; font-size: 11px; color: #888888;">视角 1</span>
+  </div>
+  <div style="flex: 1; text-align: center; box-sizing: border-box;">
+    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 B" />
+    <span style="display: block; margin-top: 4px; font-size: 11px; color: #888888;">视角 2</span>
+  </div>
+  <div style="flex: 1; text-align: center; box-sizing: border-box;">
+    <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600&auto=format&fit=crop&q=80" style="width: 100%; border-radius: 6px; display: block; object-fit: cover;" alt="视角 C" />
+    <span style="display: block; margin-top: 4px; font-size: 11px; color: #888888;">视角 3</span>
   </div>
 </section>`,
   },

@@ -61,6 +61,7 @@ export function ComponentPickerPopover({
     { id: "quote", label: "金句" },
     { id: "list", label: "清单" },
     { id: "comparison", label: "对比" },
+    { id: "layout", label: "图组" },
     { id: "signature", label: "名片" },
   ];
 

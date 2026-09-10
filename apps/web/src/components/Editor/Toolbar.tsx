@@ -28,14 +28,22 @@ import {
 import { setLinkToFootnoteEnabled } from "./ToolbarState";
 import { SyntaxHelpPopover } from "./SyntaxHelpPopover";
 import { ComponentPickerPopover } from "./ComponentPickerPopover";
+import { ComplianceCheckPopover } from "./ComplianceCheckPopover";
 import "./Toolbar.css";
 
 interface ToolbarProps {
   onInsert: (prefix: string, suffix: string, placeholder: string) => void;
   onFormatPangu?: () => void;
+  content?: string;
+  onReplaceWord?: (oldWord: string, newWord: string, index: number) => void;
 }
 
-export function Toolbar({ onInsert, onFormatPangu }: ToolbarProps) {
+export function Toolbar({
+  onInsert,
+  onFormatPangu,
+  content = "",
+  onReplaceWord,
+}: ToolbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [showMermaidMenu, setShowMermaidMenu] = useState(false);
@@ -395,6 +403,9 @@ export function Toolbar({ onInsert, onFormatPangu }: ToolbarProps) {
 
       {/* 语法帮助 */}
       <SyntaxHelpPopover />
+
+      {/* 微信内容与广告法极限词体检 */}
+      <ComplianceCheckPopover content={content} onReplaceWord={onReplaceWord} />
 
       {/* 隐藏的文件输入 */}
       <input

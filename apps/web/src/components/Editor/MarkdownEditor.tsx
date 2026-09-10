@@ -316,12 +316,49 @@ export function MarkdownEditor() {
     view.focus();
   };
 
+  const handleReplaceWord = (
+    oldWord: string,
+    newWord: string,
+    index: number,
+  ) => {
+    const view = viewRef.current;
+    if (!view) return;
+
+    const docLength = view.state.doc.length;
+    let from = index;
+    let to = index + oldWord.length;
+
+    if (from < docLength && view.state.doc.sliceString(from, to) === oldWord) {
+      view.dispatch({
+        changes: { from, to, insert: newWord },
+        selection: { anchor: from, head: from + newWord.length },
+      });
+    } else {
+      const fullText = view.state.doc.toString();
+      const actualIdx = fullText.indexOf(oldWord);
+      if (actualIdx !== -1) {
+        from = actualIdx;
+        to = actualIdx + oldWord.length;
+        view.dispatch({
+          changes: { from, to, insert: newWord },
+          selection: { anchor: from, head: from + newWord.length },
+        });
+      }
+    }
+    view.focus();
+  };
+
   return (
     <div className="markdown-editor">
       <div className="editor-header">
         <span className="editor-title">Markdown 编辑器</span>
       </div>
-      <Toolbar onInsert={handleInsert} onFormatPangu={handleFormatPangu} />
+      <Toolbar
+        onInsert={handleInsert}
+        onFormatPangu={handleFormatPangu}
+        content={content}
+        onReplaceWord={handleReplaceWord}
+      />
       {showSearch && viewRef.current && (
         <SearchPanel
           view={viewRef.current}
