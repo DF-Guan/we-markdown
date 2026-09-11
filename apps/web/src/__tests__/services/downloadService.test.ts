@@ -118,6 +118,48 @@ describe("downloadService", () => {
       );
       expect(macArmItem?.fileSize).toBe("90.0 MB");
     });
+
+    it("correctly prioritizes setup installer over elevate.exe and matches universal/x64 dmg", () => {
+      const initial = buildFallbackPlatforms("1.3.0");
+      const mockAssets = [
+        {
+          name: "elevate.exe",
+          browser_download_url: "https://github.com/downloads/elevate.exe",
+          size: 107520,
+        },
+        {
+          name: "WeMarkdown.Setup.1.3.0.exe",
+          browser_download_url:
+            "https://github.com/downloads/WeMarkdown.Setup.1.3.0.exe",
+          size: 85698519,
+        },
+        {
+          name: "WeMarkdown-1.3.0-arm64.dmg",
+          browser_download_url:
+            "https://github.com/downloads/WeMarkdown-1.3.0-arm64.dmg",
+          size: 107917127,
+        },
+        {
+          name: "WeMarkdown-1.3.0.dmg",
+          browser_download_url:
+            "https://github.com/downloads/WeMarkdown-1.3.0.dmg",
+          size: 109859055,
+        },
+      ];
+
+      const merged = mergeAssetsWithPlatforms(initial, mockAssets);
+      const winInstaller = merged
+        .find((p) => p.os === "windows")
+        ?.items.find((i) => i.id === "win-installer");
+      expect(winInstaller?.fileName).toBe("WeMarkdown.Setup.1.3.0.exe");
+      expect(winInstaller?.fileSize).toBe("81.7 MB");
+
+      const macX64 = merged
+        .find((p) => p.os === "mac")
+        ?.items.find((i) => i.id === "mac-x64");
+      expect(macX64?.fileName).toBe("WeMarkdown-1.3.0.dmg");
+      expect(macX64?.fileSize).toBe("104.8 MB");
+    });
   });
 
   describe("fetchLatestReleaseInfo", () => {

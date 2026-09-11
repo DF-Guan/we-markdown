@@ -221,21 +221,39 @@ export function mergeAssetsWithPlatforms(
       // 模糊匹配 assets 中的同类安装包
       const matched = assets.find((a) => {
         const name = a.name.toLowerCase();
-        if (item.id === "win-installer") return name.endsWith(".exe");
-        if (item.id === "win-portable")
+        if (item.id === "win-installer") {
           return (
-            name.endsWith("win.zip") ||
-            (name.includes("win") && name.endsWith(".zip"))
+            name.endsWith(".exe") &&
+            !name.includes("elevate") &&
+            (name.includes("setup") ||
+              name.includes("installer") ||
+              !assets.some((x) => x.name.toLowerCase().includes("setup")))
           );
-        if (item.id === "mac-arm64")
+        }
+        if (item.id === "win-portable") {
+          return (
+            name.endsWith(".zip") &&
+            (name.includes("win") || name.includes("windows"))
+          );
+        }
+        if (item.id === "mac-arm64") {
           return name.includes("arm64") && name.endsWith(".dmg");
-        if (item.id === "mac-x64")
+        }
+        if (item.id === "mac-x64") {
           return (
-            (name.includes("x64") || name.includes("intel")) &&
-            name.endsWith(".dmg")
+            name.endsWith(".dmg") &&
+            (name.includes("x64") ||
+              name.includes("intel") ||
+              !name.includes("arm64"))
           );
-        if (item.id === "mac-zip")
-          return name.includes("mac") && name.endsWith(".zip");
+        }
+        if (item.id === "mac-zip") {
+          return (
+            name.endsWith(".zip") &&
+            name.includes("mac") &&
+            !name.includes("arm64")
+          );
+        }
         if (item.id === "linux-appimage") return name.endsWith(".appimage");
         if (item.id === "linux-deb") return name.endsWith(".deb");
         return false;
