@@ -131,6 +131,19 @@
 - **Observable State (物理可观测)**:
   - `apps/web/src/__tests__/services/downloadService.test.ts` 与 `apps/web/src/__tests__/components/DownloadPortal.test.tsx` 100% 全绿通过；Vite 自动将 `DownloadPortal` 分块打包为独立按需加载 chunk；Header 中在非 Electron 环境下渲染 `.btn-download-client`。
 
+### 13. 编辑器深度体验与自媒体起手骨架优化 (`editor-zen-mode-and-skeletons`)
+
+- **User POV (用户视角)**:
+  - **桌面端三分栏与专注模式**：在编辑器/预览标题栏点击胶囊切换按钮，可在「对照 (50/50)」、「专注编辑 (100% 全宽沉浸写作)」与「纯净预览 (100% 全宽排版审校)」间一键切换，偏好自动保存；
+  - **拖拽传图与文件直传**：从电脑桌面或文件夹直接拖拽图片或 Markdown 文本进入编辑器，自动弹出毛玻璃感应框；图片自动等比压缩至 2MB 限制内并插入，.md 文本自动解析导入；
+  - **实时选区字数统计**：选中文本时，底部状态栏动态弹出绿底高亮徽标展示「已选: X 词 · Y 字 (Z 行)」，方便推文精修；
+  - **当前行微光高亮与行号切换**：编辑时当前行呈现柔和微光，底部状态栏支持一键开启/隐藏代码行号；
+  - **自媒体起手式文章骨架模板库**：工具栏新增「起手模板」弹窗，涵盖资讯周报、深度方法论长文、读书笔记、产品评测 4 套经典框架，一键应用。
+- **Agent Drive (机器驱动)**:
+  - `editorStore.ts` 持久化 `desktopLayoutMode`；`LayoutSegmentSwitch.tsx` 统领三模态布局；`articleSkeletons.ts` 与 `ArticleSkeletonPopover.tsx` 提供结构化排版骨架；`MarkdownEditor.tsx` 集成 CodeMirror `domEventHandlers` (拖拽)、`highlightActiveLine()`、`lineNumbers()` 与选区动态监听。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/components/ArticleSkeletonPopover.test.tsx`、`articleSkeletons.test.ts` 与 `LayoutSegmentSwitch.test.tsx` 100% 全绿通过；`.editor-drag-overlay`、`.editor-stat-selected`、`.layout-segment-switch` 真实渲染且样式就绪。
+
 ---
 
 ## 🛠️ 机械校验指令 (Verification Command)

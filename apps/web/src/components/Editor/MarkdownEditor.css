@@ -532,3 +532,202 @@
 [data-ui-theme="dark"] .editor-container .cm-line {
   color: #d4d4d4;
 }
+
+/* === 拖拽文件感应蒙层 === */
+.editor-drag-overlay {
+  position: absolute;
+  inset: 12px;
+  z-index: 50;
+  border: 2px dashed #07c160;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  animation: dragOverlayFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dragOverlayFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.editor-drag-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 24px 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow:
+    0 16px 36px -12px rgba(7, 193, 96, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(7, 193, 96, 0.2);
+}
+
+.drag-icon-bounce {
+  color: #07c160;
+  animation: dragIconBounce 1.2s infinite ease-in-out;
+}
+
+@keyframes dragIconBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.drag-primary-text {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.drag-secondary-text {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+[data-ui-theme="dark"] .editor-drag-overlay {
+  background: rgba(15, 23, 42, 0.92);
+  border-color: #07c160;
+}
+
+[data-ui-theme="dark"] .editor-drag-card {
+  background: #1e293b;
+  border-color: rgba(7, 193, 96, 0.3);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
+}
+
+[data-ui-theme="dark"] .drag-primary-text {
+  color: #f8fafc;
+}
+
+[data-ui-theme="dark"] .drag-secondary-text {
+  color: #94a3b8;
+}
+
+/* === 实时选区微徽标 === */
+.editor-stat-selected {
+  background: rgba(7, 193, 96, 0.12) !important;
+  color: #07c160 !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(7, 193, 96, 0.25) !important;
+  animation: statBadgePop 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes statBadgePop {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* === 编辑器底部快捷操作组 === */
+.editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border-light);
+  background: var(--bg-primary);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.editor-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.editor-footer-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary, #64748b);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.editor-footer-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary, #0f172a);
+}
+
+.editor-footer-toggle-btn.is-active {
+  background: rgba(7, 193, 96, 0.1);
+  color: #07c160;
+  border-color: rgba(7, 193, 96, 0.2);
+}
+
+[data-ui-theme="dark"] .editor-footer-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+}
+
+[data-ui-theme="dark"] .editor-footer-toggle-btn.is-active {
+  background: rgba(7, 193, 96, 0.15);
+  color: #38ef7d;
+  border-color: rgba(7, 193, 96, 0.3);
+}
+
+/* === CodeMirror 行号与当前行高亮优雅适配 === */
+.editor-container .cm-lineNumbers .cm-gutterElement {
+  padding: 0 10px 0 6px;
+  font-size: 12px;
+  font-family: var(--font-mono, monospace);
+  color: #94a3b8;
+  user-select: none;
+}
+
+[data-ui-theme="dark"] .editor-container .cm-lineNumbers .cm-gutterElement {
+  color: #64748b;
+}
+
+.editor-container .cm-activeLine {
+  background-color: rgba(7, 193, 96, 0.035) !important;
+  border-radius: 2px;
+}
+
+.editor-container .cm-activeLineGutter {
+  color: #07c160 !important;
+  font-weight: 700 !important;
+}
+
+[data-ui-theme="dark"] .editor-container .cm-activeLine {
+  background-color: rgba(255, 255, 255, 0.035) !important;
+}
+
+[data-ui-theme="dark"] .editor-container .cm-activeLineGutter {
+  color: #38ef7d !important;
+  font-weight: 700 !important;
+}

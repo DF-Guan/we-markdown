@@ -30,6 +30,7 @@ import { SyntaxHelpPopover } from "./SyntaxHelpPopover";
 import { ComponentPickerPopover } from "./ComponentPickerPopover";
 import { ComplianceCheckPopover } from "./ComplianceCheckPopover";
 import { AICopilotPopover } from "./AICopilotPopover";
+import { ArticleSkeletonPopover } from "./ArticleSkeletonPopover";
 import "./Toolbar.css";
 
 interface ToolbarProps {
@@ -392,6 +393,13 @@ export function Toolbar({
 
       {/* 自媒体排版组件 */}
       <ComponentPickerPopover onInsert={onInsert} />
+
+      {/* 自媒体文章起手式模板 */}
+      <ArticleSkeletonPopover
+        onInsertContent={(txt) => onInsert("", "", txt)}
+        onReplaceContent={onReplaceContent}
+        currentContentLength={content.length}
+      />
 
       {/* 盘古中英文排版美化 */}
       {onFormatPangu && (

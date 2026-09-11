@@ -26,6 +26,9 @@ interface EditorStore {
 
   resetDocument: (options?: ResetOptions) => void;
   copyToWechat: () => void;
+
+  desktopLayoutMode: "split" | "editor" | "preview";
+  setDesktopLayoutMode: (mode: "split" | "editor" | "preview") => void;
 }
 
 export const defaultMarkdown = `# 欢迎使用 WeMarkdown
@@ -200,5 +203,22 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     } catch (error) {
       console.error("复制失败:", error);
     }
+  },
+
+  desktopLayoutMode: (() => {
+    if (typeof window === "undefined") return "split";
+    const saved = localStorage.getItem("wemd-desktop-layout");
+    if (saved === "editor" || saved === "preview" || saved === "split") {
+      return saved;
+    }
+    return "split";
+  })(),
+  setDesktopLayoutMode: (mode) => {
+    try {
+      localStorage.setItem("wemd-desktop-layout", mode);
+    } catch {
+      /* ignore quota error */
+    }
+    set({ desktopLayoutMode: mode });
   },
 }));

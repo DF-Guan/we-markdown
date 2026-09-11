@@ -72,6 +72,7 @@ function App() {
   } = useMobileView();
   const isMobile = isMobileScreen && !platform.isElectron;
   const copyToWechat = useEditorStore((state) => state.copyToWechat);
+  const desktopLayoutMode = useEditorStore((state) => state.desktopLayoutMode);
   const [showThemePanel, setShowThemePanel] = useState(false);
 
   // 客户端下载专区与独立路由状态 (#/download)
@@ -423,6 +424,7 @@ function App() {
           </div>
           <div
             className="workspace"
+            data-desktop-view={!isMobile ? desktopLayoutMode : undefined}
             data-mobile-view={isMobile ? activeView : undefined}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
