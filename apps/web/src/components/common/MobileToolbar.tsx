@@ -24,6 +24,7 @@ interface MobileToolbarProps {
   onOpenTheme: () => void;
   onOpenAICopilot?: () => void;
   onOpenComponentPicker?: () => void;
+  onOpenDownload?: () => void;
 }
 
 /**
@@ -36,6 +37,7 @@ export function MobileToolbar({
   onOpenTheme,
   onOpenAICopilot,
   onOpenComponentPicker,
+  onOpenDownload,
 }: MobileToolbarProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [canInstall, setCanInstall] = useState(false);
@@ -97,6 +99,18 @@ export function MobileToolbar({
                 <Palette size={20} />
                 <span>主题管理</span>
               </button>
+              {onOpenDownload && (
+                <button
+                  className="mobile-menu-item"
+                  onClick={() => {
+                    onOpenDownload();
+                    setShowMenu(false);
+                  }}
+                >
+                  <Download size={20} color="#2563eb" />
+                  <span>桌面客户端下载</span>
+                </button>
+              )}
               {canInstall && (
                 <button
                   className="mobile-menu-item"

@@ -36,6 +36,11 @@ const UpdateModal = lazy(() =>
     default: m.UpdateModal,
   })),
 );
+const DownloadPortal = lazy(() =>
+  import("./components/DownloadPortal/DownloadPortal").then((m) => ({
+    default: m.DownloadPortal,
+  })),
+);
 import { MobileThemeSelector } from "./components/Theme/MobileThemeSelector";
 
 interface UpdateEventData {
@@ -68,6 +73,66 @@ function App() {
   const isMobile = isMobileScreen && !platform.isElectron;
   const copyToWechat = useEditorStore((state) => state.copyToWechat);
   const [showThemePanel, setShowThemePanel] = useState(false);
+
+  // 客户端下载专区与独立路由状态 (#/download)
+  const [showDownloadPortal, setShowDownloadPortal] = useState(false);
+  const [isDownloadRoute, setIsDownloadRoute] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const hash = window.location.hash.toLowerCase();
+    const path = window.location.pathname.toLowerCase();
+    return (
+      hash === "#/download" ||
+      hash === "#download" ||
+      path.endsWith("/download")
+    );
+  });
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      const path = window.location.pathname.toLowerCase();
+      const match =
+        hash === "#/download" ||
+        hash === "#download" ||
+        path.endsWith("/download");
+      setIsDownloadRoute(match);
+      if (match) {
+        setShowDownloadPortal(true);
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  const handleOpenDownloadPortal = () => {
+    setShowDownloadPortal(true);
+    if (
+      typeof window !== "undefined" &&
+      window.location.hash !== "#/download"
+    ) {
+      window.location.hash = "#/download";
+    }
+  };
+
+  const handleCloseDownloadPortal = () => {
+    setShowDownloadPortal(false);
+    setIsDownloadRoute(false);
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === "#/download" || hash === "#download") {
+        if (window.history?.replaceState) {
+          window.history.replaceState(
+            "",
+            document.title,
+            window.location.pathname + window.location.search,
+          );
+        } else {
+          window.location.hash = "";
+        }
+      }
+    }
+  };
 
   // 移动端左右滑动手势切换编辑/预览
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -244,6 +309,16 @@ function App() {
 
   return (
     <div className="app" data-layout-mode={isMobile ? "mobile" : "desktop"}>
+      {/* 客户端下载专区（支持 URL 路由直达与 Header 弹窗呼出） */}
+      {(showDownloadPortal || isDownloadRoute) && (
+        <Suspense fallback={null}>
+          <DownloadPortal
+            isStandaloneRoute={isDownloadRoute}
+            onClose={handleCloseDownloadPortal}
+          />
+        </Suspense>
+      )}
+
       {/* 更新提示 Modal */}
       {updateInfo && (
         <Suspense fallback={null}>
@@ -309,7 +384,7 @@ function App() {
             },
           }}
         />
-        <Header />
+        <Header onOpenDownload={handleOpenDownloadPortal} />
         <button
           className={`history-toggle ${showHistory ? "" : "is-collapsed"}`}
           onClick={() => setShowHistory((prev) => !prev)}
@@ -388,6 +463,7 @@ function App() {
               onOpenTheme={() => setShowThemePanel(true)}
               onOpenAICopilot={handleOpenAICopilot}
               onOpenComponentPicker={handleOpenComponentPicker}
+              onOpenDownload={handleOpenDownloadPortal}
             />
           )}
         </main>

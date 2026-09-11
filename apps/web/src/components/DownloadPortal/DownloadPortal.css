@@ -1,0 +1,715 @@
+/* ==========================================================================
+   WeMarkdown 客户端下载中心 (DownloadPortal) 样式
+   遵循 Apple 极简、玻璃拟态、高级黑白银色系与深色自适应
+   ========================================================================== */
+
+.download-portal-container {
+  box-sizing: border-box;
+  width: 100%;
+  color: var(--ui-text-primary);
+  font-family: var(--ui-font-sans);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 独立路由模式：占满全视口 */
+.download-portal-container.standalone {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--ui-bg-page);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(0, 0, 0, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 0, 0, 0.04) 0px, transparent 50%);
+}
+
+/* 编辑器内弹窗模式：毛玻璃浮层 */
+.download-portal-container.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px;
+  animation: downloadPortalFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes downloadPortalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.download-portal-inner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  background: var(--ui-bg-primary);
+  border-radius: var(--ui-radius-xl);
+  border: 1px solid var(--ui-border-light);
+  box-shadow: var(--ui-shadow-premium);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.standalone .download-portal-inner {
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0 24px;
+}
+
+/* --------------------------------------------------------------------------
+   顶部导航栏
+   -------------------------------------------------------------------------- */
+.download-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 36px;
+  border-bottom: 1px solid var(--ui-border-light);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+[data-ui-theme="dark"] .download-header {
+  background: rgba(28, 28, 30, 0.85);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.download-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.download-brand-logo {
+  border-radius: 10px;
+  box-shadow: var(--ui-shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.download-brand-logo:hover {
+  transform: scale(1.05);
+}
+
+.download-brand-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.download-brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-version-pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-bg-secondary);
+  color: var(--ui-text-secondary);
+  border: 1px solid var(--ui-border-light);
+}
+
+.download-brand-desc {
+  font-size: 12px;
+  color: var(--ui-text-tertiary);
+}
+
+.download-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.download-ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ui-text-secondary);
+  padding: 8px 14px;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-bg-secondary);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.download-ghost-btn:hover {
+  color: var(--ui-text-primary);
+  background: var(--ui-bg-hover);
+}
+
+.download-close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: var(--ui-bg-secondary);
+  color: var(--ui-text-primary);
+  padding: 8px 14px;
+  border-radius: var(--ui-radius-pill);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.download-close-btn:hover {
+  background: var(--ui-bg-hover);
+  transform: scale(1.02);
+}
+
+/* --------------------------------------------------------------------------
+   首屏 Hero
+   -------------------------------------------------------------------------- */
+.download-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 56px 24px 36px;
+  background: linear-gradient(
+    180deg,
+    var(--ui-bg-page) 0%,
+    var(--ui-bg-primary) 100%
+  );
+  border-bottom: 1px solid var(--ui-border-light);
+}
+
+.download-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 4px 12px;
+  border-radius: var(--ui-radius-pill);
+  margin-bottom: 18px;
+}
+
+.download-hero-title {
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0 0 14px;
+  line-height: 1.15;
+  background: linear-gradient(
+    180deg,
+    var(--ui-text-primary) 0%,
+    var(--ui-text-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.download-hero-subtitle {
+  font-size: 16px;
+  color: var(--ui-text-secondary);
+  max-width: 620px;
+  line-height: 1.6;
+  margin: 0 0 32px;
+}
+
+/* 主推荐大卡片 */
+.download-primary-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 580px;
+}
+
+.download-hero-loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  color: var(--ui-text-secondary);
+  font-size: 14px;
+}
+
+.download-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ui-border-color);
+  border-top-color: var(--ui-text-primary);
+  border-radius: 50%;
+  animation: downloadSpin 0.7s linear infinite;
+}
+
+@keyframes downloadSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* macOS 芯片架构切换 */
+.mac-arch-toggle {
+  display: flex;
+  background: var(--ui-bg-secondary);
+  border-radius: var(--ui-radius-pill);
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 8px;
+  border: 1px solid var(--ui-border-light);
+}
+
+.mac-arch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: var(--ui-radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ui-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mac-arch-btn.active {
+  background: var(--ui-bg-primary);
+  color: var(--ui-text-primary);
+  box-shadow: var(--ui-shadow-sm);
+  font-weight: 600;
+}
+
+.arch-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  background: #10b981;
+  color: #ffffff;
+  border-radius: var(--ui-radius-pill);
+  font-weight: 600;
+}
+
+/* 主推荐下载 CTA */
+.download-cta-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 28px;
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-accent-primary);
+  color: #ffffff !important;
+  text-decoration: none;
+  box-shadow: var(--ui-shadow-lg);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.download-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ui-shadow-xl);
+  filter: brightness(1.08);
+}
+
+.download-cta-primary:active {
+  transform: translateY(0);
+}
+
+.download-cta-text {
+  text-align: left;
+}
+
+.download-cta-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+
+.download-cta-sub {
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+.download-alt-link {
+  font-size: 13px;
+  color: var(--ui-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.download-alt-link a {
+  color: var(--ui-text-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.download-alt-tip {
+  color: var(--ui-text-tertiary);
+  font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   全平台矩阵卡片区域
+   -------------------------------------------------------------------------- */
+.download-matrix-section {
+  padding: 48px 36px;
+  background: var(--ui-bg-primary);
+}
+
+.download-section-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.download-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.download-section-subtitle {
+  font-size: 14px;
+  color: var(--ui-text-secondary);
+  margin: 0;
+}
+
+.download-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.platform-card {
+  background: var(--ui-bg-secondary);
+  border: 1px solid var(--ui-border-light);
+  border-radius: var(--ui-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.platform-card:hover {
+  border-color: var(--ui-border-color);
+  box-shadow: var(--ui-shadow-md);
+}
+
+.platform-card.highlighted {
+  border-color: var(--ui-text-primary);
+  background: var(--ui-bg-card-muted);
+  box-shadow: var(--ui-shadow-md);
+}
+
+.platform-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.platform-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ui-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ui-bg-primary);
+  border: 1px solid var(--ui-border-light);
+  color: var(--ui-text-primary);
+}
+
+.platform-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+
+.platform-card-requirement {
+  font-size: 12px;
+  color: var(--ui-text-tertiary);
+}
+
+.platform-curr-tag {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-accent-primary);
+  color: #ffffff;
+}
+
+.platform-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.platform-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  background: var(--ui-bg-primary);
+  border-radius: var(--ui-radius-md);
+  border: 1px solid var(--ui-border-light);
+  transition: border-color 0.15s ease;
+}
+
+.platform-item-row:hover {
+  border-color: var(--ui-border-color);
+}
+
+.platform-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.platform-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ui-text-primary);
+}
+
+.item-size-pill {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ui-text-tertiary);
+  background: var(--ui-bg-secondary);
+  padding: 1px 6px;
+  border-radius: var(--ui-radius-pill);
+}
+
+.platform-item-desc {
+  font-size: 11px;
+  color: var(--ui-text-secondary);
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.platform-download-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-accent-primary);
+  color: #ffffff !important;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.platform-download-action:hover {
+  transform: scale(1.04);
+  filter: brightness(1.1);
+}
+
+/* --------------------------------------------------------------------------
+   客户端专属核心优势
+   -------------------------------------------------------------------------- */
+.download-features-section {
+  padding: 48px 36px;
+  background: var(--ui-bg-page);
+  border-top: 1px solid var(--ui-border-light);
+}
+
+.download-features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.feature-item-card {
+  background: var(--ui-bg-primary);
+  border: 1px solid var(--ui-border-light);
+  border-radius: var(--ui-radius-lg);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ui-text-primary);
+  margin-bottom: 16px;
+}
+
+.feature-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.feature-card-text {
+  font-size: 12px;
+  color: var(--ui-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   首次安装指南与安全声明
+   -------------------------------------------------------------------------- */
+.download-faq-section {
+  padding: 0 36px 36px;
+  background: var(--ui-bg-page);
+}
+
+.faq-notice-card {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--ui-radius-lg);
+  padding: 20px 24px;
+}
+
+.faq-notice-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #059669;
+  margin-bottom: 10px;
+}
+
+.faq-notice-body {
+  font-size: 13px;
+  color: var(--ui-text-secondary);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   页脚
+   -------------------------------------------------------------------------- */
+.download-footer {
+  padding: 28px 36px;
+  border-top: 1px solid var(--ui-border-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: var(--ui-bg-primary);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.footer-links a {
+  color: var(--ui-text-secondary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer-links a:hover {
+  color: var(--ui-text-primary);
+}
+
+.footer-dot {
+  color: var(--ui-text-tertiary);
+}
+
+.footer-copyright {
+  font-size: 12px;
+  color: var(--ui-text-tertiary);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   响应式断点适配
+   -------------------------------------------------------------------------- */
+@media (max-width: 960px) {
+  .download-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .download-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .download-hero-title {
+    font-size: 32px;
+  }
+  .download-header,
+  .download-matrix-section,
+  .download-features-section,
+  .download-faq-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .download-portal-container.modal-overlay {
+    padding: 0;
+  }
+  .download-portal-inner {
+    border-radius: 0;
+    min-height: 100vh;
+  }
+  .download-features-grid {
+    grid-template-columns: 1fr;
+  }
+  .download-hero-title {
+    font-size: 26px;
+  }
+  .mac-arch-toggle {
+    flex-direction: column;
+    width: 100%;
+  }
+  .download-header {
+    padding: 16px;
+  }
+}

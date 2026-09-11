@@ -25,6 +25,7 @@ import {
   ChevronsUp,
   ChevronsDown,
   Sparkles,
+  Download,
 } from "lucide-react";
 import { useUITheme } from "../../hooks/useUITheme";
 import { useWindowControls } from "../../hooks/useWindowControls";
@@ -108,7 +109,11 @@ const WindowControls = ({ fixed = false }: { fixed?: boolean }) => {
   );
 };
 
-export function Header() {
+interface HeaderProps {
+  onOpenDownload?: () => void;
+}
+
+export function Header({ onOpenDownload }: HeaderProps = {}) {
   const { copyToWechat } = useEditorStore();
   const markdown =
     useEditorStore((state) =>
@@ -204,6 +209,19 @@ export function Header() {
               onClick={() => setShowStorageModal(true)}
             />
           )}
+          {!isElectron && (
+            <FloatingToolbarButton
+              icon={<Download size={18} strokeWidth={2} />}
+              label="客户端下载"
+              onClick={() => {
+                if (onOpenDownload) {
+                  onOpenDownload();
+                } else {
+                  window.location.hash = "#/download";
+                }
+              }}
+            />
+          )}
           <FloatingToolbarButton
             icon={<ImageIcon size={18} strokeWidth={2} />}
             label="图床设置"
@@ -271,6 +289,24 @@ export function Header() {
               >
                 <Layers size={18} strokeWidth={2} />
                 <span>存储模式</span>
+              </button>
+            )}
+            {!isElectron && (
+              <button
+                type="button"
+                className="btn-secondary btn-download-client"
+                onClick={() => {
+                  if (onOpenDownload) {
+                    onOpenDownload();
+                  } else {
+                    window.location.hash = "#/download";
+                  }
+                }}
+                title="下载 WeMarkdown 桌面客户端"
+                aria-label="下载 WeMarkdown 桌面客户端"
+              >
+                <Download size={18} strokeWidth={2} />
+                <span>客户端下载</span>
               </button>
             )}
             <button

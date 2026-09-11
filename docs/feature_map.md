@@ -119,6 +119,18 @@
 - **Observable State (物理可观测)**:
   - `apps/web/src/__tests__/services/pwaService.test.ts` 100% 全绿通过；`sw.js` 与 `manifest.webmanifest` 资源就绪；`App.css` 包含移动端 `@keyframes mobilePaneFadeIn` 与手势触控样式。
 
+### 12. 「A+B」双模官网级客户端下载中心 (`desktop-download-portal`)
+
+- **User POV (用户视角)**:
+  - 用户可通过 URL 路由（如 `#/download`）以独立全屏官网落地页形态访问，也可在 Web 编辑器顶部标题栏或移动端更多菜单点击「客户端下载」平滑唤起沉浸式毛玻璃下载专区，关闭后返回编辑器草稿毫发无损；
+  - **智能 OS 嗅探**：自动识别 Windows、macOS (支持 Apple Silicon 与 Intel 一键切换)、Linux，首屏高亮最适合当前电脑的安装包主按钮；
+  - **全平台矩阵卡片**：整齐罗列 Windows (.exe 安装包 / .zip 便携版)、macOS (.dmg / .zip)、Linux (.AppImage / .deb) 以及系统运行要求；
+  - **零跳转直链下载**：点击按钮直接由浏览器从 GitHub Releases 官方 CDN 拉取下载，无需跳转 GitHub 英文代码库；自动同步最新 Release 版本、文件体积与更新日志，并带有离线静态降级。
+- **Agent Drive (机器驱动)**:
+  - `downloadService.ts` 执行 `detectUserOS()` 智能嗅探、`fetchLatestReleaseInfo()` 动态拉取与静态兜底；`DownloadPortal.tsx` 与 `.css` 遵循 Apple 极简与暗色自适应设计；`App.tsx` 监听 `hashchange` 实现 URL 路由联动与状态隔离。
+- **Observable State (物理可观测)**:
+  - `apps/web/src/__tests__/services/downloadService.test.ts` 与 `apps/web/src/__tests__/components/DownloadPortal.test.tsx` 100% 全绿通过；Vite 自动将 `DownloadPortal` 分块打包为独立按需加载 chunk；Header 中在非 Electron 环境下渲染 `.btn-download-client`。
+
 ---
 
 ## 🛠️ 机械校验指令 (Verification Command)

@@ -477,6 +477,18 @@
   opacity: 0.8;
 }
 
+/* 客户端下载专区入口按钮微调 */
+.btn-download-client {
+  position: relative;
+  font-weight: 500;
+}
+
+.btn-download-client:hover {
+  background: var(--ui-bg-hover, rgba(255, 255, 255, 0.95));
+  border-color: var(--ui-border-color, rgba(0, 0, 0, 0.16));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
 /* Darktu 官网入口按钮专属微光效果 */
 .darktu-portal-btn {
   border-color: rgba(99, 102, 241, 0.25);
