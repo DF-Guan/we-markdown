@@ -71,4 +71,14 @@ describe("AICopilotPopover", () => {
 
     expect(screen.queryByText("AI 创作副驾驶")).not.toBeInTheDocument();
   });
+
+  it("should close popover when Escape key is pressed", () => {
+    render(<AICopilotPopover content="# 标题" />);
+    const triggerBtn = screen.getByRole("button", { name: /AI 创作副驾驶/i });
+    fireEvent.click(triggerBtn);
+    expect(screen.getByText("AI 创作副驾驶")).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.queryByText("AI 创作副驾驶")).not.toBeInTheDocument();
+  });
 });

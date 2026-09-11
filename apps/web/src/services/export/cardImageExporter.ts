@@ -141,12 +141,16 @@ export function buildCardMarkup(options: CardExportOptions): {
   const width = format === "quote" ? 640 : format === "card" ? 720 : 800;
   const minHeight = format === "card" ? 960 : 480;
 
-  const rawContentHtml =
+  const formattedCustomContent =
     options.customContent && options.customContent.trim()
-      ? `<div style="font-size: 18px; line-height: 1.85; color: ${theme.text}; font-weight: 500; padding: 12px 0;">${options.customContent}</div>`
-      : options.renderedHtml && options.renderedHtml.trim()
-        ? options.renderedHtml
-        : `<p style="font-size: 16px; line-height: 1.8; color: ${theme.text};">${extractArticleMeta(options.markdown).excerpt}</p>`;
+      ? escapeXml(options.customContent.trim()).replace(/\n+/g, "<br />")
+      : "";
+
+  const rawContentHtml = formattedCustomContent
+    ? `<div style="font-size: 18px; line-height: 1.85; color: ${theme.text}; font-weight: 500; padding: 12px 0;">${formattedCustomContent}</div>`
+    : options.renderedHtml && options.renderedHtml.trim()
+      ? options.renderedHtml
+      : `<p style="font-size: 16px; line-height: 1.8; color: ${theme.text};">${extractArticleMeta(options.markdown).excerpt}</p>`;
 
   const safeTitle = escapeXml(title);
   const safeAuthorName = escapeXml(authorName);

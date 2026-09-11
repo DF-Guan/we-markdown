@@ -80,4 +80,22 @@ describe("ComponentPickerPopover (排版组件弹窗与实景预览)", () => {
       expect.stringContaining(firstTemplate.html),
     );
   });
+
+  it("closes popover when Escape key is pressed", () => {
+    render(<ComponentPickerPopover onInsert={() => {}} />);
+    const trigger = screen.getByRole("button", { name: /排版组件/i });
+    fireEvent.click(trigger);
+    expect(screen.getByText("排版组件库")).toBeDefined();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(screen.queryByText("排版组件库")).toBeNull();
+  });
+
+  it("opens popover on wemd-open-component-picker custom event", () => {
+    render(<ComponentPickerPopover onInsert={() => {}} />);
+    expect(screen.queryByText("排版组件库")).toBeNull();
+
+    fireEvent(window, new CustomEvent("wemd-open-component-picker"));
+    expect(screen.getByText("排版组件库")).toBeDefined();
+  });
 });

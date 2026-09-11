@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
   Download,
   Copy,
@@ -114,7 +115,7 @@ export function CardImageExportModal({
     }
   };
 
-  return (
+  const modalNode = (
     <div className="card-export-modal-backdrop" onClick={onClose}>
       <div
         className="card-export-modal-dialog"
@@ -253,4 +254,8 @@ export function CardImageExportModal({
       </div>
     </div>
   );
+
+  return typeof document !== "undefined"
+    ? createPortal(modalNode, document.body)
+    : modalNode;
 }

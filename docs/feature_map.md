@@ -37,11 +37,12 @@
 ### 4. 自媒体内联排版组件库 (`creator-typography-snippets`)
 
 - **User POV (用户视角)**:
-  - 用户在编辑器工具栏点击「排版组件」按钮（Sparkles 图标），唤起组件选择器（支持实景视觉渲染预览与紧凑列表一键切换，包含灵感提示、杂志金句、步骤清单、核心对比、作者名片、双图并排、三图画廊 7 款精选模板），点击即插入光标处；真实效果一目了然，复制到微信公众号后台完美保全样式。
+  - 用户在编辑器工具栏点击「排版组件」按钮（Sparkles 图标），唤起组件选择器（支持实景视觉渲染预览与紧凑列表一键切换，包含灵感提示、杂志金句、步骤清单、核心对比、作者名片、双图并排、三图画廊 7 款精选模板），点击即插入光标处；真实效果一目了然，复制到微信公众号后台完美保全样式；
+  - 无论在桌面分栏宽度如何变化，弹窗均能动态自适应居中夹紧，杜绝右侧与底部截断；移动端提供全屏浮层响应与底部快捷菜单一键直达。
 - **Agent Drive (机器驱动)**:
-  - `CREATOR_SNIPPET_TEMPLATES` 导出高质感、自包含内联 CSS 组件，`ComponentPickerPopover` 提供真实渲染视窗、视图模式切换、分类过滤、无障碍键盘响应与平滑交互。
+  - `CREATOR_SNIPPET_TEMPLATES` 导出高质感、自包含内联 CSS 组件，`ComponentPickerPopover` 提供动态边界约束夹紧（`clampedGlobalLeft` 与自适应高度）、真实渲染视窗、视图模式切换、分类过滤、Esc 键与移动端事件响应。
 - **Observable State (物理可观测)**:
-  - `apps/web/src/__tests__/components/snippetTemplates.test.ts` 100% 全绿，组件弹窗支持 `.component-card-preview` 真实渲染视窗与 `.preview-toggle-btn` 模式切换；插入的 HTML 均由 `<section style="...">` 封装且具备 `box-sizing: border-box`，不含任何外部 JavaScript 或侵入式外部依赖。
+  - `apps/web/src/__tests__/components/snippetTemplates.test.ts` 与 `ComponentPickerPopover.test.tsx` 100% 全绿，组件弹窗支持 `.component-card-preview` 真实渲染视窗与 `.preview-toggle-btn` 模式切换；CSS 具备移动端适配与容器溢出防护；插入的 HTML 均由 `<section style="...">` 封装且具备 `box-sizing: border-box`，不含任何外部 JavaScript 或侵入式外部依赖。
 
 ### 5. 盘古中英文排版美化与实时阅读时长统计 (`pangu-formatter-and-reading-stats`)
 
@@ -97,13 +98,13 @@
 ### 10. 纯前端轻量化 AI 创作副驾驶 (`byok-ai-copilot`)
 
 - **User POV (用户视角)**:
-  - 用户在编辑器工具栏点击「AI 创作副驾驶」按钮（或使用快捷键 `Alt+A`），展开轻量微型悬浮面板；
+  - 用户在编辑器工具栏点击「AI 创作副驾驶」按钮（或使用快捷键 `Alt+A`），展开轻量微型悬浮面板；支持 `Escape` 键极速退出；
   - **爆款标题工坊**：一键生成 5~8 组涵盖悬念、反常识、干货清单、痛点共鸣与金句沉淀的自媒体爆款标题，支持一键设为主标题；
   - **内容润色去 AI 味**：对全文或选中文本执行自然流畅 (去 AI 味)、自媒体爆款网感、严谨学术深度与极简凝练等多维度调优；
-  - **摘要金句与海报联动**：提炼 150 字精华导读与穿透力金句，支持一键做成小红书 3:4 卡片或金句微卡（直通 `CardImageExportModal`）；
-  - **BYOK 隐私安全**：本地配置 DeepSeek / 硅基流动 / OpenAI / Claude API Key 与 BaseURL，AES-256 加密持久化存储，绝不上报第三方服务器。
+  - **摘要金句与海报联动**：提炼 150 字精华导读与穿透力金句，支持一键做成小红书 3:4 卡片或金句微卡（直通 `CardImageExportModal`，自动关闭主浮层并将模态框以 `createPortal` 独立挂载至顶层）；
+  - **BYOK 隐私安全**：本地配置 DeepSeek / 硅基流动 / OpenAI / Claude API Key 与 BaseURL，AES-256 加密持久化存储，绝不上报第三方服务器；关闭浮层时主动中断请求节约配额。
 - **Agent Drive (机器驱动)**:
-  - `aiConfig.ts` 负责凭证加密持久化与服务商预置；`aiService.ts` 统一调度 OpenAI 兼容与 Claude 规范，并执行结构化 JSON 提取与容错降级；`AICopilotPopover.tsx` 提供紧凑视窗与 CodeMirror 原子事务替换。
+  - `aiConfig.ts` 负责凭证加密持久化与服务商预置；`aiService.ts` 统一调度 OpenAI 兼容与 Claude 规范，并执行结构化 JSON 提取与容错降级；`AICopilotPopover.tsx` 提供动态视口夹紧（`clampedGlobalLeft`）、CodeMirror 原子事务替换与 Esc 响应。
 - **Observable State (物理可观测)**:
   - `apps/web/src/__tests__/services/aiConfig.test.ts`、`apps/web/src/__tests__/services/aiService.test.ts` 与 `apps/web/src/__tests__/components/AICopilotPopover.test.tsx` 100% 全绿通过；工具栏渲染 `.ai-copilot-trigger-btn` 且支持全局 `wemd-open-ai-copilot` 事件。
 
@@ -111,9 +112,10 @@
 
 - **User POV (用户视角)**:
   - 用户在移动端设备（屏幕宽度 < 768px）可使用平滑左右滑屏手势（向左轻滑切至预览，向右轻滑切至编辑）或底部 Tab 栏顺畅切换；
-  - 在 Chrome / Safari / Edge 浏览器中支持点击「添加到桌面」，即可作为独立原生 Web 应用离线脱机运行，无网环境下照常排版写作与本地暂存。
+  - 具备文本编辑与交互防冲突保护：在编辑器文字选区、拖拽光标或浏览宽代码块/表格时，自动豁免滑动手势，防止意外切屏；
+  - 在 Chrome / Safari / Edge 浏览器中支持点击「添加到桌面」，即可作为独立原生 Web 应用离线脱机运行，无网环境下照常排版写作与本地暂存；底部更多菜单支持一键呼出排版组件库。
 - **Agent Drive (机器驱动)**:
-  - `public/manifest.webmanifest` 声明应用独立窗口标识与操作快捷方式；`public/sw.js` 部署 Cache-First 离线缓存拦截策略；`pwaService.ts` 接管 Service Worker 注册、更新检测与安装事件分发；`App.tsx` 实现基于位移矢量的触控滑屏响应。
+  - `public/manifest.webmanifest` 声明应用独立窗口标识与操作快捷方式；`public/sw.js` 部署 Cache-First 离线缓存拦截策略；`pwaService.ts` 接管 Service Worker 注册、更新检测与安装事件分发；`App.tsx` 实现基于位移矢量与 DOM 目标排查的触控滑屏响应。
 - **Observable State (物理可观测)**:
   - `apps/web/src/__tests__/services/pwaService.test.ts` 100% 全绿通过；`sw.js` 与 `manifest.webmanifest` 资源就绪；`App.css` 包含移动端 `@keyframes mobilePaneFadeIn` 与手势触控样式。
 

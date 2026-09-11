@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import {
   Sparkles,
   Loader2,
@@ -138,10 +138,13 @@ export function AICopilotPopover({
       const maxHeight = Math.max(320, Math.min(540, availableHeight));
 
       setDropdownStyle({
+        position: "absolute",
         left: `${relativeLeft}px`,
         right: "auto",
         width: `${popoverWidth}px`,
         maxHeight: `${maxHeight}px`,
+        maxWidth: `calc(100vw - 24px)`,
+        boxSizing: "border-box",
       });
     };
 
@@ -154,7 +157,7 @@ export function AICopilotPopover({
     };
   }, [isOpen, activeTab]);
 
-  // 快捷键 Alt+A 触发切换
+  // 快捷键 (Alt+A 切换, Escape 关闭)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
@@ -163,11 +166,13 @@ export function AICopilotPopover({
       ) {
         e.preventDefault();
         setIsOpen((prev) => !prev);
+      } else if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isOpen]);
 
   // 监听移动端或全局自定义唤起事件
   useEffect(() => {
@@ -177,10 +182,19 @@ export function AICopilotPopover({
       window.removeEventListener("wemd-open-ai-copilot", handleCustomOpen);
   }, []);
 
-  // 点击外部关闭
+  // 点击外部关闭 (豁免海报卡片弹窗)
   useEffect(() => {
     if (!isOpen) return;
     const handleClickOutside = (e: MouseEvent) => {
+      if (cardModal.open) return;
+      const target = e.target as HTMLElement | null;
+      if (
+        target?.closest?.(
+          ".card-export-modal-backdrop, .card-export-modal-dialog",
+        )
+      ) {
+        return;
+      }
       if (
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
@@ -190,6 +204,16 @@ export function AICopilotPopover({
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen, cardModal.open]);
+
+  // 面板关闭时中断未完成的请求，节约用户 token
+  useEffect(() => {
+    if (!isOpen) {
+      abortCurrentRequest();
+    }
+    return () => {
+      abortCurrentRequest();
+    };
   }, [isOpen]);
 
   // 取消尚未完成的请求
@@ -378,6 +402,8 @@ export function AICopilotPopover({
   };
 
   const currentSelection = getSelectedText?.() || "";
+
+  const markdownParser = useMemo(() => createMarkdownParser(), []);
 
   return (
     <div className="ai-copilot-popover-container" ref={containerRef}>
@@ -670,13 +696,14 @@ export function AICopilotPopover({
                     <button
                       type="button"
                       className="ai-btn-secondary"
-                      onClick={() =>
+                      onClick={() => {
+                        setIsOpen(false);
                         setCardModal({
                           open: true,
                           content: summary,
                           format: "card",
-                        })
-                      }
+                        });
+                      }}
                     >
                       <Image size={13} />
                       <span>制作导读卡片</span>
@@ -713,13 +740,14 @@ export function AICopilotPopover({
                         <button
                           type="button"
                           className="ai-btn-secondary"
-                          onClick={() =>
+                          onClick={() => {
+                            setIsOpen(false);
                             setCardModal({
                               open: true,
                               content: q,
                               format: "quote",
-                            })
-                          }
+                            });
+                          }}
                         >
                           <Image size={13} />
                           <span>做成金句微卡</span>
@@ -874,7 +902,7 @@ export function AICopilotPopover({
           open={cardModal.open}
           onClose={() => setCardModal((prev) => ({ ...prev, open: false }))}
           markdown={content}
-          renderedHtml={createMarkdownParser().render(content)}
+          renderedHtml={markdownParser.render(content)}
           initialFormat={cardModal.format}
           initialContent={cardModal.content}
         />

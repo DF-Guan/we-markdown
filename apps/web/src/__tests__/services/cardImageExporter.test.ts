@@ -75,4 +75,17 @@ describe("cardImageExporter (卡片与长图海报导出引擎)", () => {
     expect(html).toContain('<img src="test.jpg" alt="pic" />');
     expect(html).toContain("<br />");
   });
+
+  it("should safely escape XML and preserve newlines as br tags in customContent", () => {
+    const { html } = buildCardMarkup({
+      markdown: "# 主题文章",
+      renderedHtml: "<p>原文</p>",
+      format: "quote",
+      customContent: "“代码是逻辑的写照 <AI & Logic>”\n\n专注深度排版。",
+    });
+
+    expect(html).toContain("&lt;AI &amp; Logic&gt;");
+    expect(html).toContain("<br />");
+    expect(html).not.toContain("<AI & Logic>");
+  });
 });

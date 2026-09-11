@@ -74,6 +74,16 @@ function App() {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!isMobile) return;
+    const target = e.target as HTMLElement | null;
+    // 如果触摸起点在代码编辑器内部、横向滚动元素（代码块/表格）或弹窗浮层内，不触发页面滑动切换，保障正常文字选择与滚动
+    if (
+      target?.closest?.(
+        ".cm-editor, .cm-content, .cm-line, pre, code, table, .ai-copilot-dropdown, .component-picker-popover, .mobile-menu-panel, .card-export-modal-dialog",
+      )
+    ) {
+      touchStartRef.current = null;
+      return;
+    }
     const touch = e.touches[0];
     touchStartRef.current = { x: touch.clientX, y: touch.clientY };
   };
@@ -101,6 +111,15 @@ function App() {
     }
     setTimeout(() => {
       window.dispatchEvent(new CustomEvent("wemd-open-ai-copilot"));
+    }, 60);
+  };
+
+  const handleOpenComponentPicker = () => {
+    if (activeView !== "editor") {
+      setActiveView("editor");
+    }
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("wemd-open-component-picker"));
     }, 60);
   };
 
@@ -368,6 +387,7 @@ function App() {
               onCopyToWechat={copyToWechat}
               onOpenTheme={() => setShowThemePanel(true)}
               onOpenAICopilot={handleOpenAICopilot}
+              onOpenComponentPicker={handleOpenComponentPicker}
             />
           )}
         </main>

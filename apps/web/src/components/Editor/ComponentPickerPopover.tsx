@@ -18,9 +18,85 @@ export function ComponentPickerPopover({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showVisualPreview, setShowVisualPreview] = useState(true);
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 点击外部关闭
+  // 动态计算弹窗位置与边界约束，彻底防止右侧或底部溢出截断
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const updatePlacement = () => {
+      if (!containerRef.current) return;
+      // 移动端由全屏 Fixed CSS 统领
+      if (window.innerWidth < 768) {
+        setDropdownStyle({});
+        return;
+      }
+
+      const triggerRect = containerRef.current.getBoundingClientRect();
+      const editorEl =
+        containerRef.current.closest(".editor-pane") ||
+        containerRef.current.closest(".markdown-editor");
+
+      const editorRect = editorEl
+        ? editorEl.getBoundingClientRect()
+        : {
+            left: 0,
+            right: window.innerWidth,
+            top: 0,
+            bottom: window.innerHeight,
+            width: window.innerWidth,
+          };
+
+      // 弹窗宽度：300px ~ 390px，且留出左右至少 24px 边距
+      const popoverWidth = Math.max(300, Math.min(390, editorRect.width - 24));
+
+      // 以按钮中心为理想中轴
+      const btnCenter = triggerRect.left + triggerRect.width / 2;
+      const idealGlobalLeft = btnCenter - popoverWidth / 2;
+
+      // 严格夹紧在 editorRect 内部 [editorRect.left + 12, editorRect.right - popoverWidth - 12]
+      const clampedGlobalLeft = Math.max(
+        editorRect.left + 12,
+        Math.min(idealGlobalLeft, editorRect.right - popoverWidth - 12),
+      );
+
+      const relativeLeft = clampedGlobalLeft - triggerRect.left;
+      const availableHeight = editorRect.bottom - triggerRect.bottom - 20;
+      const maxHeight = Math.max(320, Math.min(540, availableHeight));
+
+      setDropdownStyle({
+        position: "absolute",
+        left: `${relativeLeft}px`,
+        right: "auto",
+        width: `${popoverWidth}px`,
+        maxHeight: `${maxHeight}px`,
+        maxWidth: `calc(100vw - 24px)`,
+        boxSizing: "border-box",
+      });
+    };
+
+    updatePlacement();
+    const rafId = requestAnimationFrame(updatePlacement);
+    window.addEventListener("resize", updatePlacement);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", updatePlacement);
+    };
+  }, [isOpen, selectedCategory]);
+
+  // 监听移动端或全局自定义唤起事件
+  useEffect(() => {
+    const handleCustomOpen = () => setIsOpen(true);
+    window.addEventListener("wemd-open-component-picker", handleCustomOpen);
+    return () =>
+      window.removeEventListener(
+        "wemd-open-component-picker",
+        handleCustomOpen,
+      );
+  }, []);
+
+  // 点击外部与 Escape 键关闭
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -90,6 +166,7 @@ export function ComponentPickerPopover({
       {isOpen && (
         <div
           className="component-picker-popover"
+          style={dropdownStyle}
           role="dialog"
           aria-label="自媒体排版组件选择器"
         >

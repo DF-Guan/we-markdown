@@ -95,16 +95,40 @@ sequenceDiagram
     end
 ```
 
-### 2. 移动端触控滑屏数学判据 (Touch Swipe Vector Equation)
+### 2. 移动端触控滑屏数学判据与防干扰集 (Touch Swipe Vector Equation & Interference Guard)
 
 当触控结束时，计算位移向量 $\Delta \mathbf{P} = (\Delta x, \Delta y)$：
 
 $$
 \begin{cases}
 |\Delta x| \ge 55\text{px} \\
-|\Delta x| > 1.5 \times |\Delta y|
+|\Delta x| > 1.5 \times |\Delta y| \\
+T_{\text{origin}} \notin \mathcal{S}_{\text{interactive}}
 \end{cases}
 $$
 
+其中防干扰交互集合定义为：
+$$\mathcal{S}_{\text{interactive}} = \{\text{.cm-editor}, \text{.cm-content}, \text{.cm-line}, \text{pre}, \text{code}, \text{table}, \text{.ai-copilot-dropdown}, \text{.component-picker-popover}, \text{.mobile-menu-panel}\}$$
+
 - 当满足上述条件且 $\Delta x < 0$ 时，触发状态迁移：$\text{activeView} \gets \text{'preview'}$；
 - 当满足上述条件且 $\Delta x > 0$ 时，触发状态迁移：$\text{activeView} \gets \text{'editor'}$。
+
+---
+
+## 📐 四、浮动面板自适应边界夹紧算法 (Popover Clamping Geometry)
+
+为了彻底根除 `.editor-pane` 的 `overflow: hidden` 对工具栏右侧密集排布按钮展开宽弹窗（如 AI 副驾驶 $W=420\text{px}$、排版组件库 $W=390\text{px}$）的物理右侧裁切，建立如下视口夹紧微分方程：
+
+设触发按钮几何中轴坐标为 $C_{\text{btn}} = L_{\text{btn}} + \frac{W_{\text{btn}}}{2}$，弹窗理想中轴对齐全局坐标为：
+$$X_{\text{ideal}} = C_{\text{btn}} - \frac{W_{\text{popover}}}{2}$$
+
+引入容器容差边界约束 $\delta = 12\text{px}$，夹紧后的全局绝对坐标为：
+$$X_{\text{clamped}} = \max\left(X_{\text{container\_left}} + \delta, \min\left(X_{\text{ideal}}, X_{\text{container\_right}} - W_{\text{popover}} - \delta\right)\right)$$
+
+计算相对父级定位容器的位移增量：
+$$\Delta x_{\text{rel}} = X_{\text{clamped}} - L_{\text{btn}}$$
+
+同时自适应垂直高度上限：
+$$H_{\text{max}} = \max\left(320, \min\left(540, Y_{\text{container\_bottom}} - B_{\text{btn}} - 20\right)\right)$$
+
+由此保证无论屏幕处于任意桌面分辨率、分栏比例或移动端折叠状态，弹窗均 100% 完整容纳于可见视口内，永不发生窗口截断。

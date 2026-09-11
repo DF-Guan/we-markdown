@@ -7,6 +7,7 @@ import {
   X,
   Sparkles,
   Download,
+  LayoutGrid,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import type { MobileViewType } from "../../hooks/useMobileView";
@@ -22,6 +23,7 @@ interface MobileToolbarProps {
   onCopyToWechat: () => void;
   onOpenTheme: () => void;
   onOpenAICopilot?: () => void;
+  onOpenComponentPicker?: () => void;
 }
 
 /**
@@ -33,6 +35,7 @@ export function MobileToolbar({
   onCopyToWechat,
   onOpenTheme,
   onOpenAICopilot,
+  onOpenComponentPicker,
 }: MobileToolbarProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [canInstall, setCanInstall] = useState(false);
@@ -70,6 +73,18 @@ export function MobileToolbar({
                 >
                   <Sparkles size={20} color="#6366f1" />
                   <span>AI 创作副驾驶</span>
+                </button>
+              )}
+              {onOpenComponentPicker && (
+                <button
+                  className="mobile-menu-item"
+                  onClick={() => {
+                    onOpenComponentPicker();
+                    setShowMenu(false);
+                  }}
+                >
+                  <LayoutGrid size={20} color="#07c160" />
+                  <span>自媒体排版组件</span>
                 </button>
               )}
               <button

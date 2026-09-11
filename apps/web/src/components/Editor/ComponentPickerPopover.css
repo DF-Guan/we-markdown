@@ -2,6 +2,7 @@
   position: absolute;
   top: 100%;
   left: 0;
+  right: auto;
   margin-top: 6px;
   width: 390px;
   max-width: calc(100vw - 32px);
@@ -11,10 +12,11 @@
   box-shadow:
     0 12px 30px -6px rgba(0, 0, 0, 0.14),
     0 8px 12px -6px rgba(0, 0, 0, 0.06);
-  z-index: 1000;
+  z-index: 1100;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-sizing: border-box;
   animation: pickerPopIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -130,6 +132,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  min-height: 0;
   max-height: 420px;
   overflow-y: auto;
 }
@@ -275,4 +279,21 @@
 
 [data-ui-theme="dark"] .component-card:hover {
   background: color-mix(in srgb, var(--accent-primary) 6%, var(--bg-secondary));
+}
+
+/* 移动端全屏居中/底部自适应适配，彻底杜绝小屏幕截断 */
+@media (max-width: 768px) {
+  .component-picker-popover {
+    position: fixed !important;
+    top: 56px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: calc(100vw - 20px) !important;
+    max-height: calc(100dvh - 125px) !important;
+    margin: 0 !important;
+    z-index: 2100 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25) !important;
+  }
 }
