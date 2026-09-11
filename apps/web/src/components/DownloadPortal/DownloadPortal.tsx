@@ -307,7 +307,7 @@ export function DownloadPortal({
                 <div className="platform-card-icon win">
                   <Monitor size={24} />
                 </div>
-                <div>
+                <div className="platform-card-title-group">
                   <h3 id={winHeadingId} className="platform-card-title">
                     Windows
                   </h3>
@@ -366,7 +366,7 @@ export function DownloadPortal({
                 <div className="platform-card-icon mac">
                   <Apple size={24} />
                 </div>
-                <div>
+                <div className="platform-card-title-group">
                   <h3 id={macHeadingId} className="platform-card-title">
                     macOS
                   </h3>
@@ -425,7 +425,7 @@ export function DownloadPortal({
                 <div className="platform-card-icon linux">
                   <Terminal size={24} />
                 </div>
-                <div>
+                <div className="platform-card-title-group">
                   <h3 id={linuxHeadingId} className="platform-card-title">
                     Linux
                   </h3>
@@ -536,33 +536,36 @@ export function DownloadPortal({
 
         {/* 页脚 */}
         <footer className="download-footer">
-          <div className="footer-links">
+          <div className="download-footer-links">
             <a
               href="https://github.com/DF-Guan/we-markdown"
               target="_blank"
               rel="noopener noreferrer"
+              className="download-footer-link"
             >
               <FileCode size={14} />
               <span>GitHub 源码</span>
             </a>
-            <span className="footer-dot">·</span>
+            <span className="download-footer-dot">·</span>
             <a
               href="https://github.com/DF-Guan/we-markdown/releases"
               target="_blank"
               rel="noopener noreferrer"
+              className="download-footer-link"
             >
               <span>历史发行版本</span>
             </a>
-            <span className="footer-dot">·</span>
+            <span className="download-footer-dot">·</span>
             <a
               href="https://darktu.com"
               target="_blank"
               rel="noopener noreferrer"
+              className="download-footer-link"
             >
               <span>Darktu 旗下产品</span>
             </a>
           </div>
-          <p className="footer-copyright">
+          <p className="download-footer-copyright">
             © {new Date().getFullYear()} WeMarkdown Team. Released under the
             MIT License.
           </p>
