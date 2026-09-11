@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   Zap,
   Command,
-  CheckCircle2,
   ArrowLeft,
   ExternalLink,
   Sparkles,
@@ -16,7 +15,7 @@ import {
   FileCode,
   Package,
 } from "lucide-react";
-import darktuLogo from "../../assets/logo-128.png";
+import appLogo from "../../assets/logo-128.png";
 import {
   fetchLatestReleaseInfo,
   detectUserOS,
@@ -88,7 +87,7 @@ export function DownloadPortal({
               onClick={() => setSelectedMacArch("arm64")}
             >
               <Apple size={16} />
-              <span>Apple 芯片 (M1/M2/M3/M4)</span>
+              <span>Apple 芯片 (Apple Silicon)</span>
               <span className="arch-badge">推荐</span>
             </button>
             <button
@@ -225,7 +224,7 @@ export function DownloadPortal({
         <header className="download-header">
           <div className="download-brand">
             <img
-              src={darktuLogo}
+              src={appLogo}
               alt="WeMarkdown Logo"
               width={38}
               height={38}
@@ -308,7 +307,7 @@ export function DownloadPortal({
                 <div className="platform-card-icon win">
                   <Monitor size={24} />
                 </div>
-                <div>
+                <div className="platform-card-title-group">
                   <h3 id={winHeadingId} className="platform-card-title">
                     Windows
                   </h3>
@@ -331,16 +330,18 @@ export function DownloadPortal({
                     <div key={item.id} className="platform-item-row">
                       <div className="platform-item-info">
                         <div className="platform-item-name">
-                          <Package size={15} />
-                          <span>{item.name}</span>
+                          <Package size={14} className="package-icon" />
+                          <span className="platform-item-title">
+                            {item.name}
+                          </span>
+                        </div>
+                        <div className="platform-item-desc">
                           {item.fileSize && (
                             <span className="item-size-pill">
                               {item.fileSize}
                             </span>
                           )}
-                        </div>
-                        <div className="platform-item-desc">
-                          {item.description}
+                          <span>{item.description}</span>
                         </div>
                       </div>
                       <a
@@ -349,7 +350,7 @@ export function DownloadPortal({
                         download
                         title={`下载 ${item.fileName}`}
                       >
-                        <Download size={15} />
+                        <Download size={14} />
                         <span>下载</span>
                       </a>
                     </div>
@@ -365,7 +366,7 @@ export function DownloadPortal({
                 <div className="platform-card-icon mac">
                   <Apple size={24} />
                 </div>
-                <div>
+                <div className="platform-card-title-group">
                   <h3 id={macHeadingId} className="platform-card-title">
                     macOS
                   </h3>
@@ -388,16 +389,18 @@ export function DownloadPortal({
                     <div key={item.id} className="platform-item-row">
                       <div className="platform-item-info">
                         <div className="platform-item-name">
-                          <Package size={15} />
-                          <span>{item.name}</span>
+                          <Package size={14} className="package-icon" />
+                          <span className="platform-item-title">
+                            {item.name}
+                          </span>
+                        </div>
+                        <div className="platform-item-desc">
                           {item.fileSize && (
                             <span className="item-size-pill">
                               {item.fileSize}
                             </span>
                           )}
-                        </div>
-                        <div className="platform-item-desc">
-                          {item.description}
+                          <span>{item.description}</span>
                         </div>
                       </div>
                       <a
@@ -406,7 +409,7 @@ export function DownloadPortal({
                         download
                         title={`下载 ${item.fileName}`}
                       >
-                        <Download size={15} />
+                        <Download size={14} />
                         <span>下载</span>
                       </a>
                     </div>
@@ -422,7 +425,7 @@ export function DownloadPortal({
                 <div className="platform-card-icon linux">
                   <Terminal size={24} />
                 </div>
-                <div>
+                <div className="platform-card-title-group">
                   <h3 id={linuxHeadingId} className="platform-card-title">
                     Linux
                   </h3>
@@ -445,16 +448,18 @@ export function DownloadPortal({
                     <div key={item.id} className="platform-item-row">
                       <div className="platform-item-info">
                         <div className="platform-item-name">
-                          <Package size={15} />
-                          <span>{item.name}</span>
+                          <Package size={14} className="package-icon" />
+                          <span className="platform-item-title">
+                            {item.name}
+                          </span>
+                        </div>
+                        <div className="platform-item-desc">
                           {item.fileSize && (
                             <span className="item-size-pill">
                               {item.fileSize}
                             </span>
                           )}
-                        </div>
-                        <div className="platform-item-desc">
-                          {item.description}
+                          <span>{item.description}</span>
                         </div>
                       </div>
                       <a
@@ -463,7 +468,7 @@ export function DownloadPortal({
                         download
                         title={`下载 ${item.fileName}`}
                       >
-                        <Download size={15} />
+                        <Download size={14} />
                         <span>下载</span>
                       </a>
                     </div>
@@ -529,55 +534,29 @@ export function DownloadPortal({
           </div>
         </section>
 
-        {/* 首次安装指南与安全声明 */}
-        <section className="download-faq-section">
-          <div className="faq-notice-card">
-            <div className="faq-notice-header">
-              <CheckCircle2 size={20} className="faq-icon-success" />
-              <span>100% 开源安全与官方构建</span>
-            </div>
-            <p className="faq-notice-body">
-              WeMarkdown 由 GitHub Actions 自动化流水线公开构建，代码 100%
-              开源透明且无任何恶意追踪。
-              <br />• <strong>Windows 提示</strong>：首次启动如弹出 SmartScreen
-              拦截蓝窗，点击 <em>“更多信息”</em> ➜ <em>“仍要运行”</em> 即可。
-              <br />• <strong>macOS 提示</strong>
-              ：首次打开若提示“无法验证开发者”，请进入系统{" "}
-              <em>“设置 ➜ 隐私与安全性”</em>，点击底部的 <em>“仍要打开”</em>{" "}
-              即可信任运行。
-            </p>
-          </div>
-        </section>
-
         {/* 页脚 */}
         <footer className="download-footer">
-          <div className="footer-links">
+          <div className="download-footer-links">
             <a
               href="https://github.com/DF-Guan/we-markdown"
               target="_blank"
               rel="noopener noreferrer"
+              className="download-footer-link"
             >
               <FileCode size={14} />
               <span>GitHub 源码</span>
             </a>
-            <span className="footer-dot">·</span>
+            <span className="download-footer-dot">·</span>
             <a
               href="https://github.com/DF-Guan/we-markdown/releases"
               target="_blank"
               rel="noopener noreferrer"
+              className="download-footer-link"
             >
               <span>历史发行版本</span>
             </a>
-            <span className="footer-dot">·</span>
-            <a
-              href="https://darktu.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>Darktu 旗下产品</span>
-            </a>
           </div>
-          <p className="footer-copyright">
+          <p className="download-footer-copyright">
             © {new Date().getFullYear()} WeMarkdown Team. Released under the
             MIT License.
           </p>

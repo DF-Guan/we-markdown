@@ -15,6 +15,7 @@ import {
   getThemedMermaidDiagram,
 } from "../../utils/mermaidConfig";
 import { renderTableBlocksForPreview } from "../../services/wechatTableRenderer";
+import { LayoutSegmentSwitch } from "../common/LayoutSegmentSwitch";
 import "./MarkdownPreview.css";
 
 const SYNC_SCROLL_EVENT = "ahafair-sync-scroll";
@@ -241,8 +242,11 @@ export function MarkdownPreview() {
   return (
     <div className="markdown-preview">
       <div className="preview-header">
-        <span className="preview-title">实时预览</span>
-        <span className="preview-subtitle">微信排版效果</span>
+        <div className="preview-header-left">
+          <span className="preview-title">实时预览</span>
+          <span className="preview-subtitle">微信排版效果</span>
+        </div>
+        <LayoutSegmentSwitch />
       </div>
       <div
         className="preview-container"

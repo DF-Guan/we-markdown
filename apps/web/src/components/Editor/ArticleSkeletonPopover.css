@@ -1,0 +1,286 @@
+.article-skeleton-popover {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  box-shadow:
+    0 16px 36px -8px rgba(0, 0, 0, 0.16),
+    0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: skeletonFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes skeletonFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.skeleton-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+}
+
+.skeleton-header-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  letter-spacing: 0.2px;
+}
+
+.skeleton-title-icon {
+  color: #07c160;
+}
+
+.skeleton-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary, #64748b);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.skeleton-close-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-primary, #0f172a);
+}
+
+.skeleton-popover-subtitle {
+  margin: 8px 16px 10px;
+  font-size: 12px;
+  color: var(--text-secondary, #64748b);
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.skeleton-cards-container {
+  padding: 0 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 380px;
+}
+
+.skeleton-cards-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.skeleton-cards-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+}
+
+.skeleton-item-card {
+  padding: 10px 12px;
+  background: var(--bg-primary, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.skeleton-item-card:hover {
+  border-color: rgba(7, 193, 96, 0.4);
+  box-shadow: 0 4px 12px rgba(7, 193, 96, 0.08);
+  transform: translateY(-1px);
+}
+
+.skeleton-item-card.is-selected {
+  border-color: #07c160;
+  background: rgba(7, 193, 96, 0.02);
+}
+
+.skeleton-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skeleton-card-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(7, 193, 96, 0.12);
+  color: #07c160;
+  letter-spacing: 0.2px;
+}
+
+.skeleton-card-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary, #0f172a);
+}
+
+.skeleton-card-desc {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--text-secondary, #64748b);
+  line-height: 1.45;
+}
+
+.skeleton-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.skeleton-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.skeleton-action-btn.replace-btn {
+  background: #07c160;
+  color: #ffffff;
+}
+
+.skeleton-action-btn.replace-btn:hover {
+  background: #06ad56;
+  box-shadow: 0 2px 6px rgba(7, 193, 96, 0.3);
+}
+
+.skeleton-action-btn.insert-btn {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary, #334155);
+}
+
+.skeleton-action-btn.insert-btn:hover {
+  background: rgba(0, 0, 0, 0.09);
+  color: #0f172a;
+}
+
+.skeleton-popover-footer {
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.02);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+}
+
+.skeleton-footer-hint {
+  font-size: 11px;
+  color: var(--text-secondary, #64748b);
+  display: block;
+}
+
+.skeleton-footer-hint kbd {
+  display: inline-block;
+  padding: 1px 4px;
+  font-size: 10px;
+  font-family: inherit;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* 深色模式适配 */
+[data-theme="dark"] .article-skeleton-popover {
+  background: rgba(28, 32, 40, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 16px 36px -8px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .skeleton-item-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="dark"] .skeleton-item-card:hover {
+  border-color: rgba(7, 193, 96, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .skeleton-item-card.is-selected {
+  border-color: #07c160;
+  background: rgba(7, 193, 96, 0.08);
+}
+
+[data-theme="dark"] .skeleton-action-btn.insert-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .skeleton-action-btn.insert-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .skeleton-popover-footer {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .skeleton-footer-hint kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* 移动端全屏抽屉适配 */
+@media (max-width: 767px) {
+  .article-skeleton-popover {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-height: 80vh !important;
+    border-radius: 20px 20px 0 0 !important;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.25) !important;
+    animation: skeletonMobileSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes skeletonMobileSlideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}

@@ -40,19 +40,19 @@
   font-family: var(--font-mono);
 }
 
-.footer-links {
+.sidebar-footer .footer-links {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.footer-links a:hover {
+.sidebar-footer .footer-links a:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
   text-decoration: none;
 }
 
-.footer-links a {
+.sidebar-footer .footer-links a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,7 +66,7 @@
 }
 
 /* Footer Tooltips */
-.footer-links a::after {
+.sidebar-footer .footer-links a::after {
   content: attr(data-tooltip);
   position: absolute;
   bottom: 100%;
@@ -89,7 +89,7 @@
   z-index: 9999;
 }
 
-.footer-links a:hover::after {
+.sidebar-footer .footer-links a:hover::after {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(-4px);

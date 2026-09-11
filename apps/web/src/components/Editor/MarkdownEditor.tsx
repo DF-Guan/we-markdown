@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorView, minimalSetup } from "codemirror";
+import {
+  highlightActiveLine,
+  highlightActiveLineGutter,
+  lineNumbers,
+} from "@codemirror/view";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { EditorState } from "@codemirror/state";
 import { githubLight } from "@uiw/codemirror-theme-github";
@@ -15,6 +20,8 @@ import { formatPanguMarkdown } from "../../utils/panguFormatter";
 import { Toolbar } from "./Toolbar";
 import { SearchPanel } from "./SearchPanel";
 import { SaveIndicator } from "./SaveIndicator";
+import { LayoutSegmentSwitch } from "../common/LayoutSegmentSwitch";
+import { UploadCloud, Hash } from "lucide-react";
 import toast from "react-hot-toast";
 import "./MarkdownEditor.css";
 import { customKeymap } from "./editorShortcuts";
@@ -39,6 +46,24 @@ export function MarkdownEditor() {
   const uiTheme = useUITheme((state) => state.theme);
   const isSyncingRef = useRef(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
+  const [showLineNumbers, setShowLineNumbers] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("wemd-line-numbers") === "true";
+  });
+  const [selectionStats, setSelectionStats] = useState<{
+    words: number;
+    chars: number;
+    lines: number;
+  } | null>(null);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("wemd-line-numbers", String(showLineNumbers));
+    } catch {
+      /* ignore storage quota error */
+    }
+  }, [showLineNumbers]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -50,6 +75,77 @@ export function MarkdownEditor() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  const handleImageUpload = (
+    file: File,
+    view: EditorView,
+    dropPos?: number,
+  ) => {
+    const needAutoCompress = file.size > WECHAT_IMAGE_MAX_SIZE_BYTES;
+
+    const uploadPromise = (async () => {
+      const result = await uploadEditorImage(file, {
+        compressionOptions: {
+          maxSizeBytes: WECHAT_IMAGE_MAX_SIZE_BYTES,
+        },
+      });
+      return result;
+    })();
+
+    const loadingToken = `ahafair-upload-${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 8)}`;
+    const loadingText = `![上传中... ${file.name}](${loadingToken})`;
+    const range = view.state.selection.main;
+    const from = dropPos !== undefined ? dropPos : range.from;
+    const to = dropPos !== undefined ? dropPos : range.to;
+
+    view.dispatch({
+      changes: {
+        from,
+        to,
+        insert: loadingText,
+      },
+    });
+
+    toast.promise(uploadPromise, {
+      loading: needAutoCompress ? "正在压缩并上传图片..." : "正在上传图片...",
+      success: (result) => {
+        const imageText = `![](${result.url})`;
+        const currentDoc = view.state.doc.toString();
+        const index = currentDoc.indexOf(loadingText);
+
+        if (index !== -1) {
+          view.dispatch({
+            changes: {
+              from: index,
+              to: index + loadingText.length,
+              insert: imageText,
+            },
+          });
+        }
+        return result.compressed
+          ? `图片上传成功（已自动压缩 ${formatImageSize(
+              result.originalSize,
+            )} -> ${formatImageSize(result.finalSize)}）`
+          : "图片上传成功";
+      },
+      error: (err) => {
+        const currentDoc = view.state.doc.toString();
+        const index = currentDoc.indexOf(loadingText);
+        if (index !== -1) {
+          view.dispatch({
+            changes: {
+              from: index,
+              to: index + loadingText.length,
+              insert: "",
+            },
+          });
+        }
+        return `上传失败: ${err.message}`;
+      },
+    });
+  };
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -64,6 +160,10 @@ export function MarkdownEditor() {
         minimalSetup,
         customKeymap,
         markdown({ base: markdownLanguage, extensions: [underlineExtension] }),
+        highlightActiveLine(),
+        ...(showLineNumbers
+          ? [lineNumbers(), highlightActiveLineGutter()]
+          : []),
         uiTheme === "dark"
           ? wechatMarkdownHighlightingDark
           : wechatMarkdownHighlighting,
@@ -80,72 +180,67 @@ export function MarkdownEditor() {
                 event.preventDefault();
                 const file = item.getAsFile();
                 if (!file) continue;
+                handleImageUpload(file, view);
+              }
+            }
+          },
+          dragenter: (event) => {
+            const dt = event.dataTransfer;
+            if (
+              dt &&
+              (dt.types.includes("Files") || dt.types.includes("text/plain"))
+            ) {
+              event.preventDefault();
+              setIsDraggingOver(true);
+            }
+          },
+          dragover: (event) => {
+            const dt = event.dataTransfer;
+            if (
+              dt &&
+              (dt.types.includes("Files") || dt.types.includes("text/plain"))
+            ) {
+              event.preventDefault();
+              dt.dropEffect = "copy";
+              setIsDraggingOver(true);
+            }
+          },
+          dragleave: (event) => {
+            const related = event.relatedTarget as Node | null;
+            if (!related || !editorRef.current?.contains(related)) {
+              setIsDraggingOver(false);
+            }
+          },
+          drop: (event, view) => {
+            setIsDraggingOver(false);
+            const files = event.dataTransfer?.files;
+            if (!files || files.length === 0) return;
 
-                const needAutoCompress =
-                  file.size > WECHAT_IMAGE_MAX_SIZE_BYTES;
+            event.preventDefault();
+            const coords = { x: event.clientX, y: event.clientY };
+            const dropPos =
+              view.posAtCoords(coords) ?? view.state.selection.main.from;
 
-                // 使用统一流程自动压缩并上传
-                const uploadPromise = (async () => {
-                  const result = await uploadEditorImage(file, {
-                    compressionOptions: {
-                      maxSizeBytes: WECHAT_IMAGE_MAX_SIZE_BYTES,
-                    },
-                  });
-                  return result;
-                })();
-
-                const loadingToken = `ahafair-upload-${Date.now()}-${Math.random()
-                  .toString(36)
-                  .slice(2, 8)}`;
-                const loadingText = `![上传中... ${file.name}](${loadingToken})`;
-                const range = view.state.selection.main;
-                view.dispatch({
-                  changes: {
-                    from: range.from,
-                    to: range.to,
-                    insert: loadingText,
-                  },
-                });
-
-                toast.promise(uploadPromise, {
-                  loading: needAutoCompress
-                    ? "正在压缩并上传图片..."
-                    : "正在上传图片...",
-                  success: (result) => {
-                    const imageText = `![](${result.url})`;
-                    const currentDoc = view.state.doc.toString();
-                    const index = currentDoc.indexOf(loadingText);
-
-                    if (index !== -1) {
-                      view.dispatch({
-                        changes: {
-                          from: index,
-                          to: index + loadingText.length,
-                          insert: imageText,
-                        },
-                      });
-                    }
-                    return result.compressed
-                      ? `图片上传成功（已自动压缩 ${formatImageSize(
-                          result.originalSize,
-                        )} -> ${formatImageSize(result.finalSize)}）`
-                      : "图片上传成功";
-                  },
-                  error: (err) => {
-                    const currentDoc = view.state.doc.toString();
-                    const index = currentDoc.indexOf(loadingText);
-                    if (index !== -1) {
-                      view.dispatch({
-                        changes: {
-                          from: index,
-                          to: index + loadingText.length,
-                          insert: "",
-                        },
-                      });
-                    }
-                    return `上传失败: ${err.message}`;
-                  },
-                });
+            for (const file of Array.from(files)) {
+              if (file.type.startsWith("image/")) {
+                handleImageUpload(file, view, dropPos);
+              } else if (
+                file.name.endsWith(".md") ||
+                file.name.endsWith(".txt") ||
+                file.type.startsWith("text/")
+              ) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                  const text = e.target?.result as string;
+                  if (text) {
+                    view.dispatch({
+                      changes: { from: dropPos, insert: text },
+                      selection: { anchor: dropPos + text.length },
+                    });
+                    toast.success(`已导入文件: ${file.name}`);
+                  }
+                };
+                reader.readAsText(file);
               }
             }
           },
@@ -154,6 +249,20 @@ export function MarkdownEditor() {
           if (update.docChanged) {
             const newContent = update.state.doc.toString();
             setMarkdown(newContent);
+          }
+          if (update.selectionSet || update.docChanged) {
+            const sel = update.state.selection.main;
+            if (sel.from !== sel.to) {
+              const selectedText = update.state.sliceDoc(sel.from, sel.to);
+              const stats = getArticleStats(selectedText);
+              setSelectionStats({
+                words: stats.words,
+                chars: stats.charsNoSpaces,
+                lines: stats.lines,
+              });
+            } else {
+              setSelectionStats(null);
+            }
           }
         }),
         EditorView.theme({
@@ -170,8 +279,21 @@ export function MarkdownEditor() {
             padding: "16px",
           },
           ".cm-gutters": {
-            backgroundColor: "#f8f9fa",
+            backgroundColor: "transparent",
             border: "none",
+            color: "var(--text-secondary, #94a3b8)",
+            paddingRight: "8px",
+          },
+          ".cm-activeLine": {
+            backgroundColor:
+              uiTheme === "dark"
+                ? "rgba(255, 255, 255, 0.04)"
+                : "rgba(7, 193, 96, 0.03)",
+          },
+          ".cm-activeLineGutter": {
+            backgroundColor: "transparent",
+            color: uiTheme === "dark" ? "#81d4fa" : "#07c160",
+            fontWeight: "600",
           },
         }),
       ],
@@ -223,7 +345,7 @@ export function MarkdownEditor() {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setMarkdown, uiTheme]);
+  }, [setMarkdown, uiTheme, showLineNumbers]);
 
   useEffect(() => {
     const view = viewRef.current;
@@ -391,6 +513,7 @@ export function MarkdownEditor() {
     <div className="markdown-editor">
       <div className="editor-header">
         <span className="editor-title">Markdown 编辑器</span>
+        <LayoutSegmentSwitch />
       </div>
       <Toolbar
         onInsert={handleInsert}
@@ -409,9 +532,29 @@ export function MarkdownEditor() {
       )}
       <div className="editor-body-wrapper">
         <div ref={editorRef} className="editor-container" />
+        {isDraggingOver && (
+          <div className="editor-drag-overlay">
+            <div className="editor-drag-card">
+              <UploadCloud size={32} className="drag-icon-bounce" />
+              <p className="drag-primary-text">释放以导入图片或文档</p>
+              <p className="drag-secondary-text">
+                支持 PNG / JPG / WebP（自动保真压缩至 2MB 内）及 .md / .txt 文本
+              </p>
+            </div>
+          </div>
+        )}
       </div>
       <div className="editor-footer">
         <div className="editor-stats">
+          {selectionStats && (
+            <span
+              className="editor-stat editor-stat-selected"
+              title="当前鼠标/键盘选区实时统计"
+            >
+              已选: {selectionStats.words} 词 · {selectionStats.chars} 字 (
+              {selectionStats.lines} 行)
+            </span>
+          )}
           <span className="editor-stat">行数: {articleStats.lines}</span>
           <span className="editor-stat">字数: {articleStats.words}</span>
           <span className="editor-stat">
@@ -424,7 +567,18 @@ export function MarkdownEditor() {
             预计阅读: {articleStats.readingTimeString}
           </span>
         </div>
-        <SaveIndicator />
+        <div className="editor-footer-actions">
+          <button
+            type="button"
+            className={`editor-footer-toggle-btn ${showLineNumbers ? "is-active" : ""}`}
+            onClick={() => setShowLineNumbers((prev) => !prev)}
+            title={showLineNumbers ? "点击隐藏行号" : "点击显示行号"}
+          >
+            <Hash size={12} />
+            <span>{showLineNumbers ? "行号: 开" : "行号: 关"}</span>
+          </button>
+          <SaveIndicator />
+        </div>
       </div>
     </div>
   );

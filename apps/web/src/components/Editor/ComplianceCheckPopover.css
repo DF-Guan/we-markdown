@@ -36,6 +36,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .compliance-title-wrap {
@@ -60,7 +61,9 @@
 
 .compliance-body {
   padding: 12px 16px;
-  max-height: 340px;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 380px;
   overflow-y: auto;
 }
 
@@ -128,6 +131,7 @@
   margin-bottom: 8px;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 6px;
 }
 
@@ -216,6 +220,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 /* 工具栏小圆点徽标 */
