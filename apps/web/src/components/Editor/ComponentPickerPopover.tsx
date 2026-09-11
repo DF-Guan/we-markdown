@@ -62,8 +62,11 @@ export function ComponentPickerPopover({
       );
 
       const relativeLeft = clampedGlobalLeft - triggerRect.left;
-      const availableHeight = editorRect.bottom - triggerRect.bottom - 20;
-      const maxHeight = Math.max(320, Math.min(540, availableHeight));
+      const availableHeight = Math.min(
+        editorRect.bottom - triggerRect.bottom - 20,
+        window.innerHeight - triggerRect.bottom - 20,
+      );
+      const maxHeight = Math.max(300, Math.min(560, availableHeight));
 
       setDropdownStyle({
         position: "absolute",

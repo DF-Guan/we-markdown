@@ -94,6 +94,7 @@
   justify-content: space-between;
   padding: 12px 16px 8px;
   border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.06));
+  flex-shrink: 0;
 }
 
 .ai-copilot-title-row {
@@ -138,6 +139,7 @@
   margin: 8px 14px 4px;
   border-radius: 10px;
   gap: 2px;
+  flex-shrink: 0;
 }
 
 .ai-copilot-tab-btn {

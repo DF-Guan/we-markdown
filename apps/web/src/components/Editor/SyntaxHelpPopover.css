@@ -9,6 +9,9 @@
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-md);
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .syntax-help-header {
@@ -17,10 +20,15 @@
   font-size: 13px;
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
 .syntax-help-list {
   padding: 6px 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 380px;
+  overflow-y: auto;
 }
 
 .syntax-help-row {
@@ -48,6 +56,7 @@
   border-top: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 
 .syntax-help-action-link {

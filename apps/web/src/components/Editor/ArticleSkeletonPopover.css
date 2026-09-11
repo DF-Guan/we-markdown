@@ -35,6 +35,7 @@
   justify-content: space-between;
   padding: 12px 16px 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
 }
 
 .skeleton-header-title {
@@ -75,6 +76,7 @@
   font-size: 12px;
   color: var(--text-secondary, #64748b);
   line-height: 1.5;
+  flex-shrink: 0;
 }
 
 .skeleton-cards-container {
@@ -83,7 +85,8 @@
   flex-direction: column;
   gap: 8px;
   overflow-y: auto;
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   max-height: 380px;
 }
 
@@ -105,6 +108,7 @@
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 6px;
 }
 
@@ -193,6 +197,7 @@
   padding: 8px 16px;
   background: rgba(0, 0, 0, 0.02);
   border-top: 1px solid rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
 }
 
 .skeleton-footer-hint {
