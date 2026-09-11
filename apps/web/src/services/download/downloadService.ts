@@ -159,8 +159,7 @@ export function buildFallbackPlatforms(version: string): PlatformCategory[] {
         {
           id: "mac-arm64",
           name: "Apple Silicon (推荐)",
-          description:
-            "原生适配 M1 / M2 / M3 / M4 系列芯片，冷启动快，功耗极低",
+          description: "原生适配 Apple Silicon 全系芯片，冷启动极速，超低功耗",
           fileName: `WeMarkdown-${cleanVersion}-arm64.dmg`,
           downloadUrl: `${baseDownloadUrl}/WeMarkdown-${cleanVersion}-arm64.dmg`,
           recommended: true,
