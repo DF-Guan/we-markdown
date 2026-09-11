@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { HelpCircle, ExternalLink } from "lucide-react";
+import { HelpCircle, ExternalLink, Download, BookOpen } from "lucide-react";
 import "./SyntaxHelpPopover.css";
 
 // 语法速查数据
@@ -42,10 +42,15 @@ export function SyntaxHelpPopover() {
 
   const openDocs = () => {
     window.open(
-      "https://md.darktu.com",
+      "https://docs.darktu.com/#/syntax",
       "_blank",
       "noopener,noreferrer",
     );
+    setIsOpen(false);
+  };
+
+  const openDownloadPortal = () => {
+    window.location.hash = "#/download";
     setIsOpen(false);
   };
 
@@ -70,10 +75,27 @@ export function SyntaxHelpPopover() {
               </div>
             ))}
           </div>
-          <button className="syntax-help-docs-link" onClick={openDocs}>
-            <span>查看完整文档</span>
-            <ExternalLink size={12} />
-          </button>
+          <div className="syntax-help-footer">
+            <button
+              type="button"
+              className="syntax-help-action-link"
+              onClick={openDocs}
+              title="查看 Darktu 知识库完整语法与排版指南"
+            >
+              <BookOpen size={13} />
+              <span>查看完整文档</span>
+              <ExternalLink size={12} />
+            </button>
+            <button
+              type="button"
+              className="syntax-help-action-link download-btn"
+              onClick={openDownloadPortal}
+              title="打开 WeMarkdown 桌面客户端下载专区"
+            >
+              <Download size={13} />
+              <span>下载桌面客户端</span>
+            </button>
+          </div>
         </div>
       )}
     </div>

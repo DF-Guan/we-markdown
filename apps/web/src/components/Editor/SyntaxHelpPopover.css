@@ -44,22 +44,40 @@
   font-size: 12px;
 }
 
-.syntax-help-docs-link {
+.syntax-help-footer {
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+}
+
+.syntax-help-action-link {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   width: 100%;
-  padding: 10px 14px;
+  padding: 8px 14px;
   border: none;
-  border-top: 1px solid var(--border-light);
   background: transparent;
-  color: var(--accent-primary);
+  color: var(--ui-text-primary, var(--text-primary));
   font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
 }
 
-.syntax-help-docs-link:hover {
+.syntax-help-action-link:hover {
   background: var(--bg-secondary);
+  color: var(--accent-primary);
+}
+
+.syntax-help-action-link.download-btn {
+  color: #2563eb;
+  border-top: 1px dashed var(--border-light);
+  font-weight: 600;
+}
+
+.syntax-help-action-link.download-btn:hover {
+  background: rgba(37, 99, 235, 0.08);
 }
