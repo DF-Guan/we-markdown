@@ -48,13 +48,18 @@
   letter-spacing: 0.5px;
 }
 
+.ai-copilot-dropdown,
+.ai-copilot-dropdown * {
+  box-sizing: border-box;
+}
+
 /* 浮动面板 */
 .ai-copilot-dropdown {
   position: absolute;
   top: calc(100% + 8px);
-  left: 0;
-  width: 440px;
-  max-width: 92vw;
+  right: 0;
+  width: 420px;
+  max-width: calc(100vw - 24px);
   background: var(--glass-bg, rgba(255, 255, 255, 0.96));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -164,7 +169,8 @@
 /* 主内容视窗 */
 .ai-copilot-body {
   padding: 14px 16px;
-  max-height: 480px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   font-size: 13px;
   display: flex;
@@ -482,4 +488,20 @@
 [data-ui-theme="dark"] .ai-privacy-note {
   background: rgba(6, 78, 59, 0.3);
   color: #34d399;
+}
+
+/* 移动端全屏居中弹层适配 */
+@media (max-width: 768px) {
+  .ai-copilot-dropdown {
+    position: fixed !important;
+    top: 56px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: calc(100vw - 20px) !important;
+    max-height: calc(100dvh - 125px) !important;
+    z-index: 2100 !important;
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  }
 }

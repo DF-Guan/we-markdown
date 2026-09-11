@@ -87,8 +87,72 @@ export function AICopilotPopover({
   const [showApiKey, setShowApiKey] = useState(false);
   const [testingConnection, setTestingConnection] = useState(false);
 
+  // 6. 弹窗自适应边界约束样式
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
+
   const containerRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  // 动态计算弹窗位置与边界约束，彻底防止右侧或底部溢出截断
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const updatePlacement = () => {
+      if (!containerRef.current) return;
+      // 移动端由全屏 Fixed CSS 统领
+      if (window.innerWidth < 768) {
+        setDropdownStyle({});
+        return;
+      }
+
+      const triggerRect = containerRef.current.getBoundingClientRect();
+      const editorEl =
+        containerRef.current.closest(".editor-pane") ||
+        containerRef.current.closest(".markdown-editor");
+
+      const editorRect = editorEl
+        ? editorEl.getBoundingClientRect()
+        : {
+            left: 0,
+            right: window.innerWidth,
+            top: 0,
+            bottom: window.innerHeight,
+            width: window.innerWidth,
+          };
+
+      // 弹窗宽度：320px ~ 420px，且留出左右至少 24px 边距
+      const popoverWidth = Math.max(320, Math.min(420, editorRect.width - 24));
+
+      // 以按钮中心为理想中轴
+      const btnCenter = triggerRect.left + triggerRect.width / 2;
+      const idealGlobalLeft = btnCenter - popoverWidth / 2;
+
+      // 严格夹紧在 editorRect 内部 [editorRect.left + 12, editorRect.right - popoverWidth - 12]
+      const clampedGlobalLeft = Math.max(
+        editorRect.left + 12,
+        Math.min(idealGlobalLeft, editorRect.right - popoverWidth - 12),
+      );
+
+      const relativeLeft = clampedGlobalLeft - triggerRect.left;
+      const availableHeight = editorRect.bottom - triggerRect.bottom - 20;
+      const maxHeight = Math.max(320, Math.min(540, availableHeight));
+
+      setDropdownStyle({
+        left: `${relativeLeft}px`,
+        right: "auto",
+        width: `${popoverWidth}px`,
+        maxHeight: `${maxHeight}px`,
+      });
+    };
+
+    updatePlacement();
+    const rafId = requestAnimationFrame(updatePlacement);
+    window.addEventListener("resize", updatePlacement);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", updatePlacement);
+    };
+  }, [isOpen, activeTab]);
 
   // 快捷键 Alt+A 触发切换
   useEffect(() => {
@@ -329,7 +393,7 @@ export function AICopilotPopover({
       </button>
 
       {isOpen && (
-        <div className="ai-copilot-dropdown">
+        <div className="ai-copilot-dropdown" style={dropdownStyle}>
           {/* 头部标题与关闭 */}
           <div className="ai-copilot-header">
             <div className="ai-copilot-title-row">
