@@ -116,16 +116,14 @@ export function Toolbar({
       const rect = container.getBoundingClientRect();
       const spaceRight = window.innerWidth - rect.right;
 
-      const isInRightHalf = rect.left > window.innerWidth / 2;
-      const isTightSpace = spaceRight < 300;
-
-      if (isInRightHalf || isTightSpace) {
+      if (spaceRight < 160) {
         setMermaidSubmenuSide("left");
       } else {
         setMermaidSubmenuSide("right");
       }
     };
 
+    updateSubmenuSide();
     const rafId = requestAnimationFrame(updateSubmenuSide);
     window.addEventListener("resize", updateSubmenuSide);
     return () => {
@@ -306,6 +304,7 @@ export function Toolbar({
           className={`md-toolbar-btn ${showMermaidMenu ? "active" : ""}`}
           onClick={toggleMermaidMenu}
           data-tooltip="插入图表"
+          aria-label="插入图表"
         >
           <Workflow size={16} />
         </button>
@@ -317,18 +316,26 @@ export function Toolbar({
                 key={idx}
                 className="md-toolbar-dropdown-item"
                 onClick={() => handleMermaidInsert(template.code)}
+                onMouseEnter={() => setShowMermaidMore(false)}
               >
                 <template.icon size={14} className="mr-2" />
                 <span>{template.label}</span>
               </button>
             ))}
-            <div className="md-toolbar-dropdown-more" ref={mermaidMoreRef}>
+            <div
+              className="md-toolbar-dropdown-more"
+              ref={mermaidMoreRef}
+              onMouseEnter={() => setShowMermaidMore(true)}
+            >
               <button
                 type="button"
                 className={`md-toolbar-dropdown-item md-toolbar-dropdown-more-btn ${
                   showMermaidMore ? "active" : ""
                 }`}
-                onClick={() => setShowMermaidMore((prev) => !prev)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMermaidMore((prev) => !prev);
+                }}
                 aria-expanded={showMermaidMore}
               >
                 <span>查看更多</span>

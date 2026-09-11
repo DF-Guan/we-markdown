@@ -126,8 +126,7 @@
   box-shadow: var(--shadow-md);
   z-index: 1000;
   min-width: 140px;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
+  overflow: visible;
   padding: 4px;
   display: flex;
   flex-direction: column;
@@ -147,6 +146,7 @@
   cursor: pointer;
   border-radius: var(--radius-sm);
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .md-toolbar-dropdown-item:hover {
@@ -194,7 +194,9 @@
   background: var(--bg-primary);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-md);
+  box-shadow:
+    0 8px 24px -4px rgba(0, 0, 0, 0.15),
+    0 2px 6px -1px rgba(0, 0, 0, 0.06);
   z-index: 1001;
   min-width: 140px;
   padding: 4px;
@@ -205,9 +207,25 @@
   animation: dropdown-slide 0.15s ease;
 }
 
+/* 鼠标悬停桥接，消除 6px 间距导致的鼠标移动丢失 */
+.md-toolbar-dropdown-submenu::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: -10px;
+  width: 12px;
+}
+
 .md-toolbar-dropdown-submenu.is-left {
   left: auto;
   right: calc(100% + 6px);
+}
+
+.md-toolbar-dropdown-submenu.is-left::before {
+  left: auto;
+  right: -10px;
+  width: 12px;
 }
 
 .md-toolbar-dropdown-more-btn.active .md-toolbar-dropdown-chevron {
