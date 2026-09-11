@@ -15,7 +15,7 @@ import {
   FileCode,
   Package,
 } from "lucide-react";
-import darktuLogo from "../../assets/logo-128.png";
+import appLogo from "../../assets/logo-128.png";
 import {
   fetchLatestReleaseInfo,
   detectUserOS,
@@ -224,7 +224,7 @@ export function DownloadPortal({
         <header className="download-header">
           <div className="download-brand">
             <img
-              src={darktuLogo}
+              src={appLogo}
               alt="WeMarkdown Logo"
               width={38}
               height={38}
@@ -554,15 +554,6 @@ export function DownloadPortal({
               className="download-footer-link"
             >
               <span>历史发行版本</span>
-            </a>
-            <span className="download-footer-dot">·</span>
-            <a
-              href="https://darktu.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="download-footer-link"
-            >
-              <span>Darktu 旗下产品</span>
             </a>
           </div>
           <p className="download-footer-copyright">
