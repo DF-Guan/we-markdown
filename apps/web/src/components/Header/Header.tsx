@@ -111,9 +111,13 @@ const WindowControls = ({ fixed = false }: { fixed?: boolean }) => {
 
 interface HeaderProps {
   onOpenDownload?: () => void;
+  onOpenWechatDraft?: () => void;
 }
 
-export function Header({ onOpenDownload }: HeaderProps = {}) {
+export function Header({
+  onOpenDownload,
+  onOpenWechatDraft,
+}: HeaderProps = {}) {
   const { copyToWechat } = useEditorStore();
   const markdown =
     useEditorStore((state) =>
@@ -240,6 +244,17 @@ export function Header({ onOpenDownload }: HeaderProps = {}) {
             }
           />
           <FloatingToolbarButton
+            icon={<ImageIcon size={18} strokeWidth={2} />}
+            label="图像工坊"
+            onClick={() =>
+              window.open(
+                "https://image-atelier.darktu.com",
+                "_blank",
+                "noopener,noreferrer",
+              )
+            }
+          />
+          <FloatingToolbarButton
             icon={<Send size={18} strokeWidth={2} />}
             label="复制到公众号"
             onClick={copyToWechat}
@@ -324,6 +339,21 @@ export function Header({ onOpenDownload }: HeaderProps = {}) {
               <span>主题管理</span>
             </button>
             <a
+              href="https://image-atelier.darktu.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary darktu-portal-btn atelier-portal-btn"
+              title="访问 Darktu 图像工坊 (纯本地 100vh 批量图像处理)"
+              aria-label="Darktu 图像工坊"
+            >
+              <ImageIcon
+                size={18}
+                strokeWidth={2}
+                className="darktu-sparkle-icon"
+              />
+              <span>图像工坊</span>
+            </a>
+            <a
               href="https://darktu.com"
               target="_blank"
               rel="noopener noreferrer"
@@ -342,6 +372,7 @@ export function Header({ onOpenDownload }: HeaderProps = {}) {
             <CopyDropdown
               onCopyPlatform={handleCopyPlatform}
               onOpenCardExport={() => setShowCardExportModal(true)}
+              onOpenWechatDraft={onOpenWechatDraft}
             />
 
             <button
